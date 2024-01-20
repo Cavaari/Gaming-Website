@@ -1,0 +1,27 @@
+:root {
+    --first-color: #E9A400;
+    --second-color: #152A64;
+    --third-color: #00032F;
+}
+
+html, body{
+    margin: 0;
+    padding: 0;
+}
+
+.bg-first{
+    background-color: var(--first-color);
+}
+
+.bg-second{
+    background-color: var(--second-color);
+}
+
+.bg-third{
+    background-color: var(--third-color);
+}
+
+/* since our nav bar is 4rem */
+.new-section{
+    height: calc(100vh - 4rem);
+}
