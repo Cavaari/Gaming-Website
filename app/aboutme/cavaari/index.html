@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <title>Cavaari Taylor</title>
+</head>
+<body id="pageBody">
+    <header>
+        <h1>Cavaari's Page</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="../../../index.php">Home</a></li>
+            <li><a href="../index.php">About Me</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div id="about" class="form-section">
+            <h1>About Me</h1>
+            <p>Hi, I'm Cavaari Taylor. I love web development and programming. 
+                I hail from the island of Saint Lucia in the Caribbean. A lovely island
+                in the Caribbean where the sun is always shining and the people are always smiling.
+                I am currently in my final semester of my Software Engineering degree at the University of Guelph.
+                I am a very hardworking and dedicated individual who is always willing to learn new things.
+                I am in my 4th year at the University of Guelph and I am eager to break into the industry. 
+            </p>
+        </div>
+
+    </main>
+    <footer>
+        <p>&copy; <span id="currentYear"></span> Cavaari</p>
+    </footer>
+
+    <script>
+        // Set the current year in the footer
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+    </script>
+</body>
+</html>
