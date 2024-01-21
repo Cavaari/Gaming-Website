@@ -1,4 +1,3 @@
-/* Resetting some default browser styles */
 body, h1, p, ul, li {
     margin: 0;
     padding: 0;
@@ -6,10 +5,10 @@ body, h1, p, ul, li {
 
 body {
     background-image: url("oceanview.jpg");
-    background-size: cover; /* Ensures the image covers the entire background */
-    background-position: center; /* Centers the background image */
-    background-repeat: no-repeat; /* Prevents the background image from repeating */
-    background-attachment: fixed; /* Makes the background image fixed to the viewport */
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
     min-width: 100%;
     min-height: 100vh;
 }
