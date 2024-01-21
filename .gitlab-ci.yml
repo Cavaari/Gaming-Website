@@ -3,7 +3,6 @@ image: php:latest
 before_script:
   - apt-get update
   - apt-get install -y php php-cli libapache2-mod-php
-  - apt-get install php5-common libapache2-mod-php5 php5-cli
 
 variables:
   SOCS_SERVER: "socs@cis4250w24-09.socs.uoguelph.ca"
