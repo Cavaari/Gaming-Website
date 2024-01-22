@@ -16,7 +16,7 @@
         <ul class="dropdown-menu bg-second">
             <li><a class="dropdown-item new-nav-link" href="aboutme/edearing">Eric Dearing</a></li>
             <li><a class="dropdown-item new-nav-link" href="aboutme/eivanov">Eivanov</a></li>
-            <li><a class="dropdown-item new-nav-link" href="aboutme/kgarment">Kgarment</a></li>
+            <li><a class="dropdown-item new-nav-link" href="aboutme/kgarmend">Kgarmend</a></li>
             <li><a class="dropdown-item new-nav-link" href="aboutme/kkehelba">Kkehelba</a></li>
             <li><a class="dropdown-item new-nav-link" href="aboutme/msalmaan">Muhammad Salmaan</a></li>
         </ul>
