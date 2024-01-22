@@ -1,3 +1,3 @@
-<?php
-include('about.html');
+<?php 
+    echo file_get_contents( "tnazar.html" );
 ?>
