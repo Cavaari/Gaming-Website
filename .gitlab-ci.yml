@@ -2,6 +2,8 @@ image: php:latest
 
 before_script:
   - apt-get update
+  - cd team_9/app
+  - php index.php
 
 variables:
   SOCS_SERVER: "socs@cis4250w24-09.socs.uoguelph.ca"
