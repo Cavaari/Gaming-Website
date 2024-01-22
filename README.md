@@ -16,3 +16,11 @@
 	3) Create folder with your username
 	4) Create and edit index.php
 
+## Team Members:
+	- Eric Dearing (Team Lead)
+	- Karina Garmendez
+	- Egor Ivanov
+	- Kalindu Kehel Baddarage
+	- Tehreem Nazar
+	- Muhammad Salmaan
+	- Cavaari Taylor
