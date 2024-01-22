@@ -13,6 +13,9 @@
             include 'components/navbar.php';
         ?>
 
+        <div class="new-section bg-third d-flex align-items-center justify-content-center text-first">
+            <h1>Welcome to team 9’s web app</h1>
+        </div>
 
         <div class="new-section bg-first">
 
