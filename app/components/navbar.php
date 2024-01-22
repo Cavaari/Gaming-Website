@@ -19,6 +19,8 @@
             <li><a class="dropdown-item new-nav-link" href="aboutme/kgarmend">Kgarmend</a></li>
             <li><a class="dropdown-item new-nav-link" href="aboutme/kkehelba">Kkehelba</a></li>
             <li><a class="dropdown-item new-nav-link" href="aboutme/msalmaan">Muhammad Salmaan</a></li>
+            <li><a class="dropdown-item new-nav-link" href="aboutme/tnazar">Tehreem</a></li>
+            <li><a class="dropdown-item new-nav-link" href="aboutme/cavaari">Cavaari</a></li>
         </ul>
     </div>
 </nav>
