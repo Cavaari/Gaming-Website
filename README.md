@@ -27,7 +27,7 @@
 
 	
 
-##Sprint 1: Site Development
+## Sprint 1: Site Development
 
 In this sprint the team set out to develop a simple starting platform for our soon to be diverse and fully immersive gaming hub to which will allow users a comprehensive gaming experience.
 
