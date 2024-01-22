@@ -45,17 +45,10 @@ deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   environment: production
   before_script:
-  - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-  - eval $(ssh-agent -s)
-  - chmod 400 "$VM_CREDS"
-  - ssh-add "$VM_CREDS"
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - git config --global user.email "kgarmend@example.com"
-  - git config --global user.name "kgarmend"
+    - sudo apt-get install sshpass # Installing plugin to help automate connection to VM
   script:
     - echo "Deploying application to VM..."
-    - echo "$VM_CREDS" | ssh $SOCS_SERVER
+    - sshpass -p '$VM_CREDS' ssh $SOCS_SERVER
     - cd team_9
     - git pull
     - echo "Application simulation successfully deployed to '$SOCS_SERVER'."
