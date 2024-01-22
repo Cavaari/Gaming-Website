@@ -47,7 +47,6 @@ deploy-job:      # This job runs in the deploy stage.
   before_script:
   - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
   - eval $(ssh-agent -s)
-  - echo "$VM_CREDS" | tr -d '\r' | ssh-add -
   - chmod 400 "$VM_CREDS"
   - ssh-add "$VM_CREDS"
   - mkdir -p ~/.ssh
@@ -56,7 +55,7 @@ deploy-job:      # This job runs in the deploy stage.
   - git config --global user.name "kgarmend"
   script:
     - echo "Deploying application to VM..."
-    - ssh $SOCS_SERVER
+    - echo "$VM_CREDS" | ssh $SOCS_SERVER
     - cd team_9
     - git pull
     - echo "Application simulation successfully deployed to '$SOCS_SERVER'."
