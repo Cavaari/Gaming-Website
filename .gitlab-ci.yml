@@ -49,7 +49,7 @@ deploy-job:      # This job runs in the deploy stage.
   environment: production
   script:
     - echo "Deploying application to VM..."
-    - ssh $SOCS_SERVER | $VM_CREDS
+    - ssh "$SOCS_SERVER" | "$VM_CREDS"
     - cd team_9
     - git pull
     - echo "Application simulation successfully deployed to '$SOCS_SERVER'."
