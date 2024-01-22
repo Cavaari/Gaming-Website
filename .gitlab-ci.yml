@@ -2,7 +2,6 @@ image: php:latest
 
 before_script:
   - apt-get update
-  - cd team_9/app
   - php index.php
 
 variables:
