@@ -18,10 +18,15 @@ header {
     padding: 10px;
     opacity: 0;
     animation: fadeInUp 1s ease-out forwards;
+    align-items: center;
 }
 
 h1 {
     color: #39FF14; 
+}
+
+h2 {
+    color: #B15EFF; 
 }
 
 nav ul {
@@ -31,10 +36,12 @@ nav ul {
 
 nav a {
     text-decoration: none;
-    color: #39FF14; 
+    color: black; 
     padding: 5px 10px;
-    display: inline-block;
+    display: flex;
     transition: color 0.3s ease-in-out;
+    align-self: start;
+    background-color: antiquewhite;
 }
 
 nav a:hover {
@@ -48,20 +55,20 @@ main {
 }
 
 .form-section {
-    color: #39FF14; 
+    color: #B15EFF; 
     padding: 20px;
     margin-bottom: 20px;
-}
-
-h2 {
-    color: #39FF14; 
+    background-color: antiquewhite;
 }
 
 footer {
-    color: black;
+    color: #ffff;
     padding: 10px;
     text-align: center;
     animation: bounce 1s infinite alternate;
+    text-decoration: underline;
+    font-weight: bold;
+    
 }
 
 @keyframes fadeInUp {
