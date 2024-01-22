@@ -47,7 +47,7 @@ deploy-job:      # This job runs in the deploy stage.
   before_script:
     - sudo apt-get install sshpass # Installing plugin to help automate connection to VM
   script:
-    - echo "Deploying application to VM..."
+    - echo "Deploying application to Team9 socs VM..."
     - sshpass -p '$VM_CREDS' ssh $SOCS_SERVER
     - cd team_9
     - git pull
