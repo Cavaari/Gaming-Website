@@ -49,5 +49,7 @@ deploy-job:      # This job runs in the deploy stage.
   script:
     - echo "Deploying application to Team9 socs VM..."
     - apt-get install -y sshpass # Installing plugin to help automate connection to VM
-    - sshpass -p '$VM_CREDS' ssh -tt $SOCS_SERVER 'cd team_9'
+    - sshpass -p '$VM_CREDS' ssh -tt $SOCS_SERVER
+    - cd team_9
+    - git pull
     - echo "Application simulation successfully deployed to '$SOCS_SERVER'."
