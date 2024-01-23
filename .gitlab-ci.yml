@@ -50,9 +50,9 @@ deploy-job:      # This job runs in the deploy stage.
     - apt-get install openssh-client -y
     - 'which ssh-agent'
     - eval $(ssh-agent -s)
-    - ssh-add <(echo "$VM_CREDS")
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
+    - echo "$SOCS_SERVER" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
   script:
