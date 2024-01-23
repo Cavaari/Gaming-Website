@@ -46,10 +46,16 @@ deploy-job:      # This job runs in the deploy stage.
   environment: production
   before_script:
     - apt-get update
+    - apt-get install -y sshpass # Installing plugin to help automate connection to VM
+    - 'which ssh-agent'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - apt-get install -y sshpass # Installing plugin to help automate connection to VM
-    - sshpass -p '$VM_CREDS' ssh -tt $SOCS_SERVER
-    - cd team_9
-    - git pull
+    - sshpass -p '$VM_CREDS' ssh -tt $SOCS_SERVER cd team_9
+    # - git pull
     - echo "Application simulation successfully deployed to '$SOCS_SERVER'."
