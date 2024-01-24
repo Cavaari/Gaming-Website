@@ -4,8 +4,8 @@ PM2 was used as Node.js process manager
 (https://pm2.keymetrics.io/)
 
 1) $ cd next-js 
-2) $ npm i
-3) $ npm run build
+2) $ sudo npm i
+3) $ sudo npm run build
 4) $ sudo pm2 start "sudo npm start" --name "Next App"
 
 
