@@ -6,7 +6,7 @@ PM2 was used as Node.js process manager
 1) $ cd next-js 
 2) $ sudo npm i
 3) $ sudo npm run build
-4) $ sudo pm2 start "sudo npm start" --name "Next App"
+4) $ sudo pm2 start "sudo npm start" --name "NextApp"
 
 
 ## Getting Started Local
