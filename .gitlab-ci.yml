@@ -53,8 +53,7 @@ deploy-job:      # This job runs in the deploy stage.
     - chmod 700 ~/.ssh
     - ssh-keyscan cis4250w24-09.socs.uoguelph.ca >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "ls;cd team_9;git pull;"
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "ls;cd team_9;git branch;"
     - echo "Application simulation successfully deployed to '$SSH_USER'."
