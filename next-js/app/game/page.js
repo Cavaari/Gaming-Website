@@ -27,8 +27,6 @@ export default async function Game(){
     return (
         <div className="p-5 new-section bg-second d-flex flex-column align-items-center justify-content-end">
             <CustomSocket/>
-            
-            
         </div>
     )
 }

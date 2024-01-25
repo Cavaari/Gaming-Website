@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server"
+import { createServer } from "http";
 import { Server } from "socket.io";
+
 
 
 export default function SocketHandler (req, res)  {
@@ -7,28 +8,33 @@ export default function SocketHandler (req, res)  {
       console.log('Socket is already running')
     } else {
       console.log('Socket is initializing')
-      const io = new Server(res.socket.server)
 
-      io.on("connection", (socket) => {
-        console.log("Client Connected!");
-
-        socket.on('message', (message) => {
-            io.emit('message', message);
-        });
-
-        io.engine.on("connection_error", (err) => {
-          console.log(err.req);      // the request object
-          console.log(err.code);     // the error code, for example 1
-          console.log(err.message);  // the error message, for example "Session ID unknown"
-          console.log(err.context);  // some additional error context
-        });
-
-        // Clean up the socket on disconnect
-        socket.on('disconnect', () => {
-            console.log(`Socket ${socket.id} disconnected.`);
-        });
+      const httpServer = createServer();
+      const io = new Server(httpServer, {
+        cors:{
+          origin: "*"
+        }
       });
       
+      io.on("connection", (socket) => {
+        console.log("Client is Here: " + socket.id);
+
+        socket.on("message", (message) => {
+          socket.emit("new_msg", message)
+        });
+
+        socket.on("disconnect", () => {
+          console.log("Client is Out: " + socket.id);
+        });
+      });
+
+      
+
+      httpServer.listen(3001, () =>{
+        console.log("Socket Server Started!");
+      });
+
+
       res.socket.server.io = io
     }
     res.end()
