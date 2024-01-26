@@ -3,7 +3,7 @@
 
     /pages/_app.js  <- layout wrapper and will be rendered at everypage
 
-    [Source](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts)
+[Source](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts)
 
 ## Front-end
     Everything inside of /pages folder will be rendered on the website 
