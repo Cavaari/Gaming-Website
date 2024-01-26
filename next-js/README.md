@@ -1,7 +1,7 @@
 # Routing
     Reusable components are located at /components folder
 
-    /pages/_app.js  <- layout wrapper and will be rendered at everypage
+    /pages/_app.js  <- layout wrapper and will be rendered at every page
 
 [Source](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts)
 
@@ -12,7 +12,7 @@
     /pages/about/me.js  -> www.site.com/about/me
 
 ## Back-end
-    Everything inside of /pages/api folder will be rendered on the website 
+    Everything inside of /pages/api folder will be run on the server 
 
     /pages/api/server.js  -> www.site.com/api/server
 
