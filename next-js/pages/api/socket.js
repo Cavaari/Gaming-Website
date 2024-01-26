@@ -19,8 +19,10 @@ export default function SocketHandler (req, res)  {
       io.on("connection", (socket) => {
         console.log("Client is Here: " + socket.id);
 
+        socket.join("test room");
+
         socket.on("message", (message) => {
-          socket.emit("new_msg", message)
+          io.to("test room").emit("new_msg", message);
         });
 
         socket.on("disconnect", () => {
