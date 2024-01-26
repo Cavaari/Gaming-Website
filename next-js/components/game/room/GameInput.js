@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
-export default function GameInput({socket}){
+import { useCallback, useEffect, useState } from "react";
+export default function GameInput({socket, room, isJoined}){
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
     
-    const handleSend = ()=>{
-        socket.emit("message", message)
-        setMessage("")
-    }
-
+    // send message to the room
+    const handleSend = useCallback(()=>{
+        if (isJoined){
+            socket.emit("message", {text: message, room: room})
+            setMessage("")
+        }
+    },[isJoined, message])
     
+
+    // recive messages from the room
     useEffect(()=>{
         if(socket){
             socket.on('new_msg', (message) => {

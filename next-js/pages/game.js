@@ -1,4 +1,4 @@
-import GameInput from "@/components/game/GameInput";
+import Room from "@/components/game/room/Room";
 import CustomSocket from "@/components/socket/CustomSocket";
 import { useEffect, useState } from "react";
 
@@ -17,7 +17,7 @@ export default function Game(){
     // declare a socket connection state for other components on the page can use it
     const [socket, setSocket] = useState(null)
 
-    
+
     return (
         <div className="p-5 new-section bg-second d-flex flex-column align-items-center justify-content-end">
             {/* declare a socket connection state for other components on the page can use it */}
@@ -25,7 +25,7 @@ export default function Game(){
 
 
             {/* Test Component which uses socket connection state*/}
-            <GameInput socket={socket}/>
+            <Room socket={socket}/>
         </div>
     )
 }

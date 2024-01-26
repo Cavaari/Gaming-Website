@@ -22,10 +22,14 @@ export default function SocketHandler (req, res)  {
       io.on("connection", (socket) => {
         console.log("Client is Here: " + socket.id);
 
-        socket.join("test room");
-
         socket.on("message", (message) => {
-          io.to("test room").emit("new_msg", message);
+          console.log(message);
+          io.to(message.room).emit("new_msg", message.text);
+        });
+
+        socket.on("join", (room) => {
+          socket.join(room);
+          console.log(socket.id + " Joined the Room: " + room);
         });
 
         socket.on("disconnect", () => {
