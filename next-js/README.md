@@ -1,3 +1,22 @@
+# Routing
+    Reusable components are located at /components folder
+
+    /pages/_app.js  <- layout wrapper and will be rendered at everypage
+
+    [Source](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts)
+
+## Front-end
+    Everything inside of /pages folder will be rendered on the website 
+
+    /pages/game.js  -> www.site.com/game
+    /pages/about/me.js  -> www.site.com/about/me
+
+## Back-end
+    Everything inside of /pages/api folder will be rendered on the website 
+
+    /pages/api/server.js  -> www.site.com/api/server
+
+
 ## Production
 
 PM2 was used as Node.js process manager
