@@ -46,7 +46,7 @@ deploy-job:      # This job runs in the deploy stage.
   environment: production
   image: debian:12.4
   before_script:
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y rsync )'
     - eval $(ssh-agent -s)
     - chmod 400 "$SSH_PRIVATE_KEY"
     - ssh-add "$SSH_PRIVATE_KEY"
@@ -56,5 +56,6 @@ deploy-job:      # This job runs in the deploy stage.
     - chmod 644 ~/.ssh/known_hosts
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - ssh socs@cis4250w24-09.socs.uoguelph.ca "ls;cd team_9;git branch;"
+    - rsync -avz --delete --exclude='.git/' --exclude='.gitlab-ci.yml' --no-t --no-perms ./ socs@cis4250w24-09.socs.uoguelph.ca:/team_9/app/
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "ls;cd team_9;git branch;"
     - echo "Application simulation successfully deployed to '$SSH_USER'."
