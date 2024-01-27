@@ -58,10 +58,10 @@ deploy-job:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - git config --global user.email "kkehelba@uoguelph.ca"
-    - git config --global user.name "Kalindu Fernando"
+    - git config --global user.name "kfernando"
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "cd team_9;git config user.name;sudo git pull -i $SSH_PRIVATE_KEY origin ;"
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "cd team_9; git config user.name 'kkehelba'; sudo git pull origin"
     - echo "Application simulation successfully deployed to socs."
   # only:
   #   - main
