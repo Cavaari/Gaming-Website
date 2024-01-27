@@ -55,7 +55,7 @@ deploy-job:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - /usr/bin/sudo chmod -R 755 pwd
+    - $(which sudo) chmod -R 755 /builds/cis4250_w24/team_9/.git/
 
   script:
     - echo "Deploying application to Team9 socs VM..."
