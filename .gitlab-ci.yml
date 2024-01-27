@@ -57,12 +57,13 @@ deploy-job:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    # - git config --global user.email=kkehelba@uoguelph.ca
-    - git config --global user.name "$ACCESS_TOKEN"
-    # - git config --global remote.origin.url=https://gitlab.socs.uoguelph.ca/cis4250_w24/team_9.git
+
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "cd team_9;sudo git pull origin;"
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "cd team_9;git config user.name 'GitLab CI';
+                                                                                              git config credential.helper 'store --file ~/.git-credentials';
+                                                                                              echo 'https://oauth2:$CI_JOB_TOKEN@gitlab.socs.uoguelph.ca' > ~/.git-credentials;
+                                                                                              sudo git pull origin;"
     - echo "Application simulation successfully deployed to socs."
   # only:
   #   - main
