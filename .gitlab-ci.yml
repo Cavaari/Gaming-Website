@@ -46,11 +46,10 @@ deploy-job:
   environment: production
   image: debian:bookworm-20240110
   before_script:
-    - apt-get update -qy
-    - apt-add-repository ppa:git-core/ppa
+    - 'command -v ssh-agent >/dev/null || (apt-get update -y && apt-get install openssh-client -y)'
+    - apt-get update
     - apt-get install -y git
     - apt-get install -y openssh-client
-    - 'command -v ssh-agent >/dev/null || (apt-get update -y && apt-get install openssh-client -y)'
     - eval $(ssh-agent -s)
     - chmod 400 "$SSH_PRIVATE_KEY"
     - ssh-add "$SSH_PRIVATE_KEY"
@@ -62,7 +61,7 @@ deploy-job:
     - git config --global user.name "Kalindu Fernando"
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "ls;cd team_9;sudo git checkout sprint-2;sudo git pull origin;"
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "cd team_9;git config user.name;sudo git pull origin;"
     - echo "Application simulation successfully deployed to socs."
   # only:
   #   - main
