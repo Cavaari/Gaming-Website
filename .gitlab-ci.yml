@@ -1,7 +1,11 @@
-image: debian:bookworm-20240110
+image: php:latest
 
 stages:
   - deploy
+
+before_script:
+  - apt-get update -qy
+  - apt-get install -y openssh-client
 
 deploy-job:
   stage: deploy
