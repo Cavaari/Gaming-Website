@@ -1,17 +1,55 @@
 image: php:latest
 
-stages:
+# cache:
+#   paths:
+#     - vendor/
+
+# before_script:
+#   - apt-get update
+#   - apt-get update -yqq
+#   # Install & enable Xdebug for code coverage reports
+#   - pecl install xdebug
+#   - docker-php-ext-enable xdebug
+#   - apt-get install -yqq git libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev libonig-dev libzip-dev
+#   # Install PHP extensions
+#   - docker-php-ext-install mbstring pdo_pgsql curl intl gd xml zip bz2 opcache
+
+stages:          # List of stages for jobs, and their order of execution
+  # - build
+  # - test
   - deploy
 
-before_script:
-  - apt-get update -qy
-  - apt-get install -y openssh-client
+# build-job:       # This job runs in the build stage, which runs first.
+#   stage: build
+#   script:
+#     - echo "Triggered build from pipeline..."
+#     - php app/index.php
+#     - echo "Compile complete."
+
+# unit-test-job:   # This job runs in the test stage.
+#   stage: test    # It only starts when the job in the build stage completes successfully.
+#   script:
+#     - echo "Triggered unit test stage from pipeline... This simulation will take about 1 second."
+#     - sleep 1
+#     # - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+#     - echo "Unit test complete."
+
+# lint-test-job:   # This job also runs in the test stage.
+#   stage: test    # It can run at the same time as unit-test-job (in parallel).
+#   script:
+#     - echo "Triggered linting test from pipeline... This simulation will take about 1 second."
+#     - sleep 1
+#     - echo "Linting test simulation completed. No lint issues found."
 
 deploy-job:
   stage: deploy
   environment: production
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y openssh-client
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - scp -i $SSH_KEY -o StrictHostKeyChecking=no -r ./team_9/app $SSH_USER:~/
+    - scp -i $SSH_KEY -r ./team_9/app $SSH_USER:~/
     - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $SSH_USER "sudo cp -r ~/app "
     - echo "Application simulation successfully deployed to '$SSH_USER'."
