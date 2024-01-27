@@ -1,4 +1,4 @@
-image: php:latest
+image: debian:bookworm-20240110
 
 stages:
   - deploy
