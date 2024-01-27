@@ -12,6 +12,6 @@ deploy-job:
   environment: production
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - scp -i $SSH_KEY -o StrictHostKeyChecking=no -r ./home/sysadmin/team_9/app $SSH_USER:~/
+    - scp -i $SSH_KEY -o StrictHostKeyChecking=no -r ./team_9/app $SSH_USER:~/
     - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $SSH_USER "sudo cp -r ~/app "
     - echo "Application simulation successfully deployed to '$SSH_USER'."
