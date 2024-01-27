@@ -50,6 +50,6 @@ deploy-job:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - scp -i $SSH_PRIVATE_KEY -r ./team_9/app $SSH_USER:~/
-    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no $SSH_USER "sudo cp -r ~/app "
+    - scp -i "$SSH_PRIVATE_KEY" -r ./team_9/app "$SSH_USER":~/
+    - ssh -i "$SSH_PRIVATE_KEY" -o StrictHostKeyChecking=no "$SSH_USER" "sudo cp -r ~/app "
     - echo "Application simulation successfully deployed to '$SSH_USER'."
