@@ -44,6 +44,7 @@ stages:          # List of stages for jobs, and their order of execution
 deploy-job:
   stage: deploy
   environment: production
+  image: debian:bookworm-20240110
   before_script:
     - apt-get update -qy
     - apt-get install -y openssh-client
@@ -55,12 +56,11 @@ deploy-job:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - $(which sudo) chmod -R 755 /builds/cis4250_w24/team_9/.git/
 
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - $(which sudo) scp -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no -r ./var/www/html/team_9 socs@cis4250w24-09.socs.uoguelph.ca:~/
-    - $(which sudo) ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "sudo cp -r /home/sysadmin/var/www/html/team_9"
+    - scp -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no -r ./www/html socs@cis4250w24-09.socs.uoguelph.ca:~/
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "sudo cp -r /home/sysadmin/var/www/html/team_9"
     - echo "Application simulation successfully deployed to socs."
   # only:
   #   - main
