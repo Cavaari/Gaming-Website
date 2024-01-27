@@ -48,6 +48,14 @@ deploy-job:
     - apt-get update -qy
     - apt-get install -y openssh-client
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - chmod 400 "$SSH_PRIVATE_KEY"
+    - ssh-add "$SSH_PRIVATE_KEY"
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+
   script:
     - echo "Deploying application to Team9 socs VM..."
     - scp -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no -r ./var/www/html/team_9 socs@cis4250w24-09.socs.uoguelph.ca:~/
