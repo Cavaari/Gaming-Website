@@ -60,7 +60,7 @@ deploy-job:
 
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - sudo rsync -avz --delete --exclude='.git/' --exclude='.gitlab-ci.yml' --no-t --no-perms ./ socs@cis4250w24-09.socs.uoguelph.ca:/var/www/html/team_9
+    - rsync -avz --delete --exclude='.git/' --exclude='.gitlab-ci.yml' --no-t --no-perms ./ socs@cis4250w24-09.socs.uoguelph.ca:/var/www/html/team_9
     # - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "cd team_9;sudo git config user.name 'GitLab CI';
     #                                                                                           sudo git config credential.helper 'store --file ~/.git-credentials';
     #                                                                                           echo 'https://oauth2:$CI_JOB_TOKEN@gitlab.socs.uoguelph.ca' > ~/.git-credentials;
