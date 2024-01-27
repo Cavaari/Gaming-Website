@@ -61,7 +61,7 @@ deploy-job:
     - git config --global user.name "Kalindu Fernando"
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "cd team_9;git config user.name;sudo git pull origin;"
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "cd team_9;git config user.name;sudo git pull -i $SSH_PRIVATE_KEY origin ;"
     - echo "Application simulation successfully deployed to socs."
   # only:
   #   - main
