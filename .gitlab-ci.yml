@@ -20,7 +20,7 @@ stages:          # List of stages for jobs, and their order of execution
   - deploy
 
 build-job:       # This job runs in the build stage, which runs first.
-  stage: 
+  stage: build
   image: npm:latest
   script:
     - echo "Triggered build from pipeline..."
