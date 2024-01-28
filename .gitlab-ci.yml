@@ -4,9 +4,9 @@ image: php:latest
 #   paths:
 #     - vendor/
 
-# before_script:
+before_script:
+  - apt-get update -yqq
 #   - apt-get update
-#   - apt-get update -yqq
 #   # Install & enable Xdebug for code coverage reports
 #   - pecl install xdebug
 #   - docker-php-ext-enable xdebug
@@ -15,31 +15,32 @@ image: php:latest
 #   - docker-php-ext-install mbstring pdo_pgsql curl intl gd xml zip bz2 opcache
 
 stages:          # List of stages for jobs, and their order of execution
-  # - build
-  # - test
-  #- deploy
+  - build
+  - test
+  - deploy
 
-# build-job:       # This job runs in the build stage, which runs first.
-#   stage: build
-#   script:
-#     - echo "Triggered build from pipeline..."
-#     - php app/index.php
-#     - echo "Compile complete."
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - echo "Triggered build from pipeline..."
+    - cd next-js/
+    - npm i
+    - npm run build
+    - echo "App build complete."
 
-# unit-test-job:   # This job runs in the test stage.
-#   stage: test    # It only starts when the job in the build stage completes successfully.
-#   script:
-#     - echo "Triggered unit test stage from pipeline... This simulation will take about 1 second."
-#     - sleep 1
-#     # - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
-#     - echo "Unit test complete."
-
-# lint-test-job:   # This job also runs in the test stage.
-#   stage: test    # It can run at the same time as unit-test-job (in parallel).
-#   script:
-#     - echo "Triggered linting test from pipeline... This simulation will take about 1 second."
-#     - sleep 1
-#     - echo "Linting test simulation completed. No lint issues found."
+app-test-job:   # This job runs in the test stage.
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  before_script:
+    - apt-get update
+    - npm install pm2@latest -g
+  script:
+    - cd next-js/
+    - echo "Triggered unit test stage from pipeline..."
+    - pm2 start pages/index.js
+    - pm2 list
+    - echo "Next.js app tests complete.... Cleaning up and stopping tests"
+    - pm2 stop pages/index.js
+    - echo "Cleanup completed."
 
 deploy-job:
   stage: deploy
@@ -57,14 +58,9 @@ deploy-job:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-
   script:
     - echo "Deploying application to Team9 socs VM..."
     - rsync -avz --delete --exclude='.git/' --exclude='.gitlab-ci.yml' --no-t --no-perms ./ socs@cis4250w24-09.socs.uoguelph.ca:/var/www/html/team_9
-    # - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no socs@cis4250w24-09.socs.uoguelph.ca "cd team_9;sudo git config user.name 'GitLab CI';
-    #                                                                                           sudo git config credential.helper 'store --file ~/.git-credentials';
-    #                                                                                           echo 'https://oauth2:$CI_JOB_TOKEN@gitlab.socs.uoguelph.ca' > ~/.git-credentials;
-    #                                                                                           sudo git pull origin;"
     - echo "Application simulation successfully deployed to socs."
-  # only:
-  #   - main
+  only:
+    - main
