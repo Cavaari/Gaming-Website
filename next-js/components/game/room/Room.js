@@ -28,8 +28,8 @@ export default function Room({socket}){
                 <>
                     <h2 className="mb-auto text-white">Select Room</h2>
                     <div className="d-flex">
-                        <input value={room} onChange={()=>{setRoom(event.target.value)}} className="form-control me-2" type="text" />
-                        <button onClick={handleSelect} className="btn btn-success">Select</button>
+                        <input placeholder="Type Room ID to Enter" value={room} onChange={()=>{setRoom(event.target.value)}} className="form-control me-2" type="text" />
+                        <button onClick={handleSelect} className="btn btn-success">Join Room</button>
                     </div>
                 </>
             }

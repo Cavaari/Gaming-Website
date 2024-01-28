@@ -31,7 +31,7 @@ export default function GameInput({socket, room, isJoined}){
                 }
             </div>
             <div className="d-flex">
-                <input value={message} onChange={()=>{setMessage(event.target.value)}} className="form-control me-2" type="text" />
+                <input placeholder="Enter Your Message" value={message} onChange={()=>{setMessage(event.target.value)}} className="form-control me-2" type="text" />
                 <button onClick={handleSend} className="btn btn-success">Send</button>
             </div>
         </>
