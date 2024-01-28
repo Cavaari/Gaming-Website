@@ -27,6 +27,9 @@ export default function Navbar() {
                     <li><a className={"dropdown-item new-nav-link " + styles.new_nav_link} href="aboutme/cavaari">Cavaari</a></li>
                 </ul>
 
+                <a className={styles.new_nav_link + " me-5 d-flex align-items-center"} href="/chat">
+                   Chat Rooms
+                </a>
                 <a className={styles.new_nav_link + " me-5 d-flex align-items-center"} href="/game">
                    Game
                 </a>

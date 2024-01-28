@@ -1,31 +1,61 @@
-import Room from "@/components/game/room/Room";
-import CustomSocket from "@/components/socket/CustomSocket";
-import { useEffect, useState } from "react";
+import { useEffect } from "react"
+
+export default function Game() {
+    useEffect(() => {
+        const initPhaser = async () => {
+            const Phaser = await import('phaser')
+
+            class Example extends Phaser.Scene {
+                preload() {
+                    this.load.setBaseURL('https://labs.phaser.io');
+
+                    this.load.image('sky', 'assets/skies/space3.png');
+                    this.load.image('logo', 'assets/sprites/phaser3-logo.png');
+                    this.load.image('red', 'assets/particles/red.png');
+                }
+
+                create() {
+                    this.add.image(400, 300, 'sky');
+
+                    const particles = this.add.particles(0, 0, 'red', {
+                        speed: 100,
+                        scale: { start: 1, end: 0 },
+                        blendMode: 'ADD'
+                    });
+
+                    const logo = this.physics.add.image(400, 100, 'logo');
+
+                    logo.setVelocity(100, 200);
+                    logo.setBounce(1, 1);
+                    logo.setCollideWorldBounds(true);
+
+                    particles.startFollow(logo);
+                }
+            }
+
+            const config = {
+                type: Phaser.AUTO,
+                width: 800,
+                height: 600,
+                scene: Example,
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                        gravity: { y: 200 }
+                    }
+                }
+            };
+
+            const game = new Phaser.Game(config);
+        }
+
+        initPhaser()
+    }, [])
 
 
-const pingRoom = async () =>{
-    await fetch("http://localhost:3000/api/socket")
-}
-
-
-export default function Game(){
-    // socket must be pinged once before server start up to be in listening state
-    useEffect(()=>{
-        pingRoom()
-    },[])
-
-    // declare a socket connection state for other components on the page can use it
-    const [socket, setSocket] = useState(null)
 
 
     return (
-        <div className="p-5 new-section bg-second d-flex flex-column align-items-center justify-content-end">
-            {/* declare a socket connection state for other components on the page can use it */}
-            <CustomSocket setSocket={setSocket}/>
-
-
-            {/* Test Component which uses socket connection state*/}
-            <Room socket={socket}/>
-        </div>
+        <div></div>
     )
 }
