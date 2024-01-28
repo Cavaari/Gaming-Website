@@ -5,8 +5,8 @@ image: php:latest
 #     - vendor/
 
 before_script:
-  - apt-get update -yqq
-#   - apt-get update
+  - apt-get update
+  # - apt-get update -yqq
 #   # Install & enable Xdebug for code coverage reports
 #   - pecl install xdebug
 #   - docker-php-ext-enable xdebug
@@ -20,7 +20,8 @@ stages:          # List of stages for jobs, and their order of execution
   - deploy
 
 build-job:       # This job runs in the build stage, which runs first.
-  stage: build
+  stage: 
+  image: npm:latest
   script:
     - echo "Triggered build from pipeline..."
     - cd next-js/
