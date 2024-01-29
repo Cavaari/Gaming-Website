@@ -39,3 +39,10 @@ Inital development contained simple php, html and css scripts to help design our
 
 As well, we did face small hurdles like required access to maintainer role to create secret env variables for ci/cd pipeline as the team as well we faced issues with ssh into socs vm for team 9 production site.
 
+
+In sprint 2 : the CI/CD is finished.
+Game logic is made (might me changed later) :  https://docs.google.com/document/d/1nidLjRdUKJwX-5qKk9KBt6gMpJV836TYZp3JL0WIDVU/edit?usp=sharing
+Figma Design for Game is here : https://www.figma.com/file/rBCjmr5ukY6rfa9GAz79cS/Game-Design?type=design&mode=design&t=38jVKrwNTlHlOLiA-1
+Phaser Wiki is here : https://gitlab.socs.uoguelph.ca/cis4250_w24/team_9/-/wikis/Phaser-Wiki
+
+
