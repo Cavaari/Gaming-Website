@@ -40,3 +40,23 @@ Figma Design for Game is here : https://www.figma.com/file/rBCjmr5ukY6rfa9GAz79c
 Phaser Wiki is here : https://gitlab.socs.uoguelph.ca/cis4250_w24/team_9/-/wikis/Phaser-Wiki
 
 
+## Socket resources:
+
+https://www.youtube.com/watch?v=okHRJXGX_wQ
+
+https://www.youtube.com/watch?v=xRJ787usR5s
+
+https://socket.io/docs/v4/server-api/
+
+https://socket.io/how-to/use-with-react
+
+https://socket.io/docs/v3/rooms/
+
+
+
+
+
+
+
+
+
