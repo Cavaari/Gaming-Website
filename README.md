@@ -10,11 +10,13 @@
 ## Nginx website config folder
 	$ cd /etc/nginx/sites-available
 
-## How to create your about me page:
-	1) Clone our repo into your local computer
-	2) $ cd app/aboutme 
-	3) Create folder with your username
-	4) Create and edit index.php
+## How to run locally
+
+1) Clone gitlab repo
+2) cd into team_9 directory
+3) Pull recent updates and cd into next-js directory
+4) run 'npm i' then 'npm run dev'
+5) Click link to localhost port to see changes
 
 ## Team Members:
 	- Kalindu Kehel Baddarage (Team Lead)
