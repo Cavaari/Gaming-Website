@@ -14,7 +14,7 @@ export default function Navbar() {
                     </button>
                     
                      {/* Yellow shape from Figma desing */}
-                    <div className={styles.nav_rect + " bg-first d-none d-md-block"}>
+                    <div className={styles.nav_rect + " bg-first d-none d-lg-block"}>
                         <div className={styles.nav_tri}></div>
                     </div>
 
