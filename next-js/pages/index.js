@@ -1,16 +1,14 @@
-export default function Home() {
-  return (
-    <>
-     <div className="new-section bg-third d-flex align-items-center justify-content-center text-first">
-            <h1>Welcome to team 9’s web app</h1>
-      </div>
+// pages/index.js
+import dynamic from 'next/dynamic';
 
-      <div className="new-section bg-first">
+const DynamicGame = dynamic(() => import('../components/Game'), { ssr: false });
 
-      </div>
-      <div className="new-section bg-second">
+const Home = () => {
+    return (
+        <div>
+            <DynamicGame />
+        </div>
+    );
+};
 
-      </div>
-    </>
-  );
-}
+export default Home;

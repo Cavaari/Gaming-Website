@@ -1,27 +1,19 @@
 class Example extends Phaser.Scene {
     preload() {
-        this.load.setBaseURL('https://labs.phaser.io');
-
-        this.load.image('sky', 'assets/skies/space3.png');
-        this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-        this.load.image('red', 'assets/particles/red.png');
+        // Load the local image from the public directory
+        this.load.image('bg', 'textures/back.png');
     }
 
     create() {
-        this.add.image(400, 300, 'sky');
+        // Use the entire game canvas size to place the background image
+        const bgImage = this.add.image(0, 0, 'bg');
+        // const bgImage = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'bg');
 
-        const particles = this.add.particles(0, 0, 'red', {
-            speed: 100,
-            scale: { start: 1, end: 0 },
-            blendMode: 'ADD'
-        });
+        // Set the background image to cover the entire game canvas
+        bgImage.setDisplaySize(this.cameras.main.width, this.cameras.main.height);
 
-        const logo = this.physics.add.image(400, 100, 'logo');
-
-        logo.setVelocity(100, 200);
-        logo.setBounce(1, 1);
-        logo.setCollideWorldBounds(true);
-
-        particles.startFollow(logo);
+        // Optionally, add other game logic here
     }
 }
+
+export default Example;
