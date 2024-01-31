@@ -12,7 +12,7 @@ export default function About() {
                 <link rel="stylesheet" type="text/css" href="/about/cavaari.css"/>
             </Head>
             <main>
-                <div id="about" class="form-section">
+                <div id="about" className="form-section">
                     <h2>About Me</h2>
                     <p>Hi, I'm Cavaari Taylor. I love web development and programming.
                         I hail from the island of Saint Lucia in the Caribbean. A lovely island

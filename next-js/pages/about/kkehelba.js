@@ -7,8 +7,8 @@ export default function About() {
                 <title>Kalindu Fernando</title>
                 <link rel="stylesheet" type="text/css" href="/about/kalindu.css"/>
             </Head>
-            <div class="headbar" id="headbar">
-                <div class="portrait">
+            <div className="headbar" id="headbar">
+                <div className="portrait">
                     <img
                         src="/about/background.jpeg"
                         width="30%"
@@ -16,12 +16,12 @@ export default function About() {
                     <br/>
                 </div>
 
-                <div class="about-me" id="about-me">
+                <div className="about-me" id="about-me">
                     <h1>Kalindu Fernando</h1>
                 </div>
             </div>
-            <div class="bio" id="bio">
-                <h2 style={{fontSize: "30px"}} class="heading">About</h2>
+            <div className="bio" id="bio">
+                <h2 style={{fontSize: "30px"}} className="heading">About</h2>
                 <p>
                     Hi I'm Kalindu! I'm a fifth year <strong>software engineering</strong> student at
                     the <strong>University of Guelph</strong>. From a young age I've had a

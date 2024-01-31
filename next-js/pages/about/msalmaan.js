@@ -27,7 +27,7 @@ export default function About() {
                 <title>Muhammad Salmaan</title>
                 <link rel="stylesheet" type="text/css" href="/about/msalmaan.css" />
             </Head>
-            <section id="home" class="home">
+            <section id="home" className="home">
                 <h1><span id="typing-text"></span></h1>
                 <nav>
                     <ul>
@@ -36,7 +36,7 @@ export default function About() {
                     </ul>
                 </nav>
                 <p>Software Engineering student @ UOG</p>
-                <div class="about-text">
+                <div className="about-text">
                     <h2>About Me</h2>
                     <p><br /></p>
                     <p id="about-paragraph">
