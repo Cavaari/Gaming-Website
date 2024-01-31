@@ -1,11 +1,6 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-
-
-
-
-
 // In socket.js or CustomSocket.js
 function generateRoomCode() {
   let result = '';
@@ -95,47 +90,41 @@ function generateLevel(levelName) {
   return level;
 }
 
+const games = [];
+function getGameById(id) {
+  return games.filter((game) => {
+    if (game.id == id) {
+      return game
+    }
+  })[0]
+}
 
-function generateGame(roomId, lives, level) {
+function generateGame(id, lives, level) {
   var game = {
-    roomId: roomId,
+    id: id,
     player1: {
       lives: lives,
-      socketID: null
+      socketId: null
     },
     player2: {
       lives: lives,
-      socketID: null
+      socketId: null
     },
     level: generateLevel(level)
   }
 
-  return game
+  games.push(game)
 }
 
-function joinPlayer(num, socket, game) {
+function joinPlayer(num, socket, gameId) {
+  const game = getGameById(gameId)
   if (num == 1) {
-    game.player1.socketID = socket.id
+    game.player1.socketId = socket.id
   } else if (num == 2) {
-    game.player2.socketID = socket.id
+    game.player2.socketId = socket.id
   }
 }
 
-const lobbies = [];
-function newLobby(id, game) {
-  lobbies.push({
-    id: id,
-    game: game
-  })
-}
-
-function getLobbyById(id) {
-  return lobbies.filter((lobby) => {
-    if (lobby.id == id) {
-      return lobby
-    }
-  })
-}
 
 // creating route at /api/socket
 export default function SocketHandler(req, res) {
@@ -159,39 +148,52 @@ export default function SocketHandler(req, res) {
 
       // Creates Lobby and Joins one player 
       socket.on("create", () => {
-        const roomCode = generateRoomCode();
-        var newGame = generateGame(roomCode, 5, "hackers")
-        joinPlayer(1, socket, newGame)
+        const id = generateRoomCode();
+        generateGame(id, 5, "hackers")
+        joinPlayer(1, socket, id)
 
-        // save lobby into the server state
-        newLobby(roomCode, newGame)
         // Create a new room and join the socket to this room
-        socket.join(roomCode);
+        socket.join(id);
         // Inform the client of the new room code
-        socket.emit('room created', roomCode);
-        console.log('Room Created With Code:', roomCode);
+        socket.emit('room created', id);
+        console.log('Room Created With ID:', id);
       });
 
       // Joins second player to the ready Lobby
-      socket.on("join", (roomId) => {
-        const lobby = getLobbyById(roomId)
-        joinPlayer(2, socket, lobby.game)
+      socket.on("join", (gameId) => {
+        const game = getGameById(gameId)
+        console.log(game);
+        if (game) {
+          joinPlayer(2, socket, gameId)
 
-        socket.join(roomId);
-        // Inform the client of the new room code
-        socket.emit('room joined', roomId);
+          socket.join(gameId);
+          // Inform the client of the new room code
+          socket.emit('room joined', gameId);
+        }else{
+          socket.emit('error', "no such game");
+        }
       });
 
-
       socket.on("test", () => {
-        socket.emit('test', JSON.stringify({lobbies}));
+        socket.emit('test', JSON.stringify({ games }));
       });
 
       socket.on("winner", (room) => {
 
       });
 
+      /*socket.on('takeTurn', (roomId, playerId, action) => {
+          if (processTurn(roomId, playerId, action)) {
+              // Broadcast the updated game state to both players
+              io.to(roomId).emit('updateState', games[roomId]);
 
+              // Optionally, notify players whose turn it is
+              const nextPlayerId = games[roomId].players[games[roomId].currentPlayerIndex];
+              io.to(roomId).emit('yourTurn', nextPlayerId);
+          } else {
+              socket.emit('error', 'Not your turn');
+          }
+        }); */
 
       // socket.on("makeMove", (room) => {
 
