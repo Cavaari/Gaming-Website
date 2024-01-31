@@ -1,5 +1,4 @@
 import Head from "next/head"
-import Image from "next/image"
 import { useEffect } from "react"
 
 export default function About() {
@@ -9,12 +8,15 @@ export default function About() {
     return (
         <>
             <Head>
+                <title>Cavaari Taylor</title>
+                {/* eslint-disable */}
                 <link rel="stylesheet" type="text/css" href="/about/cavaari.css"/>
+                {/* eslint-enable */}
             </Head>
             <main>
                 <div id="about" className="form-section">
                     <h2>About Me</h2>
-                    <p>Hi, I'm Cavaari Taylor. I love web development and programming.
+                    <p>Hi, I&apos;m Cavaari Taylor. I love web development and programming.
                         I hail from the island of Saint Lucia in the Caribbean. A lovely island
                         in the Caribbean where the sun is always shining and the people are always smiling.
                         I am currently in my final semester of my Software Engineering degree at the University of Guelph.

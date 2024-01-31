@@ -9,7 +9,7 @@ export default function GameInput({socket, room, isJoined}){
             socket.emit("message", {text: message, room: room})
             setMessage("")
         }
-    },[isJoined, message])
+    },[isJoined, message, room, socket])
     
 
     // recive messages from the room

@@ -16,7 +16,7 @@ export default function Card({ name, link = "", imgSrc, description }) {
                 <div className="card-body">
                     <h5 className="card-title">{name}</h5>
                     <p className="card-text">{description}</p>
-                    <Link href={link} className="btn btn-primary">{name}'s Page</Link>
+                    <Link href={link} className="btn btn-primary">{name}&apos;s Page</Link>
                 </div>
             </div>
         </div>)

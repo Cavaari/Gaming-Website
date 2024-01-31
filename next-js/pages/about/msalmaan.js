@@ -25,7 +25,9 @@ export default function About() {
         <>
             <Head>
                 <title>Muhammad Salmaan</title>
+                {/* eslint-disable */}
                 <link rel="stylesheet" type="text/css" href="/about/msalmaan.css" />
+                {/* eslint-enable */}
             </Head>
             <section id="home" className="home">
                 <h1><span id="typing-text"></span></h1>
@@ -40,12 +42,12 @@ export default function About() {
                     <h2>About Me</h2>
                     <p><br /></p>
                     <p id="about-paragraph">
-                        I'm Muhammad Salmaan, a passionate software developer in my fifth year
+                        I&apos;m Muhammad Salmaan, a passionate software developer in my fifth year
                         of software engineering.I have a very diverse background both in the
                         software and business field. Currently I work at NCR Corporation which
                         helped in fortifying my skills in programming languages, from Java and
-                        JavaScript to React and AngularJS. Whether it's front-end or backend
-                        solutions, I've navigated both with equal enthusiasm. My time at
+                        JavaScript to React and AngularJS. Whether it&apos;s front-end or backend
+                        solutions, I&apos;ve navigated both with equal enthusiasm. My time at
                         Reeldata Artificial Intelligence was very enjoyable and it helped me
                         in my dedication to pushing technological boundaries. Apart from
                         academics, I like to read and watch anime. Right now, I am looking

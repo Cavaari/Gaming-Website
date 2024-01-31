@@ -7,18 +7,19 @@ export default function About() {
         <>
             <Head>
                 <title>About Tehreem Nazar</title>
+                {/* eslint-disable */}
                 <link rel="stylesheet" type="text/css" href="/about/tnazar.css" />
-                <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet"></link>
+                {/* eslint-enable */}
             </Head>
             <div className="container mt-5">
                 <div className="row">
                     <div className="col-lg-4">
-                        <img src="/about/Zeus.jpeg" alt="My Cat Zeus" className="img-fluid mb-3"/>
+                        <Image width={400} height="400" src="/about/Zeus.jpeg" alt="My Cat Zeus" className="img-fluid mb-3"/>
                     </div>
                     <div className="col-lg-8">
                         <h1>Tehreem Nazar</h1>
                         <h2>About Me</h2>
-                        <p>I am a 5th year student studying Software Engineering at the University of Guelph. I enjoy backend development and currently work at National Defence as a Programmer Analyst. I have a cat that annoys me a lot and loves to sit on my keyboard when I'm programming (he's pictured above). In my spare time, I enjoy reading philosophical books and trying out new cuisines.</p>
+                        <p>I am a 5th year student studying Software Engineering at the University of Guelph. I enjoy backend development and currently work at National Defence as a Programmer Analyst. I have a cat that annoys me a lot and loves to sit on my keyboard when I&apos;m programming (he&apos;s pictured above). In my spare time, I enjoy reading philosophical books and trying out new cuisines.</p>
                     </div>
                 </div>
             </div>

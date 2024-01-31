@@ -25,7 +25,7 @@ export default function CustomSocket({setSocket}){
         return () =>{
             socket.disconnect();
         }
-    },[])
+    },[setSocket])
 
 
     return null
