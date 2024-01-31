@@ -1,4 +1,3 @@
-import Card from "@/components/about/Card";
 import Image from "next/image"
 
 export default function About() {
