@@ -10,7 +10,7 @@ export default function About() {
                 <Card name="Cavaari" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" description="Cavaari's description" link="/about/cavaari" />
                 <Card name="Karina" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" description="Karina's description" link="/about/kgarmend" />
                 <Card name="Kalindu" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" description="Kalindu's description" link="/about/kkehelba" />
-                <Card name="Eric" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" />
+                <Card name="Muhammad" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" description="Muhammad's description" link="/about/msalmaan" />
                 <Card name="Eric" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" />
                 <Card name="Greg" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" />
             </div>
