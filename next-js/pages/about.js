@@ -6,8 +6,8 @@ export default function About() {
             <h1 style={{fontSize: "5rem"}} className="text-first text-center align-self-md-start">About Us</h1>
             <div class="mt-3 mb-3 w-100 row row-cols-1 row-cols-md-3 row-cols-lg-6 g-2 d-flex  justify-content-around">
                 <Card name="Eric" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" description="Eric's description" link="/about/edearing" />
-                <Card name="Egor" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" descirption="Egor's description" link="/about/eivanov"/>
-                <Card name="Eric" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" />
+                <Card name="Egor" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" description="Egor's description" link="/about/eivanov"/>
+                <Card name="Cavaari" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" description="Cavaari's description" link="/about/cavaari" />
                 <Card name="Eric" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" />
                 <Card name="Eric" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" />
                 <Card name="Eric" imgSrc="/runeTextures/Blue/Rectangle/runeBlue_rectangle_001.png" />
