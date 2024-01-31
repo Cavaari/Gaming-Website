@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-export default function Card({ name, imgSrc, description }) {
+export default function Card({ name, link = "", imgSrc, description }) {
 
     return (
         <div class="col">
@@ -11,12 +11,12 @@ export default function Card({ name, imgSrc, description }) {
                     alt="Picture of the author"
                     class="card-img-top"
                     width={150}
-                    height={250}
+                    height={200}
                 />
                 <div class="card-body">
                     <h5 class="card-title">{name}</h5>
                     <p class="card-text">{description}</p>
-                    <Link href="" class="btn btn-primary">Go somewhere</Link>
+                    <Link href={link} class="btn btn-primary">{name}'s Page</Link>
                 </div>
             </div>
         </div>)
