@@ -31,16 +31,8 @@ export default function Navbar() {
                             </li>
                             {/* About Us Dropdown */}
                             <li class="nav-item d-flex align-items-center justify-content-center">
-                                <span className={styles.new_nav_link + " dropdown-toggle"} data-bs-toggle="dropdown" aria-expanded="false">About Us</span>
-                                <ul className="dropdown-menu bg-second">
-                                    <li><Link className={"dropdown-item " + styles.new_nav_link} href="aboutme/edearing">Eric Dearing</Link></li>
-                                    <li><Link className={"dropdown-item " + styles.new_nav_link} href="aboutme/eivanov">Eivanov</Link></li>
-                                    <li><Link className={"dropdown-item " + styles.new_nav_link} href="aboutme/kgarmend">Kgarmend</Link></li>
-                                    <li><Link className={"dropdown-item " + styles.new_nav_link} href="aboutme/kkehelba">Kkehelba</Link></li>
-                                    <li><Link className={"dropdown-item " + styles.new_nav_link} href="aboutme/msalmaan">Muhammad Salmaan</Link></li>
-                                    <li><Link className={"dropdown-item " + styles.new_nav_link} href="aboutme/tnazar">Tehreem</Link></li>
-                                    <li><Link className={"dropdown-item " + styles.new_nav_link} href="aboutme/cavaari">Cavaari</Link></li>
-                                </ul>
+                                <Link className={styles.new_nav_link} href={"/about"} >About Us</Link>
+                                
                             </li>
                             {/* Other Links */}
                             <li class="nav-item d-flex align-items-center justify-content-center">
