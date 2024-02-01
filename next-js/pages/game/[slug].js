@@ -1,7 +1,6 @@
-import useSocket from '@/components/socket/useSocket'
 import { useRouter } from 'next/router'
-import { useEffect, useRef } from 'react'
- 
+import { useContext, useEffect, useRef } from 'react'
+import SocketContext from '@/components/SocketContext';
 export default function Game() {
   const router = useRouter()
   // router.query.slug == gameId
@@ -10,7 +9,7 @@ export default function Game() {
     // phaser game object   
   const gameRef = useRef(null)
   // socket object   
-  const socket = useSocket()
+  const socket = useContext(SocketContext)
 
   useEffect(()=>{
     
@@ -18,6 +17,12 @@ export default function Game() {
         // Fetch game data
         socket.emit("get game", roomCode)
         socket.on('get game', (message) => {
+            console.log(message);
+        });
+
+
+        socket.on('game start', (message) => {
+            console.log("Game is starting the state is: \n");
             console.log(message);
         });
 

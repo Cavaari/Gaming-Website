@@ -1,12 +1,13 @@
-import useSocket from "@/components/socket/useSocket";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 
 import { useRouter } from 'next/router'
+import SocketContext from '@/components/SocketContext';
+
 
 export default function Game() {
-    const socket = useSocket()
+    const socket = useContext(SocketContext)
     const router = useRouter()
 
     useEffect(() => {
@@ -33,7 +34,7 @@ export default function Game() {
 
     const handleCreateGame = useCallback(() => {
         if (socket) {
-            socket.emit("create")
+            socket.emit("create", "noob")
         }
     }, [socket])
 

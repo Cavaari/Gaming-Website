@@ -4,7 +4,13 @@ import { Server } from "socket.io";
 import Game from "@/lib/card_match/classes/game"
 
 const games = []
-
+function getGameById(id){
+  return games.filter((game)=>{
+    if(game.getId() == id){
+      return game
+    }
+  })[0]
+}
 
 // creating route at /api/socket
 export default function SocketHandler(req, res) {
@@ -27,36 +33,41 @@ export default function SocketHandler(req, res) {
       console.log("Client is Here: " + socket.id);
 
       // Creates Lobby and Joins one player 
-      socket.on("create", () => {
-        const id = generateRoomCode();
-        generateGame(id, 5, "hackers")
-        joinPlayer(1, socket, id)
+      socket.on("create", (levelName) => {
+        const newGame = new Game(levelName, socket.id)
+        games.push(newGame)
 
         // Create a new room and join the socket to this room
-        socket.join(id);
+        socket.join(newGame.getId());
         // Inform the client of the new room code
-        socket.emit('room created', id);
-        console.log('Room Created With ID:', id);
+        socket.emit('room created', newGame.getId());
+        console.log('Game Created With ID:', newGame.getId());
       });
 
       // Joins second player to the ready Lobby
-      socket.on("join", (gameId) => {
-        const game = getGameById(gameId)
-        console.log(game);
+      socket.on("join", (id) => {
+        const game = getGameById(id)
         if (game) {
-          joinPlayer(2, socket, gameId)
+          game.joinPlayer(socket.id)
 
-          socket.join(gameId);
+          socket.join(game.getId());
+          // game start + last game state
+          io.to(game.getId()).emit('game start', JSON.stringify( game ));
           // Inform the client of the new room code
-          socket.emit('room joined', gameId);
+          socket.emit('room joined', game.getId());
         }else{
           socket.emit('error', "no such game");
         }
       });
 
       // Fetching the game
-      socket.on("get game", () => {
-        socket.emit('get game', JSON.stringify({ games }));
+      socket.on("get game", (id) => {
+        const game = getGameById(id)
+        if (game) {
+          socket.emit('get game', JSON.stringify({ games }));
+        }else{
+          socket.emit('error', "no such game");
+        }
       });
 
       socket.on("winner", (room) => {

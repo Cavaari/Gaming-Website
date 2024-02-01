@@ -68,6 +68,16 @@ function shuffleArray(array) {
     return array;
 }
 
+function setPlayer(id, levelName, name) {
+    let lives = 0;
+    if (levelName == 'pros') {
+        lives = 1;
+    } else if (levelName == 'hackers') {
+        lives = 2;
+    }
+    return new Player(lives, id, name);
+}
+
 export default class Game {
     constructor(levelName, playerId) {
         this.id = generateRoomCode();
@@ -77,18 +87,12 @@ export default class Game {
         this.board = generateBoard(levelName);
     }
     
-    setPlayer(id, levelName, name) {
-        let lives = 0;
-        if (levelName == 'pros') {
-            lives = 1;
-        } else if (levelName == 'hackers') {
-            lives = 2;
-        }
-        return new Player(lives, id, name);
+    getId() {
+        return this.id;
     }
-     
+    
     joinPlayer(id) {
-        this.player2 = setPlayer(id, levelName, "player2")
+        this.player2 = setPlayer(id, this.levelName, "player2")
     }
 
     reshuffleSpecialCards() {
