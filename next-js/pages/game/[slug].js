@@ -4,16 +4,19 @@ import { useEffect, useRef } from 'react'
  
 export default function Game() {
   const router = useRouter()
+  // router.query.slug == gameId
+  const roomCode = router.query.slug
 
+    // phaser game object   
   const gameRef = useRef(null)
-
+  // socket object   
   const socket = useSocket()
 
   useEffect(()=>{
-    // router.query.slug == gameId
-    if(router.query.slug && socket){
+    
+    if(roomCode && socket){
         // Fetch game data
-        socket.emit("get game", router.query.slug)
+        socket.emit("get game", roomCode)
         socket.on('get game', (message) => {
             console.log(message);
         });
@@ -75,6 +78,8 @@ export default function Game() {
 
                 flipCard(pointer, card) {
                     if (!card.getData('isFlipped')) {
+                        // just example of calling socket from phaser
+                        socket.emit("makeMove", {gameId: roomCode, player: socket.id, moveType: "flip"})
                         card.setTexture('card_front');
                         card.setData('isFlipped', true);
                     } else {
@@ -111,10 +116,10 @@ export default function Game() {
             gameRef.current.destroy()
         }
     }
-  },[router.query.slug, socket])
+  },[roomCode, socket])
   return (
      <div className="bg-second d-flex align-items-center text-center">
-        <h2 className='mt-3 w-100 text-white'>Room Code: {router.query.slug}</h2>
+        <h2 className='mt-3 w-100 text-white'>Room Code: {roomCode}</h2>
         <div id="game-container"></div>
     </div>
   )
