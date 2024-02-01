@@ -1,26 +1,42 @@
-import { useEffect } from 'react';
+import useSocket from '@/components/socket/useSocket'
+import { useRouter } from 'next/router'
+import { useEffect, useRef } from 'react'
+ 
+export default function Game() {
+  const router = useRouter()
 
-const Game = () => {
-    useEffect(() => {
+  const gameRef = useRef(null)
+
+  const socket = useSocket()
+
+  useEffect(()=>{
+    // router.query.slug == gameId
+    if(router.query.slug && socket){
+        // Fetch game data
+        socket.emit("get game", router.query.slug)
+        socket.on('get game', (message) => {
+            console.log(message);
+        });
+
+        // Load Phaser Game
         const initPhaser = async () => {
             const Phaser = await import('phaser');
-            
-            class GameScene extends Phaser.Scene {
 
+            class GameScene extends Phaser.Scene {
                 preload() {
                     // Load background image
-                    this.load.image('bg', 'textures/back.png');
+                    this.load.image('bg', '../../textures/back.png');
 
                     // Load card back and front images
-                    this.load.image('card_back', 'runeTextures/Black/Rectangle/Card1.png');
-                    this.load.image('card_front', 'runeTextures/Black/Rectangle/runeBlack_rectangle_007.png');
+                    this.load.image('card_back', '../../runeTextures/Black/Rectangle/Card1.png');
+                    this.load.image('card_front', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_007.png');
 
                     // Add more card images as needed
-                    this.load.image('card_1', 'runeTextures/Black/Rectangle/runeBlack_rectangle_002.png');
-                    this.load.image('card_2', 'runeTextures/Black/Rectangle/runeBlack_rectangle_003.png');
-                    this.load.image('card_2', 'runeTextures/Black/Rectangle/runeBlack_rectangle_004.png');
-                    this.load.image('card_2', 'runeTextures/Black/Rectangle/runeBlack_rectangle_005.png');
-                    this.load.image('card_2', 'runeTextures/Black/Rectangle/runeBlack_rectangle_006.png');
+                    this.load.image('card_1', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_002.png');
+                    this.load.image('card_2', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_003.png');
+                    this.load.image('card_2', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_004.png');
+                    this.load.image('card_2', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_005.png');
+                    this.load.image('card_2', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_006.png');
                 }
 
                 create() {
@@ -70,24 +86,36 @@ const Game = () => {
 
             const config = {
                 type: Phaser.AUTO,
-                width: window.innerWidth,
-                height: window.innerHeight,
+                width: 600,
+                height: 600,
+                autoCenter: Phaser.Scale.CenterType,
                 scene: GameScene,
                 physics: {
                     default: 'arcade',
                     arcade: {
                         gravity: { y: 200 }
                     }
-                }
+                },
+                canvas: document.getElementById("gameCanvas")
             };
 
             const game = new Phaser.Game(config);
+            gameRef.current = game 
         };
 
         initPhaser();
-    }, []);
-
-    return <div id="game-container"></div>;
-};
-
-export default Game;
+    }
+    
+    return ()=>{
+        if(gameRef.current){
+            gameRef.current.destroy()
+        }
+    }
+  },[router.query.slug, socket])
+  return (
+     <div className="bg-second d-flex align-items-center text-center">
+        <h2 className='mt-3 w-100 text-white'>Room Code: {router.query.slug}</h2>
+        <div id="game-container"></div>
+    </div>
+  )
+}

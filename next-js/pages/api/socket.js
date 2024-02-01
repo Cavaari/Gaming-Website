@@ -125,6 +125,9 @@ function joinPlayer(num, socket, gameId) {
   }
 }
 
+function processTurn(roomId, playerId, action){
+  return null
+}
 
 // creating route at /api/socket
 export default function SocketHandler(req, res) {
@@ -174,15 +177,15 @@ export default function SocketHandler(req, res) {
         }
       });
 
-      socket.on("test", () => {
-        socket.emit('test', JSON.stringify({ games }));
+      socket.on("get game", () => {
+        socket.emit('get game', JSON.stringify({ games }));
       });
 
       socket.on("winner", (room) => {
 
       });
 
-      /*socket.on('takeTurn', (roomId, playerId, action) => {
+      socket.on('takeTurn', (roomId, playerId, action) => {
           if (processTurn(roomId, playerId, action)) {
               // Broadcast the updated game state to both players
               io.to(roomId).emit('updateState', games[roomId]);
@@ -193,7 +196,7 @@ export default function SocketHandler(req, res) {
           } else {
               socket.emit('error', 'Not your turn');
           }
-        }); */
+        }); 
 
       // socket.on("makeMove", (room) => {
 

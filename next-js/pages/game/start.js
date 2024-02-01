@@ -2,11 +2,12 @@ import useSocket from "@/components/socket/useSocket";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
+
+import { useRouter } from 'next/router'
+
 export default function Game() {
-    const [roomCode, setRoomCode] = useState("")
-
-
     const socket = useSocket()
+    const router = useRouter()
 
     useEffect(() => {
         if (socket) {
@@ -16,6 +17,16 @@ export default function Game() {
 
             socket.on('error', (message) => {
                 alert(message)
+            });
+
+            // success 
+            socket.on('room created', (message) => {
+                router.push("/game/" + message)
+            });
+
+            // success 
+            socket.on('room joined', (message) => {
+                router.push("/game/" + message)
             });
         }
     }, [socket])
@@ -44,42 +55,37 @@ export default function Game() {
     
 
     return (
-        <div className="buttons-container">
+        <div className="new-section bg-second d-flex flex-column align-items-center justify-content-center">
             {/* <Link href={"/game/create"}>
                 <button>Create Room</button>
             </Link> */}
 
             {socket ?
-                (<button onClick={handleCreateGame}>Create Game</button>) :
+                (<button className="btn btn-success btn-lg" onClick={handleCreateGame}>Create Game</button>) :
                 (null)
             }
 
-            {socket ?
-                (<button onClick={handleTest}>Test</button>) :
-                (null)
-            }
+            <span className="fs-3 m-5 text-white">OR</span>
 
             {socket ?
                 (
-                    <div>
+                    <div className="d-flex m-2">
                         <input
+                            className="form-control me-2"
                             type="text"
                             placeholder="Enter Room Code"
                             id="code"
                         />
-                        {/* <Link href={{
-                    pathname: '/game/lobby',
-                    query: { code: roomCode },
-                }}>
-                    <button>Join Room</button>
-                </Link> */}
-                        <button onClick={handleJoinLobby}>Join Lobby</button>
+                        <button className="btn btn-primary" onClick={handleJoinLobby}>Join Lobby</button>
                     </div>
                 ) :
                 (null)
             }
 
-
+            {/* {socket ?
+                (<button onClick={handleTest}>Test</button>) :
+                (null)
+            } */}
         </div>
     )
 }
