@@ -8,11 +8,12 @@ export default function About() {
                 <Card name="Eric" imgSrc="" description="Eric's description" link="/about/edearing" />
                 <Card name="Egor" imgSrc="" description="Egor's description" link="/about/eivanov"/>
                 <Card name="Cavaari" imgSrc="" description="Cavaari's description" link="/about/cavaari" />
-                <Card name="Karina" imgSrc="" description="Karina's description" link="/about/kgarmend" />
+                <Card name="Karina" imgSrc="/about/karina.png" description="I mostly enjoy backend development and HCI!" link="/about/kgarmend" />
                 <Card name="Kalindu" imgSrc="" description="Kalindu's description" link="/about/kkehelba" />
                 <Card name="Muhammad" imgSrc="" description="Muhammad's description" link="/about/msalmaan" />
                 <Card name="Tehreem" imgSrc="" description="Tehreem's description" link="/about/tnazar"  />
-                <Card name="Greg" imgSrc="" />
+                <Card name="Greg" imgSrc="" /> 
+                /* objectFit="contain" */
             </div>
         </div>
     )

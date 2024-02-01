@@ -20,6 +20,8 @@ export default function Card({ name, link = "", imgSrc, description }) {
                             className="card-img-top"
                             width={150}
                             height={200}
+                            layout="responsive"
+                            objectFit="fill"
                         />
                     ) : (
                         <div className="rounded-top d-flex align-items-center justify-content-center" style={{width:"100%", height:"200px", backgroundColor: randomColor(), fontSize:"4rem", color: "white"}}>
