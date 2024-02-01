@@ -13,7 +13,6 @@ export default function About() {
                 <Card name="Muhammad" imgSrc="" description="Muhammad's description" link="/about/msalmaan" />
                 <Card name="Tehreem" imgSrc="" description="Tehreem's description" link="/about/tnazar"  />
                 <Card name="Greg" imgSrc="" /> 
-                /* objectFit="contain" */
             </div>
         </div>
     )
