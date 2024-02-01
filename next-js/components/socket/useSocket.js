@@ -12,19 +12,21 @@ export default function useSocket(){
     const [socket, setSocket] = useState(null)
     // establishing a socket connection
     useEffect(()=>{
-        pingRoom().then(()=>{
-            const socket = io("http://localhost:3001");
-        
-            socket.on("connect", () => {
-                console.log("Client Connected!");
-            });
-
-            socket.on("connect_error", (error) => {
-                console.log(error.code)
-            });
-
-            setSocket(socket)
-        })
+        if(!socket){
+            pingRoom().then(()=>{
+                const socket = io("http://localhost:3001");
+            
+                socket.on("connect", () => {
+                    console.log("Client Connected!");
+                });
+    
+                socket.on("connect_error", (error) => {
+                    console.log(error.code)
+                });
+    
+                setSocket(socket)
+            })
+        }
         
         // clean the connection
         return () =>{
@@ -32,7 +34,7 @@ export default function useSocket(){
                 socket.disconnect();
             }
         }
-    },[])
+    },[socket])
 
     return socket
 }

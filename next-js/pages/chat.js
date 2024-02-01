@@ -1,10 +1,9 @@
-import Room from "@/components/game/room/Room";
-import useSocket from "@/components/socket/useSocket";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import SocketContext from "@/components/SocketContext";
 
 export default function Chat(){
     // declare a socket connection state for other components on the page can use it
-    const socket = useSocket()
+    const socket = useContext(SocketContext)
 
     useEffect(()=>{
         

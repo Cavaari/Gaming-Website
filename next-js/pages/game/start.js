@@ -11,7 +11,7 @@ export default function Game() {
     const router = useRouter()
 
     useEffect(() => {
-        if (socket) {
+        if (socket && router) {
             socket.on('test', (message) => {
                 console.log(JSON.parse(message));
             });
@@ -30,7 +30,7 @@ export default function Game() {
                 router.push("/game/" + message)
             });
         }
-    }, [socket])
+    }, [socket, router])
 
     const handleCreateGame = useCallback(() => {
         if (socket) {
