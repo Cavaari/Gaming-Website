@@ -109,40 +109,37 @@ export default function Game() {
         }
 
         const config = {
-            type: Phaser.AUTO,
-            width: 800,
-            height: 600,
-            parent: 'game-container',
-            scene: [GameScene],
-            physics: {
-              default: 'arcade',
-              arcade: {
-                gravity: { y: 0 },
-              },
-            },
-          };
-  
-          gameRef.current = new Phaser.Game(config);
+          type: Phaser.AUTO,
+          width: 800,
+          height: 600,
+          parent: 'game-container',
+          scene: [GameScene],
+          physics: {
+            default: 'arcade',
+            arcade: {
+              gravity: { y: 0 }
+            }
+          }
         };
-  
-        initPhaser();
-      }
-  
-      return () => {
-        if (gameRef.current) {
-          gameRef.current.destroy();
-        }
-        // Clean up socket event listeners
-        socket.off('get game');
-        socket.off('game start');
+
+        gameRef.current = new Phaser.Game(config);
       };
-    }, [roomCode, socket]);
-  
+
+      initPhaser();
+    }
+
+    return () => {
+      if (gameRef.current) {
+        gameRef.current.destroy();
+      }
+    };
+  }, [roomCode, socket]);
+
     return (
-      <div style={{ backgroundColor: 'transparent' }} className="bg-second d-flex align-items-center text-center">
-        <h2 style={{ color: 'black', textShadow: '2px 2px 4px red' }} className='mt-3 w-100 text-black'>Room Code: {roomCode}</h2>
-        <div id="game-container" style={{ width: '800px', height: '600px' }}></div>
-      </div>
+      <div style={{ backgroundImage: 'url("/textures/background2.png")', backgroundSize: 'cover', height: '100vh', position: 'relative' }} className="bg-second d-flex align-items-center text-center">
+      <h2 style={{ color: 'purple', textShadow: '2px 2px 4px #1FE8DC', zIndex: 2, position: 'absolute', top: '-1%', left: '50%', transform: 'translate(-50%, 0%)' }} className='mt-3 w-100 text-purple'>Room Code: {roomCode}</h2>
+      <div id="game-container" style={{ border: '10px solid #1FE8DC', borderRadius: '10px', zIndex: 1, position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}></div>
+    </div>
     );
   }
 
