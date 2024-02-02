@@ -40,17 +40,11 @@ export default function Game() {
                     this.load.image('card_front', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_007.png');
 
                     // Add more card images as needed
-                    this.load.image('card_0', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_002.png');
-                    this.load.image('card_1', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_003.png');
-                    // this.load.image('card_4', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_004.png');
-                    // this.load.image('card_5', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_005.png');
-                    // this.load.image('card_6', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_006.png');
-                    for (let i = 2; i <= 9; i++) {
-                        this.load.image(`card_${i}`, '../../runeTextures/Black/Rectangle/runeBlack_rectangle_00'+`${i}`+'.png');
-                    }
-                    for (let i = 10; i <= 36; i++) {
-                        this.load.image(`card_${i}`, '../../runeTextures/Black/Rectangle/runeBlack_rectangle_0'+`${i}`+'.png');
-                    }
+                    this.load.image('card_1', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_002.png');
+                    this.load.image('card_2', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_003.png');
+                    this.load.image('card_2', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_004.png');
+                    this.load.image('card_2', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_005.png');
+                    this.load.image('card_2', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_006.png');
                 }
 
                 create() {
@@ -75,7 +69,10 @@ export default function Game() {
 
                             // Assign unique card front image to each card
                             const cardNumber = i * cols + j + 1;
-                            card.setData('cardFront', `card_${cardNumber}`);
+                            card.setData('card_front', `card_${cardNumber}`);
+
+                            // Replacing cardFront with existing image as temporary measure (no missing assets)
+                            // card.setData('cardFront', `card_${cardNumber}`);
 
                             cards.push(card);
                         }
@@ -88,7 +85,7 @@ export default function Game() {
                     if (!card.getData('isFlipped')) {
                         // just example of calling socket from phaser
                         socket.emit("makeMove", {gameId: roomCode, player: socket.id, moveType: "flip"})
-                        card.setTexture(card.getData('cardFront'));
+                        card.setTexture('card_front');
                         card.setData('isFlipped', true);
                     } else {
                         card.setTexture('card_back');
@@ -99,8 +96,8 @@ export default function Game() {
 
             const config = {
                 type: Phaser.AUTO,
-                width: 450,
-                height: 500,
+                width: 600,
+                height: 600,
                 autoCenter: Phaser.Scale.CenterType,
                 scene: GameScene,
                 physics: {
