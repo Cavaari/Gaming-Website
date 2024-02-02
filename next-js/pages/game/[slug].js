@@ -150,47 +150,34 @@ export default function Game() {
           constructor() {
             super('GameScene');
             this.flippedCards = [];
-            this.matchCheckTimeout = null;
           }
 
           preload() {
-            // Load background image
-            this.load.image('bg', '../../textures/back.png');
-
-            // Load card back and front images
-            this.load.image('card_back', '../../runeTextures/Black/Rectangle/Card1.png');
-            this.load.image('card_front', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_007.png');
-
-            // Add more card images as needed
-            this.load.image('card_0', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_002.png');
-            this.load.image('card_1', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_003.png');
-            // this.load.image('card_4', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_004.png');
-            // this.load.image('card_5', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_005.png');
-            // this.load.image('card_6', '../../runeTextures/Black/Rectangle/runeBlack_rectangle_006.png');
+            this.load.image('bg', '/textures/back.png');
+            this.load.image('card_back', '/runeTextures/Black/Rectangle/card1.png');
             for (let i = 2; i <= 9; i++) {
                 this.load.image(`card_${i}`, '../../runeTextures/Black/Rectangle/runeBlack_rectangle_00'+`${i}`+'.png');
             }
-            for (let i = 10; i <= 36; i++) {
+            for (let i = 10; i <= 13; i++) {
                 this.load.image(`card_${i}`, '../../runeTextures/Black/Rectangle/runeBlack_rectangle_0'+`${i}`+'.png');
             }
-            }
+          }
 
           create() {
-            this.add.image(400, 300, 'bg');
-            this.createCardGrid(4, 4);
+            this.add.image(400, 300, 'bg').setOrigin(0.5, 0.5);
+            this.createCardGrid(4, 6); // Adjust as needed for a 4x6 grid (24 cards)
           }
 
           createCardGrid(rows, cols) {
             const cardSpacing = 100;
-            const offsetX = (this.cameras.main.width - (cols * cardSpacing)) / 2;
-            const offsetY = (this.cameras.main.height - (rows * cardSpacing)) / 2;
+            const offsetX = (this.cameras.main.width - cols * cardSpacing) / 2;
+            const offsetY = (this.cameras.main.height - rows * cardSpacing) / 2;
             let cardTextureNames = this.getCardTextureNames(rows * cols / 2);
 
             for (let y = 0; y < rows; y++) {
               for (let x = 0; x < cols; x++) {
                 let cardTextureName = cardTextureNames.pop();
                 let card = this.add.sprite(offsetX + x * cardSpacing, offsetY + y * cardSpacing, 'card_back').setInteractive();
-                card.setData('matched', false);
                 card.setData('cardTexture', cardTextureName);
                 card.on('pointerdown', () => {
                   this.flipCard(card);
@@ -201,38 +188,43 @@ export default function Game() {
 
           getCardTextureNames(pairs) {
             let names = [];
-            for (let i = 0; i < pairs; i++) {
-              names.push(`card_${i}`, `card_${i}`);
+            // Push each texture name twice for matching pairs
+            for (let i = 2; i < pairs + 2; i++) {
+              names.push(`card_${i}`);
+              names.push(`card_${i}`);
             }
             return Phaser.Utils.Array.Shuffle(names);
           }
 
           flipCard(card) {
-            if (card.getData('matched') || this.flippedCards.length === 2) {
-              return;
-            }
+            if (this.flippedCards.length < 2 && card.texture.key === 'card_back') {
+              card.setTexture(card.getData('cardTexture'));
+              this.flippedCards.push(card);
 
-            card.setTexture(card.getData('cardTexture'));
-            this.flippedCards.push(card);
-
-            if (this.flippedCards.length === 2) {
-              this.matchCheckTimeout = this.time.delayedCall(500, () => this.checkMatch());
+              if (this.flippedCards.length === 2) {
+                this.checkForMatch();
+              }
             }
           }
 
-          checkMatch() {
-            if (this.flippedCards[0].getData('cardTexture') === this.flippedCards[1].getData('cardTexture')) {
+          checkForMatch() {
+            if (this.flippedCards[0].texture.key === this.flippedCards[1].texture.key) {
+              // Cards match, remove them
+              this.time.delayedCall(1000, () => {
               this.flippedCards.forEach(card => {
-                card.setData('matched', true);
-                card.disableInteractive();
-                card.setVisible(false);
+                card.destroy();
               });
+              this.flippedCards = [];
+            });
             } else {
-              this.flippedCards.forEach(card => {
-                card.setTexture('card_back');
+              // Cards don't match, flip them back over after a short delay
+              this.time.delayedCall(1000, () => {
+                this.flippedCards.forEach(card => {
+                  card.setTexture('card_back');
+                });
+                this.flippedCards = [];
               });
             }
-            this.flippedCards = [];
           }
         }
 
@@ -245,9 +237,9 @@ export default function Game() {
           physics: {
             default: 'arcade',
             arcade: {
-              gravity: { y: 0 },
-            },
-          },
+              gravity: { y: 0 }
+            }
+          }
         };
 
         gameRef.current = new Phaser.Game(config);
@@ -265,5 +257,7 @@ export default function Game() {
 
   return (
     <div id="game-container" style={{ width: '800px', height: '600px' }}></div>
+ 
+
   );
 }
