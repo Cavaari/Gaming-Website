@@ -256,7 +256,9 @@ export default function Game() {
   }, [roomCode, socket]);
 
   return (
-    <div id="game-container" style={{ width: '800px', height: '600px' }}></div>
+    <div style={{ backgroundColor: 'transparent' }} className="bg-second d-flex align-items-center text-center">
+      <div id="game-container" style={{ marginTop: '20px', marginBottom: '20px', zIndex: '1', border: '10px solid red', borderRadius: '10px' }}></div>
+    </div>
  
 
   );
