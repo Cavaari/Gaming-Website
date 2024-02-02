@@ -110,6 +110,7 @@ export default function Game() {
                     }
                 },
                 canvas: document.getElementById("gameCanvas")
+                
             };
 
             const game = new Phaser.Game(config);
@@ -126,8 +127,8 @@ export default function Game() {
     }
   },[roomCode, socket])
   return (
-     <div className="bg-second d-flex align-items-center text-center">
-        <h2 className='mt-3 w-100 text-white'>Room Code: {roomCode}</h2>
+    <div style={{ backgroundColor: 'transparent' }} className="bg-second d-flex align-items-center text-center">
+        <h2 style={{ color: 'black', textShadow: '2px 2px 4px red' }} className='mt-3 w-100 text-black'>Room Code: {roomCode}</h2>
         <div id="game-container"></div>
     </div>
   )
