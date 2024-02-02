@@ -7,7 +7,7 @@ class GameScene extends Phaser.Scene {
     create() {
         // Use the entire game canvas size to place the background image
         const bgImage = this.add.image(0, 0, 'bg').setBlendMode(Phaser.BlendModes.DARKEN);
-        // const bgImage = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'bg');
+        // const bgImage = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'bg').setBlendMode(Phaser.BlendModes.DARKEN);
 
         // Set the background image to cover the entire game canvas
         bgImage.setDisplaySize(window.innerWidth, window.innerHeight);
@@ -16,4 +16,4 @@ class GameScene extends Phaser.Scene {
     }
 }
 
-export default Example;
+export default GameScene;
