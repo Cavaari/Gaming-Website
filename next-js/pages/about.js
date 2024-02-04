@@ -10,7 +10,7 @@ export default function About() {
                 <Card name="Cavaari Taylor" imgSrc="/about/Profile Photo.jpg" description="An island boy with a passion for programming!" link="/about/cavaari" />
                 <Card name="Karina" imgSrc="/about/karina.png" description="I mostly enjoy backend development and HCI!" link="/about/kgarmend" />
                 <Card name="Kalindu" imgSrc="" description="Kalindu's description" link="/about/kkehelba" />
-                <Card name="Muhammad" imgSrc="" description="Muhammad's description" link="/about/msalmaan" />
+                <Card name="Muhammad" imgSrc="/about/Muhammad.png" description="Muhammad's description" link="/about/msalmaan" />
                 <Card name="Tehreem" imgSrc="" description="Tehreem's description" link="/about/tnazar"  />
                 <Card name="Greg" imgSrc="" /> 
             </div>
