@@ -21,8 +21,17 @@ export default function About() {
                         in the Caribbean where the sun is always shining and the people are always smiling.
                         I am currently in my final semester of my Software Engineering degree at the University of Guelph.
                         I am a very hardworking and dedicated individual who is always willing to learn new things.
-                        I am in my 4th year at the University of Guelph and I am eager to break into the industry.
+                        I am in my 4th year at the University of Guelph and I am eager to break into the industry. Apart 
+                        from my love of programming, I also love my home and am very proud of my island. A beautiful place
+                        with beautiful people. I am lived in this beautiful place for many years now i'll share that beauty 
+                        with you. Here is my island, Saint Lucia.
                     </p>
+                    <div className="image-container">
+                        <img src="/about/Pitons.jpg" alt="Pitons" className="form-image"/>
+                        <img src="/about/Marigot.jpg" alt="Marigot" className="form-image"/>
+                        <img src="/about/Sunset.jpg" alt="Sunset" className="form-image"/>
+                        <img src="/about/Ciceron.jpg" alt="Ciceron" className="form-image"/>
+                    </div>
                 </div>
 
             </main>
