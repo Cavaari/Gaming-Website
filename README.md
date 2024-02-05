@@ -43,4 +43,9 @@ In Sprint 3: The inital stages of game development have been completed and basic
 
 
 
+### Additional changes
+
+Additionaly we decided to redesign our about me section and included a single about me page with all the team members and had cards display each team members name and a brief description about them. This can be seen below: 
+
+![About US](Sprint 3 - resources/About_us_pics.png)
 
