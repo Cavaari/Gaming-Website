@@ -49,13 +49,13 @@ export default function Game() {
 
           preload() {
             this.load.image('bg', '/textures/back.png');
-            this.load.image('card_back', '/runeTextures/Black/Rectangle/card1.png');
+            this.load.image('card_back', '/runeTextures/Black/Slab/card1.png');
             this.load.image('card_death', '/runeTextures/Red/cardDeath.png');
             for (let i = 2; i <= 9; i++) {
-              this.load.image(`card_${i}`, `/runeTextures/Black/Rectangle/runeBlack_rectangle_00${i}.png`);
+              this.load.image(`card_${i}`, `/runeTextures/Black/Slab/runeBlack_slab_00${i}.png`);
             }
             for (let i = 10; i <= 13; i++) {
-              this.load.image(`card_${i}`, `/runeTextures/Black/Rectangle/runeBlack_rectangle_0${i}.png`);
+              this.load.image(`card_${i}`, `/runeTextures/Black/Slab/runeBlack_slab_0${i}.png`);
             }
           }
 
