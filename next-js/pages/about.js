@@ -7,7 +7,7 @@ export default function About() {
             <div className="mt-3 mb-3 w-100 row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2 d-flex  justify-content-around">
                 <Card name="Eric" imgSrc="/about/eric.jpg" description="IT Manager & Software Developer at Perpetual Motion Sports and creator of 3ric Games" link="/about/edearing" />
                 <Card name="Egor" imgSrc="" description="Egor's description" link="/about/eivanov"/>
-                <Card name="Cavaari Taylor" imgSrc="/about/Profile Photo.jpg" description="An island boy with a passion for programming!" link="/about/cavaari" />
+                <Card name="Cavaari Taylor" imgSrc="/about/Memoji.jpeg" description="An island boy with a passion for programming!" link="/about/cavaari" />
                 <Card name="Karina" imgSrc="/about/karina.png" description="I mostly enjoy backend development and HCI!" link="/about/kgarmend" />
                 <Card name="Kalindu" imgSrc="" description="Kalindu's description" link="/about/kkehelba" />
                 <Card name="Muhammad" imgSrc="/about/Muhammad.png" description="Muhammad's description" link="/about/msalmaan" />
