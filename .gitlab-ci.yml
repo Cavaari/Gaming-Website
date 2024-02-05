@@ -54,3 +54,47 @@ deploy-job:
     - echo "Application simulation successfully deployed to socs."
   only:
     - main
+
+# vm-install-job:
+#   stage: deploy
+#   environment: production
+#   image: debian:bookworm-20240110
+#   before_script:
+#     - 'command -v ssh-agent >/dev/null || (apt-get update -y && apt-get install openssh-client -y rsync)'
+#     - apt-get update
+#     - apt-get install -y git
+#     - apt-get install -y openssh-client
+#     - eval $(ssh-agent -s)
+#     - chmod 400 "$SSH_PRIVATE_KEY"
+#     - ssh-add "$SSH_PRIVATE_KEY"
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+#     - chmod 644 ~/.ssh/known_hosts
+#   script:
+#     - echo "Installing dependencies to socs VM..."
+#     - ssh socs@cis4250w24-09.socs.uoguelph.ca:/var/www/html/team_9 "sudo chmod +x install.sh; ./install.sh"
+#   only:
+#     - main
+
+# vm-remove-install-job:
+#   stage: deploy
+#   environment: production
+#   image: debian:bookworm-20240110
+#   before_script:
+#     - 'command -v ssh-agent >/dev/null || (apt-get update -y && apt-get install openssh-client -y rsync)'
+#     - apt-get update
+#     - apt-get install -y git
+#     - apt-get install -y openssh-client
+#     - eval $(ssh-agent -s)
+#     - chmod 400 "$SSH_PRIVATE_KEY"
+#     - ssh-add "$SSH_PRIVATE_KEY"
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+#     - chmod 644 ~/.ssh/known_hosts
+#   script:
+#     - echo "Uninstalling dependencies to socs VM..."
+#     - ssh socs@cis4250w24-09.socs.uoguelph.ca:/var/www/html/team_9 "sudo chmod +x uninstall.sh; ./uninstall.sh"
+#   only:
+#     - main
