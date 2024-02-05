@@ -34,7 +34,7 @@
 ## Sprint 3: Game Development
 
 
-In Sprint 3: The inital stages of game development have been completed and basic game functionality is fully functional. The implementation begn by following our inital figma design from sprint 2 which included 3 game levels for our card matching game. In this sprint our focus was only implementing the middle (Pro) level of the game and focused on a single player perspective stand point. Our multiplayer functionality will be implemented in a later sprint to allow for multiple users from different device to conect to the same game room and play one on one. Our game UI and design is displayed below.
+In Sprint 3: The inital stages of game development have been completed and basic game functionality is fully functional. The implementation begn by following our inital figma design from sprint 2 which included 3 game levels for our card matching game. In this sprint our focus was only implementing the middle (Pro) level of the game and focused on a single player perspective stand point. Our multiplayer functionality will be implemented in a later sprint to allow for multiple users from different device to conect to the same game room and play one on one.Once a game is created a room code is generated which will be used later for players to join the same room and play against one another. Our game UI and design is displayed below.
 
 ### Card Matcher!!!
 
