@@ -98,9 +98,7 @@ export default function SocketHandler(req, res) {
 
 
 
-    httpServer.listen(3001, () => {
-      console.log("Socket Server Started!");
-    });
+    httpServer.listen(3001,process.env.HOST_URL);
 
 
     res.socket.server.io = io
