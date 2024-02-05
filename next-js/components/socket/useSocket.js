@@ -4,7 +4,6 @@ import { io } from "socket.io-client";
 
 // socket must be pinged once before server start up to be in listening state
 const pingRoom = async () =>{
-    console.log(process.env.HOST_URL)
     await fetch(process.env.HOST_URL + "/api/socket")
 }
 
