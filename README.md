@@ -39,6 +39,8 @@ In Sprint 3: The inital stages of game development have been completed and basic
 ### Card Matcher!!!
 
 
-![Card Matcher](team_9/Sprint%203%20-%20resources/Card_matcher.png)
+![Card Matcher](Sprint-3-Resources/Card_matcher.png)
+
+
 
 
