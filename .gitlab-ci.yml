@@ -50,8 +50,10 @@ deploy-job:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - echo "Deploying application to Team9 socs VM..."
-    - rsync -avz --delete --exclude='.git/' --exclude='.gitlab-ci.yml' --no-t --no-perms ./ socs@cis4250w24-09.socs.uoguelph.ca:/var/www/html/team_9
+    - rsync -avz --delete --exclude='.git/' --exclude='Sprint 3 - resources/.gitkeep' --exclude='.gitlab-ci.yml' --exclude='sprint-3-documents/' --exclude='sprint-3-presentation' --no-t --no-perms ./ socs@cis4250w24-09.socs.uoguelph.ca:/var/www/html/team_9
     - echo "Application simulation successfully deployed to socs."
+  only:
+    - main
 
 # vm-install-job:
 #   stage: deploy
