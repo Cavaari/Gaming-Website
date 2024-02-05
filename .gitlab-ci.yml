@@ -1,0 +1,100 @@
+image: debian:latest
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - test
+  - deploy
+
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  before_script:
+    - apt-get update
+    - apt-get install -y nodejs npm
+  script:
+    - echo "Triggered build from pipeline..."
+    - cd next-js/
+    - npm i
+    - npm run build
+    - echo "App build complete."
+
+app-test-job:   # This job runs in the test stage.
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  before_script:
+    - apt-get update
+    - apt-get install -y nodejs npm
+    - npm install pm2@latest -g
+  script:
+    - cd next-js/
+    - echo "Triggered unit test stage from pipeline..."
+    - pm2 start pages/index.js
+    - pm2 list
+    - echo "Next.js app tests complete.... Cleaning up and stopping tests"
+    - pm2 stop pages/index.js
+    - echo "Cleanup completed."
+
+deploy-job:
+  stage: deploy
+  environment: production
+  image: debian:bookworm-20240110
+  before_script:
+    - 'command -v ssh-agent >/dev/null || (apt-get update -y && apt-get install openssh-client -y rsync)'
+    - apt-get update
+    - apt-get install -y git
+    - apt-get install -y openssh-client
+    - eval $(ssh-agent -s)
+    - chmod 400 "$SSH_PRIVATE_KEY"
+    - ssh-add "$SSH_PRIVATE_KEY"
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - echo "Deploying application to Team9 socs VM..."
+    - rsync -avz --delete --exclude='.git/' --exclude='Sprint 3 - resources/.gitkeep' --exclude='.gitlab-ci.yml' --exclude='sprint-3-documents/' --exclude='sprint-3-presentation' --no-t --no-perms ./ socs@cis4250w24-09.socs.uoguelph.ca:/var/www/html/team_9
+    - echo "Application simulation successfully deployed to socs."
+  only:
+    - main
+
+# vm-install-job:
+#   stage: deploy
+#   environment: production
+#   image: debian:bookworm-20240110
+#   before_script:
+#     - 'command -v ssh-agent >/dev/null || (apt-get update -y && apt-get install openssh-client -y rsync)'
+#     - apt-get update
+#     - apt-get install -y git
+#     - apt-get install -y openssh-client
+#     - eval $(ssh-agent -s)
+#     - chmod 400 "$SSH_PRIVATE_KEY"
+#     - ssh-add "$SSH_PRIVATE_KEY"
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+#     - chmod 644 ~/.ssh/known_hosts
+#   script:
+#     - echo "Installing dependencies to socs VM..."
+#     - ssh socs@cis4250w24-09.socs.uoguelph.ca:/var/www/html/team_9 "sudo chmod +x install.sh; ./install.sh"
+#   only:
+#     - main
+
+# vm-remove-install-job:
+#   stage: deploy
+#   environment: production
+#   image: debian:bookworm-20240110
+#   before_script:
+#     - 'command -v ssh-agent >/dev/null || (apt-get update -y && apt-get install openssh-client -y rsync)'
+#     - apt-get update
+#     - apt-get install -y git
+#     - apt-get install -y openssh-client
+#     - eval $(ssh-agent -s)
+#     - chmod 400 "$SSH_PRIVATE_KEY"
+#     - ssh-add "$SSH_PRIVATE_KEY"
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+#     - chmod 644 ~/.ssh/known_hosts
+#   script:
+#     - echo "Uninstalling dependencies to socs VM..."
+#     - ssh socs@cis4250w24-09.socs.uoguelph.ca:/var/www/html/team_9 "sudo chmod +x uninstall.sh; ./uninstall.sh"
+#   only:
+#     - main

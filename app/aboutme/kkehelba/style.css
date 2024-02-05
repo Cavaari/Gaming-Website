@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  text-align: center;
+  background-color: #222831;
+  color: #fff;
+  font-family: "Roboto";
+}
+
+.bio p {
+  width: 45%;
+}
+
+.bio p {
+  line-height: 200%;
+  margin: auto;
+  width: 45%;
+}
+
+.bio{
+  margin-bottom: 10%;
+}
+
+
+a {
+  font-size: x-small;
+  color: inherit;
+  text-decoration: none;
+}

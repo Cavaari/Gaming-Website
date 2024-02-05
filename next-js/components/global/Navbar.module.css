@@ -1,0 +1,32 @@
+.nav_rect{
+    position: sticky;
+    width: 25%;
+    height: 4rem;
+}
+
+.nav_tri{
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-left: 4rem solid transparent;
+    border-right: 4rem solid transparent;
+    border-top: 4rem solid var(--second-color);
+    position: absolute;
+    right: -4rem;
+}
+
+.nav_content{
+    z-index: 2;
+    width: 75%;
+    height: 4rem;
+}
+
+.new_nav_link{
+    text-align :center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+}
+.new_nav_link:hover{
+    color: var(--first-color)
+}
