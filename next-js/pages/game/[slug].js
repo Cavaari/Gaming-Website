@@ -24,10 +24,27 @@ export default function Game() {
       const initPhaser = async () => {
         const Phaser = await import('phaser');
 
+        class WinnerScene extends Phaser.Scene{
+          constructor(){
+            super('WinnerScene');
+          }
+          create(data){
+            const {width,height} = this.scale
+    
+            this.add.text(width * 0.15,height * 0.5, "Game over. You won!",{
+                fontSize: '48px',
+                color: '#fff',
+                backgroundColor: "rgba(43, 197, 151, 0.76)",
+                padding: {right:10,top:10,bottom:10}
+            })
+        }
+        
+        }
         class GameScene extends Phaser.Scene {
           constructor() {
             super('GameScene');
             this.flippedCards = [];
+            this.cards = [];
           }
 
           preload() {
@@ -62,6 +79,7 @@ export default function Game() {
                 card.on('pointerdown', () => {
                   this.flipCard(card);
                 });
+                this.cards.push(card);
               }
             }
           }
@@ -93,8 +111,15 @@ export default function Game() {
               this.time.delayedCall(1000, () => {
               this.flippedCards.forEach(card => {
                 card.destroy();
+                this.cards.splice(this.cards.indexOf(card),1)
               });
               this.flippedCards = [];
+
+              // check for win
+              if(this.cards.length == 0){
+                // show win screen
+                this.scene.start('WinnerScene',{title:'Game over'})
+              }
             });
             } else {
               // Cards don't match, flip them back over after a short delay
@@ -113,7 +138,7 @@ export default function Game() {
           width: 800,
           height: 600,
           parent: 'game-container',
-          scene: [GameScene],
+          scene: [GameScene, WinnerScene],
           physics: {
             default: 'arcade',
             arcade: {
