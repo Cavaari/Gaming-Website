@@ -27,10 +27,10 @@ export default function About() {
                         with you. Here is my island, Saint Lucia.
                     </p>
                     <div className="image-container">
-                        <img src="/about/Pitons.jpg" alt="Pitons" className="form-image"/>
-                        <img src="/about/Marigot.jpg" alt="Marigot" className="form-image"/>
-                        <img src="/about/Sunset.jpg" alt="Sunset" className="form-image"/>
-                        <img src="/about/Ciceron.jpg" alt="Ciceron" className="form-image"/>
+                        <image src="/about/Pitons.jpg" alt="Pitons" className="form-image"/>
+                        <image src="/about/Marigot.jpg" alt="Marigot" className="form-image"/>
+                        <image src="/about/Sunset.jpg" alt="Sunset" className="form-image"/>
+                        <image src="/about/Ciceron.jpg" alt="Ciceron" className="form-image"/>
                     </div>
                 </div>
 
