@@ -1,3 +1,5 @@
+#Team 9
+
 ## Connecting to the VM without VPN:
 
 1) $ ssh username@portkey.socs.uoguelph.ca
@@ -19,44 +21,24 @@
 5) Click link to localhost port to see changes
 
 ## Team Members:
-	- Kalindu Kehel Baddarage (Team Lead)
-	- Eric Dearing 
+	- Muhammad Salmaan (Team Lead)
 	- Karina Garmendez
 	- Egor Ivanov
-	- Tehreem Nazar
-	- Muhammad Salmaan
 	- Cavaari Taylor
+	- Tehreem Nazar
+	- Eric Dearing 
+	- Kalindu Kehel Baddarage 
 
 	
 
-## Sprint 2: CI/CD Development Completion/ Server implementation
+## Sprint 3: Game Development
 
 
+In Sprint 3: The inital stages of game development have been completed and basic game functionality is fully functional. The implementation begn by following our inital figma design from sprint 2 which included 3 game levels for our card matching game. In this sprint our focus was only implementing the middle (Pro) level of the game and focused on a single player perspective stand point. Our multiplayer functionality will be implemented in a later sprint to allow for multiple users from different device to conect to the same game room and play one on one. Our game UI and design is displayed below.
+
+### Card Matcher!!!
 
 
-In sprint 2 : the CI/CD is finished.
-Game logic is made (might me changed later) :  https://docs.google.com/document/d/1nidLjRdUKJwX-5qKk9KBt6gMpJV836TYZp3JL0WIDVU/edit?usp=sharing
-Figma Design for Game is here : https://www.figma.com/file/rBCjmr5ukY6rfa9GAz79cS/Game-Design?type=design&mode=design&t=38jVKrwNTlHlOLiA-1
-Phaser Wiki is here : https://gitlab.socs.uoguelph.ca/cis4250_w24/team_9/-/wikis/Phaser-Wiki
-
-
-## Socket resources:
-
-https://www.youtube.com/watch?v=okHRJXGX_wQ
-
-https://www.youtube.com/watch?v=xRJ787usR5s
-
-https://socket.io/docs/v4/server-api/
-
-https://socket.io/how-to/use-with-react
-
-https://socket.io/docs/v3/rooms/
-
-
-
-
-
-
-
+![Card Matcher](team_9/Sprint%203%20-%20resources/Card_matcher.png)
 
 
