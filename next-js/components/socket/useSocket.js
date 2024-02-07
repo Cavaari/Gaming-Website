@@ -14,14 +14,17 @@ export default function useSocket(){
     useEffect(()=>{
         if(!socket){
             pingRoom().then(()=>{
-                const socket = io(process.env.SOCKET_URL);
+                const socket = io(process.env.HOST_URL, {
+                    path: "/socket.io/"
+                });
             
                 socket.on("connect", () => {
                     console.log("Client Connected!");
                 });
     
                 socket.on("connect_error", (error) => {
-                    console.log(error.code)
+                    console.log(error.code);
+                    console.log(error.message);
                 });
     
                 setSocket(socket)

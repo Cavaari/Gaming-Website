@@ -24,7 +24,8 @@ export default function SocketHandler(req, res) {
     const httpServer = createServer();
     const io = new Server(httpServer, {
       cors: {
-        origin: "*"
+        origin: "*",
+        methods: ["GET", "POST"]
       }
     });
 
@@ -98,7 +99,9 @@ export default function SocketHandler(req, res) {
 
 
 
-    httpServer.listen(3001,process.env.HOST_URL);
+    httpServer.listen(3001, () => {
+      console.log("Socket Server Started!");
+    });
 
 
     res.socket.server.io = io
