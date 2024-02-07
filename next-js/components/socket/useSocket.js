@@ -14,7 +14,7 @@ export default function useSocket(){
     useEffect(()=>{
         if(!socket){
             pingRoom().then(()=>{
-                const socket = io(process.env.HOST_URL, {
+                const socket = io(process.env.SOCKET_URL, {
                     path: "/socket.io/"
                 });
             
