@@ -102,23 +102,63 @@ export default class Game {
     runGame(levelName) {
         const board = generateLevel(levelName);
         console.log(board);
-        playRound(levelName);
-
+        currentPlayer = this.player1;
+        do {
+            playRound(levelName, currentPlayer);
+            swapPlayers(currentPlayer);
+        } while (!gameOver());
     }
 
-    playRound() {
+    swapPlayers(currentPlayer) {
+        if (currentPlayer == this.player1) {
+            currentPlayer = this.player2;
+        } else {
+            currentPlayer = this.player1;
+        }
+    }
+
+    playRound(currentPlayer) {
         let currentRound = 0;
         const roundsBeforeReshuffle = 2;
 
         /* Logic for handling player moves/matches/cardflips */
-        processTurn();
+        this.makeMove(currentPlayer, moveType, coordinate);
         /* after a move has been made */
         currentRound++;
 
         if (currentRound % roundsBeforeReshuffle === 0) {
             reshuffleSpecialCards(this.board);
             console.log("Special cards have been reshuffled!");
+            this.displayReshuflleScreen();
         }
+    }
+
+    displayReshuflleScreen() {
+        return new EndScreen("Special cards have been reshuffled!");
+    }
+
+    gameOver(){
+        return false;
+    }
+
+    makeMove(gameId, playerId, moveType, coordinate) {
+        processTurn(this.id, playerId, action);
+    }
+
+    check_for_match() {
+        return true;
+    }
+
+    displayBoard(board) {
+        return null;
+    }
+
+    flipCard(board, x, y) {
+        return null;
+    }
+
+    unflipCard(board, x, y) {
+        return null;
     }
 
     processTurn(roomId, playerId, action) {
