@@ -42,6 +42,9 @@ export default function Gamer() {
         }
 
         class HowToPlayScreen extends Phaser.Scene {
+          preload() {
+            this.load.image('close', '/symbols/close.png');
+          }
           constructor() {
             super('HowToPlayScreen');
           }
@@ -54,6 +57,15 @@ export default function Gamer() {
               backgroundColor: "rgba(43, 197, 151, 0.76)",
               padding: { right: 10, top: 10, bottom: 10 }
             });
+
+            let close = this.add.sprite(width-50, 20, 'close')
+            .setInteractive()
+            close.on('pointerdown', () => {
+              this.scene.setActive(false,"HowToPlayScreen").setVisible(false,"HowToPlayScreen")
+              // this.scene.remove("HowToPlayScreen")
+            });
+            close.displayWidth = 50
+            close.displayHeight = 50
           }
         }
       
@@ -214,8 +226,8 @@ export default function Gamer() {
 
   return (
     <div style={{ backgroundImage: 'url("/textures/background2.png")', backgroundSize: 'cover', height: '100vh', position: 'relative' }} className="bg-second d-flex align-items-center text-center">
+      <button type="button" class="btn btn-success" style={{position: 'absolute', left: '1%',top:'2%', zIndex:5}} onClick={howToPlay}>How To Play</button>
       <h2 style={{ color: 'purple', textShadow: '2px 2px 4px #1FE8DC', zIndex: 2, position: 'absolute', top: '-1%', left: '50%', transform: 'translate(-50%, 0%)' }} className='mt-3 w-100 text-purple'>Room Code: {roomCode}</h2>
-      <button onClick={howToPlay}>How To Play</button>
       <div id="game-container" style={{ border: '10px solid #1FE8DC', borderRadius: '10px', zIndex: 1, position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}></div>
     </div>
   );
