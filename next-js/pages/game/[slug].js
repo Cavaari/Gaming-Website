@@ -37,9 +37,10 @@ export default function Game() {
                 backgroundColor: "rgba(43, 197, 151, 0.76)",
                 padding: {right:10,top:10,bottom:10}
             })
-        }
+          }
         
         }
+        
         class GameScene extends Phaser.Scene {
           constructor() {
             super('GameScene');
@@ -61,9 +62,16 @@ export default function Game() {
 
           create() {
             let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
+            // Adding listeners onto cards in Phaser for behaviour
+            // this.input.on('gameobjectdown', this.flipCard, this);
             bg.displayWidth = this.sys.game.config.width;
             bg.displayHeight = this.sys.game.config.height;
             this.createCardGrid(4, 6, 2);
+          }
+
+          // New method for displaying win game for player who hasn't lost
+          gameOver() {
+            this.scene.start('EndScreen',{title:'Game Over. You Win!'});
           }
 
           createCardGrid(rows, cols, numDeathCards) {
