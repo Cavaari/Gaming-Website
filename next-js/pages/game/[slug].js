@@ -25,23 +25,40 @@ export default function Gamer() {
       const initPhaser = async () => {
         const Phaser = await import('phaser');
 
-        class EndScreen extends Phaser.Scene{
-          constructor(){
+        class EndScreen extends Phaser.Scene {
+          constructor() {
             super('EndScreen');
           }
-          create(data){
-            const {width,height} = this.scale
-    
-            this.add.text(width * 0.15,height * 0.5, data.title,{
-                fontSize: '48px',
-                color: '#fff',
-                backgroundColor: "rgba(43, 197, 151, 0.76)",
-                padding: {right:10,top:10,bottom:10}
+          create(data) {
+            const { width, height } = this.scale
+
+            this.add.text(width * 0.15, height * 0.5, data.title, {
+              fontSize: '48px',
+              color: '#fff',
+              backgroundColor: "rgba(43, 197, 151, 0.76)",
+              padding: { right: 10, top: 10, bottom: 10 }
             })
           }
-        
         }
+
+        class HowToPlayScreen extends Phaser.Scene {
+          constructor() {
+            super('HowToPlayScreen');
+          }
+          create() {
+            const { width, height } = this.scale
+      
+            this.add.text(0, 0, "How To Play\n\n- Click on tiles to flip them over\n- Match two tiles to get rid of a pair\n- Be careful, if you match two death cards, you lose!\n\n- Match all cards (except death cards) to win!", {
+              fontSize: '24px',
+              color: '#fff',
+              backgroundColor: "rgba(43, 197, 151, 0.76)",
+              padding: { right: 10, top: 10, bottom: 10 }
+            });
+          }
+        }
+      
         
+
         class GameScene extends Phaser.Scene {
           preload() {
             this.load.image('bg', '/textures/back.png');
@@ -65,7 +82,7 @@ export default function Gamer() {
 
           // New method for displaying win game for player who hasn't lost
           gameOver() {
-            this.scene.start('EndScreen',{title:'Game Over. You Win!'});
+            this.scene.start('EndScreen', { title: 'Game Over. You Win!' });
           }
 
           displayBoard(board) {
@@ -74,8 +91,8 @@ export default function Gamer() {
             for (let i = 0; i < board.length; i++) {
               for (let j = 0; j < board.length; j++) {
                 const card = this.add.sprite(100 * j + 80, 100 * i + 80, 'card_back')
-                                .setInteractive()
-                                .setData('isFlipped', false);
+                  .setInteractive()
+                  .setData('isFlipped', false);
               }
             }
             cards.push(card);
@@ -90,7 +107,7 @@ export default function Gamer() {
             const offsetY = (this.cameras.main.height - rows * cardSpacing) / 2;
             this.cardsFlipped = [];
             this.cardsMatched = [];
-          
+
             for (let y = 0; y < rows; y++) {
               for (let x = 0; x < cols; x++) {
                 // Simplified example for assigning card types
@@ -106,17 +123,17 @@ export default function Gamer() {
               }
             }
           }
-          
+
           flipCard(card) {
             // Ignore if the card is already flipped or two cards are being evaluated
             if (card.getData('flipped') || this.cardsFlipped.length >= 2) {
               return;
             }
-            
+
             card.setTexture(card.getData('type'));
             card.setData('flipped', true);
             this.cardsFlipped.push(card);
-          
+
             if (this.cardsFlipped.length === 2) {
               // Check for a match
               const [card1, card2] = this.cardsFlipped;
@@ -133,7 +150,7 @@ export default function Gamer() {
               }
             }
           }
-          
+
 
 
           unflipCard(card) {
@@ -143,32 +160,32 @@ export default function Gamer() {
               this.cardsFlipped = [];
             });
           }
-          
+
           removeCard(card1) {
             card1.destroy();
             // card2.destroy();
           }
-          
+
           /* Displays that the special cards have been reshuffled*/
           displayReshuflleScreen() {
-              return null;
+            return null;
           }
-          
+
           /* Gets player input */
           getPlayerClicks(x, y, board) {
-            
-            card.on('gameobjectclick',  () => {
+
+            card.on('gameobjectclick', () => {
               this.flipCard(x, y);
             });
+          }
         }
-      }
 
         const config = {
           type: Phaser.AUTO,
           width: 800,
           height: 600,
           parent: 'game-container',
-          scene: [GameScene, EndScreen],
+          scene: [GameScene, EndScreen, HowToPlayScreen],
           physics: {
             default: 'arcade',
             arcade: {
@@ -190,11 +207,17 @@ export default function Gamer() {
     };
   }, [roomCode, socket]);
 
-    return (
-      <div style={{ backgroundImage: 'url("/textures/background2.png")', backgroundSize: 'cover', height: '100vh', position: 'relative' }} className="bg-second d-flex align-items-center text-center">
+
+  function howToPlay() {
+    gameRef.current.scene.start("HowToPlayScreen");
+  }
+
+  return (
+    <div style={{ backgroundImage: 'url("/textures/background2.png")', backgroundSize: 'cover', height: '100vh', position: 'relative' }} className="bg-second d-flex align-items-center text-center">
       <h2 style={{ color: 'purple', textShadow: '2px 2px 4px #1FE8DC', zIndex: 2, position: 'absolute', top: '-1%', left: '50%', transform: 'translate(-50%, 0%)' }} className='mt-3 w-100 text-purple'>Room Code: {roomCode}</h2>
+      <button onClick={howToPlay}>How To Play</button>
       <div id="game-container" style={{ border: '10px solid #1FE8DC', borderRadius: '10px', zIndex: 1, position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}></div>
     </div>
-    );
-  }
+  );
+}
 
