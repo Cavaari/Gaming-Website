@@ -2,8 +2,9 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import SocketContext from '@/components/SocketContext';
+import gamer from '../../lib/card_match/classes/game'
 
-export default function Game() {
+export default function Gamer() {
   const router = useRouter();
   const roomCode = router.query.slug;
   const gameRef = useRef(null);
@@ -80,34 +81,71 @@ export default function Game() {
             cards.push(card);
           }
 
-          createCardGrid(rows, cols, numDeathCards) {
+
+          createCardGrid() {
+            const rows = 4; // Example rows, adjust as needed
+            const cols = 6; // Example cols, adjust as needed
             const cardSpacing = 100;
             const offsetX = (this.cameras.main.width - cols * cardSpacing) / 2;
             const offsetY = (this.cameras.main.height - rows * cardSpacing) / 2;
-
+            this.cardsFlipped = [];
+            this.cardsMatched = [];
+          
             for (let y = 0; y < rows; y++) {
               for (let x = 0; x < cols; x++) {
-                let card = this.add.sprite(offsetX + x * cardSpacing, offsetY + y * cardSpacing, 'card_back').setInteractive();
+                // Simplified example for assigning card types
+                let cardType = `card_${Math.floor(Math.random() * 34) + 2}`; // Assuming card types are from card_2 to card_35
+                let card = this.add.sprite(offsetX + x * cardSpacing, offsetY + y * cardSpacing, 'card_back')
+                  .setInteractive()
+                  .setData('type', cardType)
+                  .setData('position', { x, y })
+                  .setData('flipped', false);
                 card.on('pointerdown', () => {
                   this.flipCard(card);
                 });
               }
             }
           }
-
-          flipCard(x, y) {
-            // cardTexture = // card at loop
-            // card.setTexture(cardTexture)
-            card.setTexture('card_04');
-          }
-
-          unflipCard(x, y) {
-            // cardTexture = // card at loop
-            card.setTexture('card_back');
+          
+          flipCard(card) {
+            // Ignore if the card is already flipped or two cards are being evaluated
+            if (card.getData('flipped') || this.cardsFlipped.length >= 2) {
+              return;
+            }
+            
+            card.setTexture(card.getData('type'));
+            card.setData('flipped', true);
+            this.cardsFlipped.push(card);
+          
+            if (this.cardsFlipped.length === 2) {
+              // Check for a match
+              const [card1, card2] = this.cardsFlipped;
+              // card1.position //card1.position -> calling check for match on the backend
+              if (card1.getData('type') === card2.getData('type')) {
+                // Match found, do something like marking them as matched
+                this.cardsMatched.push(card1, card2);
+                this.removeCard(card1);
+                this.cardsFlipped = [];
+              } else {
+                this.unflipCard(card1);
+                this.unflipCard(card2);
+              }
+            }
           }
           
-          removeCard(x, y) {
-            return null;
+
+
+          unflipCard(card) {
+            // No match, flip back after a delay
+            this.time.delayedCall(1000, () => {
+              card.setTexture('card_back').setData('flipped', false);
+              this.cardsFlipped = [];
+            });
+          }
+          
+          removeCard(card1,card2) {
+            card1.destroy();
+            card2.destroy();
           }
           
           /* Displays that the special cards have been reshuffled*/
