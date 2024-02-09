@@ -71,8 +71,6 @@ a11y:
       - 'logs/'
     reports:
       accessibility: reports/accessibility-results.json
-      screenshots: reports/screenshots.zip
-      logs: reports/logs.txt
   rules:
     - if: $urls_to_test
   variables:
