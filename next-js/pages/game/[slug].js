@@ -125,6 +125,7 @@ export default function Gamer() {
                 // Match found, do something like marking them as matched
                 this.cardsMatched.push(card1, card2);
                 this.removeCard(card1);
+                this.removeCard(card2)
                 this.cardsFlipped = [];
               } else {
                 this.unflipCard(card1);
@@ -143,9 +144,9 @@ export default function Gamer() {
             });
           }
           
-          removeCard(card1,card2) {
+          removeCard(card1) {
             card1.destroy();
-            card2.destroy();
+            // card2.destroy();
           }
           
           /* Displays that the special cards have been reshuffled*/
