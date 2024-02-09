@@ -39,12 +39,12 @@ a11y:
   image: "$CI_TEMPLATE_REGISTRY_HOST/gitlab-org/ci-cd/accessibility:6.2.3"
   variables:
     a11y_urls: "https://cis4250w24-09.socs.uoguelph.ca/"
-  before_script:
-    - apt-get update
-    - apt-get install -y nodejs npm
-    - npm install -g pa11y-ci
+  # before_script:
+  #   - apt-get update
+  #   - apt-get install -y nodejs npm
+  #   - npm install -g pa11y-ci
   script:
-    - pa11y-ci -c .pa11yci.json
+    # - pa11y-ci -c .pa11yci.json
     - /gitlab-accessibility.sh "$a11y_urls"
   allow_failure: false
   # artifacts:
