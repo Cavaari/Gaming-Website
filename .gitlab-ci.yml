@@ -56,6 +56,37 @@ deploy-job:
   only:
     - main
 
+accessibility_testing:
+  stage: accessibility
+  image: "$CI_REGISTRY_IMAGE/accessibility:latest"
+  script:
+    - /run-accessibility-tests.sh "$urls_to_test"
+  allow_failure: true
+  artifacts:
+    when: always
+    name: 'Accessibility Test Results'
+    paths:
+      - 'accessibility-reports/'
+      - 'screenshots/'
+      - 'logs/'
+    reports:
+      accessibility: reports/accessibility-results.json
+      screenshots: reports/screenshots.zip
+      logs: reports/logs.txt
+  rules:
+    - if: $urls_to_test
+  variables:
+    urls_to_test: "https://cis4250w24-09.socs.uoguelph.ca/"
+    test_settings:
+      - viewport: "mobile"
+        userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1 Mobile/15E148 Safari/604.1"
+      - viewport: "desktop"
+        userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36"
+    timeout: 120  # Set a timeout of 2 minutes for each test
+    max_reports: 10  # Limit the number of reports generated per test
+
+
+
 # vm-install-job:
 #   stage: deploy
 #   environment: production
