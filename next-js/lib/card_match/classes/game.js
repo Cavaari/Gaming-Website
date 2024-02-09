@@ -1,4 +1,5 @@
 import Player from "./player";
+import UI from "../../../pages/game/[slug]";
 
 // return random room code
 function generateRoomCode() {
@@ -178,16 +179,19 @@ export default class Game {
     /* VISUALS/LOGIC HANDLED IN SLUG */
     /* Displays whole board in JSON format */
     displayBoard() {
+        UI.displayBoard(this.board);
         return JSON.stringify(this.board);
     }
     
     /* Flips one card on board */
     flipCard(x, y) {
+        UI.flipCard();
         return null;
     }
     
     /* Unflips one card on board */
     unflipCard(x, y) {
+        UI.unflipCard(x, y);
         return null;
     }
     
@@ -203,13 +207,13 @@ export default class Game {
     
     /* Gets player input */
     getPlayerClicks() {
-        return null;
+        UI.getPlayerClicks(x, y, this.board);
     }
     
     /* END GAME LOGIC */
     /* player passed in is the winner */
     gameOver(player) {
         // Done on line 74 in [slug].js
-        return false; 
+        UI.gameOver();
     }
 }

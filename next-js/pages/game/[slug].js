@@ -42,12 +42,6 @@ export default function Game() {
         }
         
         class GameScene extends Phaser.Scene {
-          constructor() {
-            super('GameScene');
-            this.flippedCards = [];
-            this.cards = [];
-          }
-
           preload() {
             this.load.image('bg', '/textures/back.png');
             this.load.image('card_back', '/runeTextures/Black/Slab/card1.png');
@@ -55,18 +49,17 @@ export default function Game() {
             for (let i = 2; i <= 9; i++) {
               this.load.image(`card_${i}`, `/runeTextures/Black/Slab/runeBlack_slab_00${i}.png`);
             }
-            for (let i = 10; i <= 13; i++) {
+            for (let i = 10; i <= 35; i++) {
               this.load.image(`card_${i}`, `/runeTextures/Black/Slab/runeBlack_slab_0${i}.png`);
             }
           }
 
           create() {
             let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
-            // Adding listeners onto cards in Phaser for behaviour
-            // this.input.on('gameobjectdown', this.flipCard, this);
             bg.displayWidth = this.sys.game.config.width;
             bg.displayHeight = this.sys.game.config.height;
             this.createCardGrid(4, 6, 2);
+            // this.displayBoard(board);
           }
 
           // New method for displaying win game for player who hasn't lost
@@ -74,123 +67,62 @@ export default function Game() {
             this.scene.start('EndScreen',{title:'Game Over. You Win!'});
           }
 
+          displayBoard(board) {
+            const cards = [];
+
+            for (let i = 0; i < board.length; i++) {
+              for (let j = 0; j < board.length; j++) {
+                const card = this.add.sprite(100 * j + 80, 100 * i + 80, 'card_back')
+                                .setInteractive()
+                                .setData('isFlipped', false);
+              }
+            }
+            cards.push(card);
+          }
+
           createCardGrid(rows, cols, numDeathCards) {
             const cardSpacing = 100;
             const offsetX = (this.cameras.main.width - cols * cardSpacing) / 2;
             const offsetY = (this.cameras.main.height - rows * cardSpacing) / 2;
-            let cardTextureNames = this.getCardTextureNames(rows * cols / 2, numDeathCards);
 
             for (let y = 0; y < rows; y++) {
               for (let x = 0; x < cols; x++) {
-                let cardTextureName = cardTextureNames.pop();
                 let card = this.add.sprite(offsetX + x * cardSpacing, offsetY + y * cardSpacing, 'card_back').setInteractive();
-                card.setData('cardTexture', cardTextureName);
                 card.on('pointerdown', () => {
                   this.flipCard(card);
                 });
-                if(cardTextureName != 'card_death') {
-                  this.cards.push(card);
-                }
               }
             }
           }
 
-          getCardTextureNames(pairs, numDeathCards) {
-            let names = [];
-            // Push each texture name twice for matching pairs
-            for (let i = 2; i < pairs + 2 - (numDeathCards/2); i++) {
-              names.push(`card_${i}`);
-              names.push(`card_${i}`);
-            }
-            // push the death cards
-            for(let i = 0; i < numDeathCards; i++) {
-              names.push('card_death');
-            }
-
-            return Phaser.Utils.Array.Shuffle(names);
+          flipCard(x, y) {
+            // cardTexture = // card at loop
+            // card.setTexture(cardTexture)
+            card.setTexture('card_04');
           }
 
-          flipCard(card) {
-            if (this.flippedCards.length < 2 && card.texture.key === 'card_back') {
-              // start flip animation
-              this.tweens.add({
-                targets: card,
-                scaleX: 0,
-                ease: 'Linear',
-                duration: 100,
-                onComplete: () => {
-                  card.setTexture(card.getData('cardTexture'));
-          
-                  this.tweens.add({
-                    targets: card,
-                    scaleX: 1,
-                    ease: 'Linear',
-                    duration: 100,
-                  });
-
-
-                  this.flippedCards.push(card);
-          
-                  if (this.flippedCards.length === 2) {
-                    this.checkForMatch();
-                  }
-                },
-              });
-          
-              
-            }
+          unflipCard(x, y) {
+            // cardTexture = // card at loop
+            card.setTexture('card_back');
           }
           
-          checkForMatch() {
-            if (this.flippedCards[0].texture.key === this.flippedCards[1].texture.key) {
-
-              // Cards match, remove them
-              this.time.delayedCall(1000, () => {
-              this.flippedCards.forEach(card => {
-                card.destroy();
-                this.cards.splice(this.cards.indexOf(card),1)
-              });
-
-              //check for lose
-              if(this.flippedCards[0].texture.key == 'card_death') {
-                //show lose screen
-                this.scene.start('EndScreen',{title:'Game Over. You Lose!'})
-              }
-              this.flippedCards = [];
-
-              // check for win
-              if(this.cards.length == 0){
-                // show win screen
-                this.scene.start('EndScreen',{title:'Game Over. You Win!'})
-              }
+          removeCard(x, y) {
+            return null;
+          }
+          
+          /* Displays that the special cards have been reshuffled*/
+          displayReshuflleScreen() {
+              return null;
+          }
+          
+          /* Gets player input */
+          getPlayerClicks(x, y, board) {
+            
+            card.on('gameobjectclick',  () => {
+              this.flipCard(x, y);
             });
-            } else {
-              // Cards don't match, flip them back over after a short delay
-              this.time.delayedCall(1000, () => {
-                this.flippedCards.forEach(card => {
-                  // start flip animation
-                  this.tweens.add({
-                    targets: card,
-                    scaleX: 0,
-                    ease: 'Linear',
-                    duration: 100,
-                    onComplete: () => {
-                      card.setTexture('card_back');
-              
-                      this.tweens.add({
-                        targets: card,
-                        scaleX: 1,
-                        ease: 'Linear',
-                        duration: 100,
-                      });
-                      this.flippedCards = [];
-                    },
-                  });
-                });
-              });
-            }
-          }
         }
+      }
 
         const config = {
           type: Phaser.AUTO,

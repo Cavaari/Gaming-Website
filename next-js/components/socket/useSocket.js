@@ -4,7 +4,8 @@ import { io } from "socket.io-client";
 
 // socket must be pinged once before server start up to be in listening state
 const pingRoom = async () =>{
-    await fetch(process.env.HOST_URL + "/api/socket")
+    // await fetch(process.env.HOST_URL + "/api/socket")
+    await fetch("http://localhost:3000/api/socket") // Adding back localhost
 }
 
 // custom react hook needed for socket connection state
@@ -14,9 +15,10 @@ export default function useSocket(){
     useEffect(()=>{
         if(!socket){
             pingRoom().then(()=>{
-                const socket = io(process.env.SOCKET_URL, {
-                    path: "/socket.io/"
-                });
+                // const socket = io(process.env.SOCKET_URL, {
+                //     path: "/socket.io/"
+                // });
+                const socket = io("http://localhost:3001"); // Adding back localhost
             
                 socket.on("connect", () => {
                     console.log("Client Connected!");
