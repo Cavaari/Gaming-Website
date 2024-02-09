@@ -24,7 +24,8 @@ export default function SocketHandler(req, res) {
     const httpServer = createServer();
     const io = new Server(httpServer, {
       cors: {
-        origin: "*"
+        origin: "*",
+        methods: ["GET", "POST"]
       }
     });
 

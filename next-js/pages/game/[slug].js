@@ -104,15 +104,35 @@ export default function Game() {
 
           flipCard(card) {
             if (this.flippedCards.length < 2 && card.texture.key === 'card_back') {
-              card.setTexture(card.getData('cardTexture'));
-              this.flippedCards.push(card);
+              // start flip animation
+              this.tweens.add({
+                targets: card,
+                scaleX: 0,
+                ease: 'Linear',
+                duration: 100,
+                onComplete: () => {
+                  card.setTexture(card.getData('cardTexture'));
+          
+                  this.tweens.add({
+                    targets: card,
+                    scaleX: 1,
+                    ease: 'Linear',
+                    duration: 100,
+                  });
 
-              if (this.flippedCards.length === 2) {
-                this.checkForMatch();
-              }
+
+                  this.flippedCards.push(card);
+          
+                  if (this.flippedCards.length === 2) {
+                    this.checkForMatch();
+                  }
+                },
+              });
+          
+              
             }
           }
-
+          
           checkForMatch() {
             if (this.flippedCards[0].texture.key === this.flippedCards[1].texture.key) {
 
@@ -140,9 +160,25 @@ export default function Game() {
               // Cards don't match, flip them back over after a short delay
               this.time.delayedCall(1000, () => {
                 this.flippedCards.forEach(card => {
-                  card.setTexture('card_back');
+                  // start flip animation
+                  this.tweens.add({
+                    targets: card,
+                    scaleX: 0,
+                    ease: 'Linear',
+                    duration: 100,
+                    onComplete: () => {
+                      card.setTexture('card_back');
+              
+                      this.tweens.add({
+                        targets: card,
+                        scaleX: 1,
+                        ease: 'Linear',
+                        duration: 100,
+                      });
+                      this.flippedCards = [];
+                    },
+                  });
                 });
-                this.flippedCards = [];
               });
             }
           }
