@@ -56,12 +56,12 @@ deploy-job:
   only:
     - main
 
-accessibility_testing:
+a11y:
   stage: accessibility
   image: "$CI_REGISTRY_IMAGE/accessibility:latest"
   script:
-    - /run-accessibility-tests.sh "$urls_to_test"
-  allow_failure: true
+    - /gitlab-accessibility.sh "$urls_to_test"
+  allow_failure: false
   artifacts:
     when: always
     name: 'Accessibility Test Results'
@@ -77,8 +77,6 @@ accessibility_testing:
     - if: $urls_to_test
   variables:
     urls_to_test: "https://cis4250w24-09.socs.uoguelph.ca/"
-
-
 
 # vm-install-job:
 #   stage: deploy
