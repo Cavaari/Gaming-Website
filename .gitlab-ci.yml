@@ -50,9 +50,9 @@ a11y:
   artifacts:
     when: always
     expose_as: 'Accessibility Reports'
-    paths: ['reports/']
+    paths: ['/']
     reports:
-      accessibility: reports/gl-accessibility.json
+      accessibility: gl-accessibility.json
   rules:
     - if: $a11y_urls
 
