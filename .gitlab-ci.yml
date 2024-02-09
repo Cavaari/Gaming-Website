@@ -47,12 +47,12 @@ a11y:
     - pa11y-ci -c .pa11yci.json
     - /gitlab-accessibility.sh "$a11y_urls"
   allow_failure: false
-  artifacts:
-    when: always
-    expose_as: 'Accessibility Reports'
-    paths: ['/']
-    reports:
-      accessibility: gl-accessibility.json
+  # artifacts:
+  #   when: always
+  #   expose_as: 'Accessibility Reports'
+  #   paths: ['/']
+  #   reports:
+  #     accessibility: gl-accessibility.json
   rules:
     - if: $a11y_urls
 
