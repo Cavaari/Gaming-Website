@@ -38,7 +38,73 @@ export default function Game() {
             })
           }
         }
+        //////////////////
+    // LevelSelectionScreen.js
+class LevelSelectionScreen extends Phaser.Scene {
+  constructor() {
+    super('LevelSelectionScreen');
+  }
 
+  preload() {
+    this.load.image('bg', '/textures/back.png'); // Background texture is the sma eas in the figma
+  }
+  create() {
+    const { width, height } = this.scale;
+    
+    let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
+    bg.displayWidth = this.sys.game.config.width;
+    bg.displayHeight = this.sys.game.config.height;
+
+    // Style for the buttons
+    const buttonStyle = { fontSize: '32px', color: '#000', backgroundColor: '#FFF', padding: 10, borderRadius: 15 };
+
+    // Create a white rounded rectangle bubble for each button
+    this.createButton(width / 2, height / 2 - 100, 'NOOB\'S', () => this.selectLevel('noobs'), buttonStyle);
+    this.createButton(width / 2, height / 2, 'PRO\'S', () => this.selectLevel('pros'), buttonStyle);
+    this.createButton(width / 2, height / 2 + 100, 'HACKER\'S', () => this.selectLevel('hackers'), buttonStyle);
+  }
+
+  createButton(x, y, text, callback, style) {
+    // Draw the bubble background as the contrast was too little with the background
+    const bubbleWidth = 200; // Adjust the width 
+    const bubbleHeight = style.fontSize * 1.5; // Adjust the height 
+    const bubblePadding = 10;
+    const bubble = this.add.graphics({ x: x - bubbleWidth / 2 - bubblePadding, y: y - bubbleHeight / 2 - bubblePadding });
+
+    bubble.fillStyle(0xffffff, 1); // White color is being used with the level selection buttons
+    bubble.fillRoundedRect(0, 0, bubbleWidth + 2 * bubblePadding, bubbleHeight + 2 * bubblePadding, 16); // Rounded rectangle
+
+    // Add the text for levels
+    const button = this.add.text(x, y, text, style)
+      .setOrigin(0.5, 0.5)
+      .setInteractive()
+      .on('pointerdown', callback);
+
+    return { bubble, button };
+  }
+
+  selectLevel(level) {
+    let config;
+    switch (level) {
+      case 'noobs':
+        config = { rows: 4, columns: 6, deathcards: 2 };
+        break;
+      case 'pros':
+        config = { rows: 5, columns: 7, deathcards: 4 };
+        break;
+      case 'hackers':
+        config = { rows: 6, columns: 8, deathcards: 6 };
+        break;
+      default:
+        config = { rows: 4, columns: 6, deathcards: 2 }; // default to noobs if something goes wrong
+    }
+    
+    this.scene.start('StartScreen', config);
+  }
+}
+
+        
+        ////////////////////
         class HowToPlayScreen extends Phaser.Scene {
           preload() {
             this.load.image('close', '/symbols/close.png');
@@ -68,44 +134,25 @@ export default function Game() {
           }
         }
 
-
         class StartScreen extends Phaser.Scene {
           constructor() {
             super('StartScreen');
           }
-
+        
           preload() {
             this.load.image('bg', '/textures/back.png');
             this.load.image('card_back', '/runeTextures/Black/Slab/card1.png');
           }
-
+        
           create(data) {
-            const { width, height } = this.scale
+            const { width, height } = this.scale;
             let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
             bg.displayWidth = this.sys.game.config.width;
             bg.displayHeight = this.sys.game.config.height;
-            // this.createCardGrid(4, 6, 2);
-            let easy = this.add.sprite(width/3, height/2, 'card_back').setInteractive()
-            let medium = this.add.sprite(width/2, height/2, 'card_back').setInteractive()
-            let hard = this.add.sprite(width/1.5, height/2, 'card_back').setInteractive()
 
-            easy.on('pointerdown', () => {
-              this.scene.start('GameScene',{rows:4,columns:6,deathcards:2})
-              this.scene.setActive(false,'StartScreen').setVisible(false,'StartScreen')
-            });
-
-            medium.on('pointerdown', () => {
-              this.scene.start('GameScene',{rows:5,columns:7,deathcards:4})
-              this.scene.setActive(false,'StartScreen').setVisible(false,'StartScreen')
-            });
-
-            hard.on('pointerdown', () => {
-              this.scene.start('GameScene',{rows:5,columns:7,deathcards:6})
-              this.scene.setActive(false,'StartScreen').setVisible(false,'StartScreen')
-            });
+            // directly start the GameScene with the data provided when we clickedon a level in  LevelSelectionScreen
+            this.scene.start('GameScene', data);
           }
-
-
         }
 
 
@@ -123,7 +170,7 @@ export default function Game() {
             for (let i = 2; i <= 9; i++) {
               this.load.image(`card_${i}`, `/runeTextures/Black/Slab/runeBlack_slab_00${i}.png`);
             }
-            for (let i = 10; i <= 20; i++) {
+            for (let i = 10; i < 37; i++) {
               this.load.image(`card_${i}`, `/runeTextures/Black/Slab/runeBlack_slab_0${i}.png`);
             }
           }
@@ -137,10 +184,11 @@ export default function Game() {
 
           createCardGrid(rows, cols, numDeathCards) {
             const cardSpacing = 100;
-            const offsetX = (this.cameras.main.width - cols * cardSpacing) / 2;
-            const offsetY = (this.cameras.main.height - rows * cardSpacing) / 2;
-            let cardTextureNames = this.getCardTextureNames(rows * cols / 2, numDeathCards);
-
+            const offsetX = (this.cameras.main.width - cols * cardSpacing) / 2 + cardSpacing / 2;
+            const offsetY = (this.cameras.main.height - rows * cardSpacing) / 2 + cardSpacing / 2;
+            let totalCards = rows * cols;
+            let cardTextureNames = this.getCardTextureNames((totalCards - numDeathCards) / 2, numDeathCards);
+          
             for (let y = 0; y < rows; y++) {
               for (let x = 0; x < cols; x++) {
                 let cardTextureName = cardTextureNames.pop();
@@ -149,27 +197,44 @@ export default function Game() {
                 card.on('pointerdown', () => {
                   this.flipCard(card);
                 });
-                if(cardTextureName != 'card_death') {
+                if (cardTextureName !== 'card_death') {
                   this.cards.push(card);
                 }
               }
             }
           }
-
+          
           getCardTextureNames(pairs, numDeathCards) {
+            // We have 35 unique card textures from 2 to 36 and we load all those crads in first
             let names = [];
-            // Push each texture name twice for matching pairs
-            for (let i = 2; i < pairs + 2 - (numDeathCards/2); i++) {
-              names.push(`card_${i}`);
-              names.push(`card_${i}`);
+            let cardIndices = [];
+            for (let i = 2; i < 37; i++) { 
+              cardIndices.push(i);
             }
-            // push the death cards
+          
+            // then if  there are not enough unique cards, repeat the card making process
+            // meaning if we dont have enough loaded cards, more pairs will be made to fill in the board
+            while (cardIndices.length < pairs) {
+              cardIndices = [...cardIndices, ...cardIndices].slice(0, pairs);
+            }
+          
+            // then the cards are shuffled for randomness
+            cardIndices = Phaser.Utils.Array.Shuffle(cardIndices);
+          
+            // Create pairs
+            for (let i = 0; i < pairs; i++) {
+              names.push(`card_${cardIndices[i]}`);
+              names.push(`card_${cardIndices[i]}`);
+            }
+          
+            // Adding the death cards
             for(let i = 0; i < numDeathCards; i++) {
               names.push('card_death');
             }
-
+          
             return Phaser.Utils.Array.Shuffle(names);
           }
+          
 
           flipCard(card) {
             if (this.flippedCards.length < 2 && card.texture.key === 'card_back') {
@@ -259,7 +324,7 @@ export default function Game() {
           width: 800,
           height: 600,
           parent: 'game-container',
-          scene: [StartScreen, GameScene, EndScreen, HowToPlayScreen],
+          scene: [LevelSelectionScreen,StartScreen, GameScene, EndScreen, HowToPlayScreen],
           physics: {
             default: 'arcade',
             arcade: {
@@ -268,7 +333,7 @@ export default function Game() {
           }
         };
 
-        gameRef.current = new Phaser.Game(config);
+        gameRef.current = new Phaser.Game(config); 
       };
 
       initPhaser();
@@ -293,4 +358,3 @@ export default function Game() {
     </div>
     );
   }
-
