@@ -69,6 +69,46 @@ export default function Game() {
         }
 
 
+        class StartScreen extends Phaser.Scene {
+          constructor() {
+            super('StartScreen');
+          }
+
+          preload() {
+            this.load.image('bg', '/textures/back.png');
+            this.load.image('card_back', '/runeTextures/Black/Slab/card1.png');
+          }
+
+          create(data) {
+            const { width, height } = this.scale
+            let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
+            bg.displayWidth = this.sys.game.config.width;
+            bg.displayHeight = this.sys.game.config.height;
+            // this.createCardGrid(4, 6, 2);
+            let easy = this.add.sprite(width/3, height/2, 'card_back').setInteractive()
+            let medium = this.add.sprite(width/2, height/2, 'card_back').setInteractive()
+            let hard = this.add.sprite(width/1.5, height/2, 'card_back').setInteractive()
+
+            easy.on('pointerdown', () => {
+              this.scene.start('GameScene',{rows:4,columns:6,deathcards:2})
+              this.scene.setActive(false,'StartScreen').setVisible(false,'StartScreen')
+            });
+
+            medium.on('pointerdown', () => {
+              this.scene.start('GameScene',{rows:5,columns:7,deathcards:4})
+              this.scene.setActive(false,'StartScreen').setVisible(false,'StartScreen')
+            });
+
+            hard.on('pointerdown', () => {
+              this.scene.start('GameScene',{rows:5,columns:7,deathcards:6})
+              this.scene.setActive(false,'StartScreen').setVisible(false,'StartScreen')
+            });
+          }
+
+
+        }
+
+
         class GameScene extends Phaser.Scene {
           constructor() {
             super('GameScene');
@@ -83,16 +123,16 @@ export default function Game() {
             for (let i = 2; i <= 9; i++) {
               this.load.image(`card_${i}`, `/runeTextures/Black/Slab/runeBlack_slab_00${i}.png`);
             }
-            for (let i = 10; i <= 13; i++) {
+            for (let i = 10; i <= 20; i++) {
               this.load.image(`card_${i}`, `/runeTextures/Black/Slab/runeBlack_slab_0${i}.png`);
             }
           }
 
-          create() {
+          create(data) {
             let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
             bg.displayWidth = this.sys.game.config.width;
             bg.displayHeight = this.sys.game.config.height;
-            this.createCardGrid(4, 6, 2);
+            this.createCardGrid(data.rows, data.columns, data.deathcards);
           }
 
           createCardGrid(rows, cols, numDeathCards) {
@@ -182,7 +222,7 @@ export default function Game() {
           width: 800,
           height: 600,
           parent: 'game-container',
-          scene: [GameScene, EndScreen, HowToPlayScreen],
+          scene: [StartScreen, GameScene, EndScreen, HowToPlayScreen],
           physics: {
             default: 'arcade',
             arcade: {
