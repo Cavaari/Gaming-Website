@@ -45,7 +45,8 @@ a11y:
   #   - npm install -g pa11y-ci
   script:
     # - pa11y-ci -c .pa11yci.json
-    - /gitlab-accessibility.sh "$a11y_urls"
+    - /gitlab-accessibility.sh "$a11y_urls" > reports.json
+    - cat reports.json
   allow_failure: false
   # artifacts:
   #   when: always
