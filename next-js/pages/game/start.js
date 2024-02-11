@@ -51,10 +51,6 @@ export default function Game() {
         }
     }, [socket])
 
-    
-
-    
-
     return (
         <div className="new-section bg-second d-flex flex-column align-items-center justify-content-center">
             {/* <Link href={"/game/create"}>
@@ -62,7 +58,7 @@ export default function Game() {
             </Link> */}
 
             {socket ?
-                (<button className="btn btn-success btn-lg" onClick={handleCreateGame}>Create Game</button>) :
+                (<button className="btn btn-success btn-lg" onClick={handleCreateGame}>Create Chat</button>) :
                 (null)
             }
 
@@ -77,7 +73,7 @@ export default function Game() {
                             placeholder="Enter Room Code"
                             id="code"
                         />
-                        <button className="btn btn-primary" onClick={handleJoinLobby}>Join Lobby</button>
+                        <button className="btn btn-primary" onClick={handleJoinLobby}>Join Chat</button>
                     </div>
                 ) :
                 (null)

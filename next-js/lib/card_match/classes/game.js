@@ -1,6 +1,7 @@
 import Player from "./player";
+// import UI from "../../../pages/game/[slug]";
 
-// In socket.js or CustomSocket.js
+// return random room code
 function generateRoomCode() {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -11,6 +12,7 @@ function generateRoomCode() {
     return result;
 }
 
+// return random board based on the level name
 function generateBoard(levelName) {
     let rows = 0;
     let cols = 0;
@@ -60,6 +62,7 @@ function generateBoard(levelName) {
     return level;
 }
 
+// return shuffled array
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -68,6 +71,7 @@ function shuffleArray(array) {
     return array;
 }
 
+// return new player based on the level name
 function setPlayer(id, levelName, name) {
     let lives = 0;
     if (levelName == 'pros') {
@@ -78,6 +82,8 @@ function setPlayer(id, levelName, name) {
     return new Player(lives, id, name);
 }
 
+
+// game logic class
 export default class Game {
     constructor(levelName, playerId) {
         this.id = generateRoomCode();
@@ -87,41 +93,127 @@ export default class Game {
         this.board = generateBoard(levelName);
     }
     
+    /* SET PLAYERS */
     getId() {
         return this.id;
     }
     
+    // Adds second player to the game
     joinPlayer(id) {
         this.player2 = setPlayer(id, this.levelName, "player2")
     }
 
-    reshuffleSpecialCards() {
-        this.board = this.board.flat();
-    }
-
+    /* GAME LOGIC */
     runGame(levelName) {
         const board = generateLevel(levelName);
         console.log(board);
-        playRound(levelName);
-
+        currentPlayer = this.player1;
+        do {
+            playRound(levelName, currentPlayer);
+            swapPlayers(currentPlayer);
+        } while (!gameOver());
     }
-
-    playRound() {
+    
+    /* ROUND/TURN LOGIC */
+    /* Handles the logic for a single round */
+    playRound(currentPlayer) {
         let currentRound = 0;
         const roundsBeforeReshuffle = 2;
-
+        
         /* Logic for handling player moves/matches/cardflips */
-        processTurn();
+        this.makeMove(currentPlayer, moveType, coordinate);
         /* after a move has been made */
         currentRound++;
-
+        
         if (currentRound % roundsBeforeReshuffle === 0) {
             reshuffleSpecialCards(this.board);
             console.log("Special cards have been reshuffled!");
+            this.displayReshuflleScreen();
+        }
+    }
+    
+    /* Handles a single move */
+    makeMove(playerId, moveType, coordinate) {
+        return null;
+    }
+
+    /* Changes player */
+    swapPlayers(currentPlayer) {
+        if (currentPlayer == this.player1) {
+            currentPlayer = this.player2;
+        } else {
+            currentPlayer = this.player1;
         }
     }
 
-    processTurn(roomId, playerId, action) {
-        return null
+    /* CARD LOGIC */
+    /* checks if the two selected cards are the same*/
+    check_for_match(x1, y1, x2, y2) {
+        if (this.board[x1][y1] == this.board[x2][y2]) {
+            return true;
+        } else return false;
+    }
+    
+    /* reshuffles special cards (skip and death) only */
+    reshuffleSpecialCards() {
+        this.board = this.board.flat();
+    }
+    
+    /* Handles the scenario when two death cards are matched (ends game/declare winner) */
+    deathCardMatched(x1, y1, x2, y2, currentplayer) {
+        if (this.board[x1][y1] == 'X' && this.board[x2][y2] == 'X') {
+            winningplayer = this.swapPlayers(currentplayer);
+            this.gameOver(winningplayer);
+            return true;
+        } else return false;
+    }
+
+    /* Handles the scenario when two skip cards are matched (gives current player two turns) */
+    /* We can implement this next week */
+    skipCardMatched(x1, y1, x2, y2) {
+        if (this.board[x1][y1] == 'O' && this.board[x2][y2] == 'O') {
+            return true;
+        } else return false;
+    }
+    
+    /* VISUALS/LOGIC HANDLED IN SLUG */
+    /* Displays whole board in JSON format */
+    displayBoard() {
+        UI.displayBoard(this.board);
+        return JSON.stringify(this.board);
+    }
+    
+    /* Flips one card on board */
+    flipCard(x, y) {
+        UI.flipCard();
+        return null;
+    }
+    
+    /* Unflips one card on board */
+    unflipCard(x, y) {
+        UI.unflipCard(x, y);
+        return null;
+    }
+    
+    /* Removes one card */
+    removeCard(x, y) {
+        return null;
+    }
+    
+    /* Displays that the special cards have been reshuffled*/
+    displayReshuflleScreen() {
+        return null;
+    }
+    
+    /* Gets player input */
+    getPlayerClicks() {
+        UI.getPlayerClicks(x, y, this.board);
+    }
+    
+    /* END GAME LOGIC */
+    /* player passed in is the winner */
+    gameOver(player) {
+        // Done on line 74 in [slug].js
+        UI.gameOver();
     }
 }

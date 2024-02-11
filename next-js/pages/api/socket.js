@@ -24,7 +24,8 @@ export default function SocketHandler(req, res) {
     const httpServer = createServer();
     const io = new Server(httpServer, {
       cors: {
-        origin: "*"
+        origin: "*",
+        methods: ["GET", "POST"]
       }
     });
 
@@ -73,6 +74,19 @@ export default function SocketHandler(req, res) {
       socket.on("winner", (room) => {
 
       });
+
+      
+      socket.on("message", (message) => {
+        console.log(message);
+        io.to(message.room).emit("new_msg", message.text);
+      });
+
+      socket.on("join_chat", (room) => {
+        socket.join(room);
+        console.log(socket.id + " Joined the Room: " + room);
+      });
+
+
 
       socket.on('takeTurn', (roomId, playerId, action) => {
           if (processTurn(roomId, playerId, action)) {
