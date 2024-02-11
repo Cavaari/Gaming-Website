@@ -1,10 +1,8 @@
-
 import React, { useContext, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import SocketContext from '@/components/SocketContext';
-import gamer from '../../lib/card_match/classes/game'
 
-export default function Gamer() {
+export default function Game() {
   const router = useRouter();
   const roomCode = router.query.slug;
   const gameRef = useRef(null);
@@ -39,10 +37,132 @@ export default function Gamer() {
                 padding: {right:10,top:10,bottom:10}
             })
           }
-        
         }
+        //////////////////
+    // LevelSelectionScreen.js
+class LevelSelectionScreen extends Phaser.Scene {
+  constructor() {
+    super('LevelSelectionScreen');
+  }
+
+  preload() {
+    this.load.image('bg', '/textures/back.png'); // Background texture is the sma eas in the figma
+  }
+  create() {
+    const { width, height } = this.scale;
+    
+    let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
+    bg.displayWidth = this.sys.game.config.width;
+    bg.displayHeight = this.sys.game.config.height;
+
+    // Style for the buttons
+    const buttonStyle = { fontSize: '32px', color: '#000', backgroundColor: '#FFF', padding: 10, borderRadius: 15 };
+
+    // Create a white rounded rectangle bubble for each button
+    this.createButton(width / 2, height / 2 - 100, 'NOOB\'S', () => this.selectLevel('noobs'), buttonStyle);
+    this.createButton(width / 2, height / 2, 'PRO\'S', () => this.selectLevel('pros'), buttonStyle);
+    this.createButton(width / 2, height / 2 + 100, 'HACKER\'S', () => this.selectLevel('hackers'), buttonStyle);
+  }
+
+  createButton(x, y, text, callback, style) {
+    // Draw the bubble background as the contrast was too little with the background
+    const bubbleWidth = 200; // Adjust the width 
+    const bubbleHeight = style.fontSize * 1.5; // Adjust the height 
+    const bubblePadding = 10;
+    const bubble = this.add.graphics({ x: x - bubbleWidth / 2 - bubblePadding, y: y - bubbleHeight / 2 - bubblePadding });
+
+    bubble.fillStyle(0xffffff, 1); // White color is being used with the level selection buttons
+    bubble.fillRoundedRect(0, 0, bubbleWidth + 2 * bubblePadding, bubbleHeight + 2 * bubblePadding, 16); // Rounded rectangle
+
+    // Add the text for levels
+    const button = this.add.text(x, y, text, style)
+      .setOrigin(0.5, 0.5)
+      .setInteractive()
+      .on('pointerdown', callback);
+
+    return { bubble, button };
+  }
+
+  selectLevel(level) {
+    let config;
+    switch (level) {
+      case 'noobs':
+        config = { rows: 4, columns: 6, deathcards: 2 };
+        break;
+      case 'pros':
+        config = { rows: 5, columns: 7, deathcards: 4 };
+        break;
+      case 'hackers':
+        config = { rows: 6, columns: 8, deathcards: 6 };
+        break;
+      default:
+        config = { rows: 4, columns: 6, deathcards: 2 }; // default to noobs if something goes wrong
+    }
+    
+    this.scene.start('StartScreen', config);
+  }
+}
+
         
+        ////////////////////
+        class HowToPlayScreen extends Phaser.Scene {
+          preload() {
+            this.load.image('close', '/symbols/close.png');
+          }
+          constructor() {
+            super('HowToPlayScreen');
+          }
+
+          create() {
+            const { width, height } = this.scale
+      
+            this.add.text(0, 0, "How To Play\n\n- Click on tiles to flip them over\n- Match two tiles to get rid of a pair\n- Be careful, if you match two death cards, you lose!\n\n- Match all cards (except death cards) to win!", {
+              fontSize: '24px',
+              color: '#fff',
+              backgroundColor: "rgba(43, 197, 151, 0.76)",
+              padding: { right: 10, top: 10, bottom: 10 }
+            });
+
+            let close = this.add.sprite(width-50, 20, 'close')
+            .setInteractive()
+            close.on('pointerdown', () => {
+              this.scene.setActive(false,"HowToPlayScreen").setVisible(false,"HowToPlayScreen")
+              // this.scene.remove("HowToPlayScreen")
+            });
+            close.displayWidth = 50
+            close.displayHeight = 50
+          }
+        }
+
+        class StartScreen extends Phaser.Scene {
+          constructor() {
+            super('StartScreen');
+          }
+        
+          preload() {
+            this.load.image('bg', '/textures/back.png');
+            this.load.image('card_back', '/runeTextures/Black/Slab/card1.png');
+          }
+        
+          create(data) {
+            const { width, height } = this.scale;
+            let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
+            bg.displayWidth = this.sys.game.config.width;
+            bg.displayHeight = this.sys.game.config.height;
+
+            // directly start the GameScene with the data provided when we clickedon a level in  LevelSelectionScreen
+            this.scene.start('GameScene', data);
+          }
+        }
+
+
         class GameScene extends Phaser.Scene {
+          constructor() {
+            super('GameScene');
+            this.flippedCards = [];
+            this.cards = [];
+          }
+
           preload() {
             this.load.image('bg', '/textures/back.png');
             this.load.image('card_back', '/runeTextures/Black/Slab/card1.png');
@@ -50,124 +170,161 @@ export default function Gamer() {
             for (let i = 2; i <= 9; i++) {
               this.load.image(`card_${i}`, `/runeTextures/Black/Slab/runeBlack_slab_00${i}.png`);
             }
-            for (let i = 10; i <= 35; i++) {
+            for (let i = 10; i < 37; i++) {
               this.load.image(`card_${i}`, `/runeTextures/Black/Slab/runeBlack_slab_0${i}.png`);
             }
           }
 
-          create() {
+          create(data) {
             let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
             bg.displayWidth = this.sys.game.config.width;
             bg.displayHeight = this.sys.game.config.height;
-            this.createCardGrid(4, 6, 2);
-            // this.displayBoard(board);
+            this.createCardGrid(data.rows, data.columns, data.deathcards);
           }
 
-          // New method for displaying win game for player who hasn't lost
-          gameOver() {
-            this.scene.start('EndScreen',{title:'Game Over. You Win!'});
-          }
-
-          displayBoard(board) {
-            const cards = [];
-
-            for (let i = 0; i < board.length; i++) {
-              for (let j = 0; j < board.length; j++) {
-                const card = this.add.sprite(100 * j + 80, 100 * i + 80, 'card_back')
-                                .setInteractive()
-                                .setData('isFlipped', false);
-              }
-            }
-            cards.push(card);
-          }
-
-
-          createCardGrid() {
-            const rows = 4; // Example rows, adjust as needed
-            const cols = 6; // Example cols, adjust as needed
+          createCardGrid(rows, cols, numDeathCards) {
             const cardSpacing = 100;
-            const offsetX = (this.cameras.main.width - cols * cardSpacing) / 2;
-            const offsetY = (this.cameras.main.height - rows * cardSpacing) / 2;
-            this.cardsFlipped = [];
-            this.cardsMatched = [];
+            const offsetX = (this.cameras.main.width - cols * cardSpacing) / 2 + cardSpacing / 2;
+            const offsetY = (this.cameras.main.height - rows * cardSpacing) / 2 + cardSpacing / 2;
+            let totalCards = rows * cols;
+            let cardTextureNames = this.getCardTextureNames((totalCards - numDeathCards) / 2, numDeathCards);
           
             for (let y = 0; y < rows; y++) {
               for (let x = 0; x < cols; x++) {
-                // Simplified example for assigning card types
-                let cardType = `card_${Math.floor(Math.random() * 34) + 2}`; // Assuming card types are from card_2 to card_35
-                let card = this.add.sprite(offsetX + x * cardSpacing, offsetY + y * cardSpacing, 'card_back')
-                  .setInteractive()
-                  .setData('type', cardType)
-                  .setData('position', { x, y })
-                  .setData('flipped', false);
+                let cardTextureName = cardTextureNames.pop();
+                let card = this.add.sprite(offsetX + x * cardSpacing, offsetY + y * cardSpacing, 'card_back').setInteractive();
+                card.setData('cardTexture', cardTextureName);
                 card.on('pointerdown', () => {
                   this.flipCard(card);
                 });
+                if (cardTextureName !== 'card_death') {
+                  this.cards.push(card);
+                }
               }
             }
           }
           
+          getCardTextureNames(pairs, numDeathCards) {
+            // We have 35 unique card textures from 2 to 36 and we load all those crads in first
+            let names = [];
+            let cardIndices = [];
+            for (let i = 2; i < 37; i++) { 
+              cardIndices.push(i);
+            }
+          
+            // then if  there are not enough unique cards, repeat the card making process
+            // meaning if we dont have enough loaded cards, more pairs will be made to fill in the board
+            while (cardIndices.length < pairs) {
+              cardIndices = [...cardIndices, ...cardIndices].slice(0, pairs);
+            }
+          
+            // then the cards are shuffled for randomness
+            cardIndices = Phaser.Utils.Array.Shuffle(cardIndices);
+          
+            // Create pairs
+            for (let i = 0; i < pairs; i++) {
+              names.push(`card_${cardIndices[i]}`);
+              names.push(`card_${cardIndices[i]}`);
+            }
+          
+            // Adding the death cards
+            for(let i = 0; i < numDeathCards; i++) {
+              names.push('card_death');
+            }
+          
+            return Phaser.Utils.Array.Shuffle(names);
+          }
+          
+
           flipCard(card) {
-            // Ignore if the card is already flipped or two cards are being evaluated
-            if (card.getData('flipped') || this.cardsFlipped.length >= 2) {
-              return;
-            }
-            
-            card.setTexture(card.getData('type'));
-            card.setData('flipped', true);
-            this.cardsFlipped.push(card);
+            if (this.flippedCards.length < 2 && card.texture.key === 'card_back') {
+              // start flip animation
+              this.tweens.add({
+                targets: card,
+                scaleX: 0,
+                ease: 'Linear',
+                duration: 100,
+                onComplete: () => {
+                  card.setTexture(card.getData('cardTexture'));
           
-            if (this.cardsFlipped.length === 2) {
-              // Check for a match
-              const [card1, card2] = this.cardsFlipped;
-              // card1.position //card1.position -> calling check for match on the backend
-              if (card1.getData('type') === card2.getData('type')) {
-                // Match found, do something like marking them as matched
-                this.cardsMatched.push(card1, card2);
-                this.removeCard(card1);
-                this.cardsFlipped = [];
-              } else {
-                this.unflipCard(card1);
-                this.unflipCard(card2);
+                  this.tweens.add({
+                    targets: card,
+                    scaleX: 1,
+                    ease: 'Linear',
+                    duration: 100,
+                  });
+
+
+                  this.flippedCards.push(card);
+          
+                  if (this.flippedCards.length === 2) {
+                    this.checkForMatch();
+                  }
+                },
+              });
+
+            }
+          }
+
+          checkForMatch() {
+            if (this.flippedCards[0].texture.key === this.flippedCards[1].texture.key) {
+
+              // Cards match, remove them
+              this.time.delayedCall(1000, () => {
+              this.flippedCards.forEach(card => {
+                card.destroy();
+                this.cards.splice(this.cards.indexOf(card),1)
+              });
+
+              //check for lose
+              if(this.flippedCards[0].texture.key == 'card_death') {
+                //show lose screen
+                this.scene.start('EndScreen',{title:'Game Over. You Lose!'})
               }
+              this.flippedCards = [];
+
+              // check for win
+              if(this.cards.length == 0){
+                // show win screen
+                this.scene.start('EndScreen',{title:'Game Over. You Win!'})
+              }
+            });
+            } else {
+              // Cards don't match, flip them back over after a short delay
+              this.time.delayedCall(1000, () => {
+                this.flippedCards.forEach(card => {
+                  // start flip animation
+                  this.tweens.add({
+                    targets: card,
+                    scaleX: 0,
+                    ease: 'Linear',
+                    duration: 100,
+                    onComplete: () => {
+                      card.setTexture('card_back');
+              
+                      this.tweens.add({
+                        targets: card,
+                        scaleX: 1,
+                        ease: 'Linear',
+                        duration: 100,
+                      });
+                      this.flippedCards = [];
+                    },
+                  });
+
+                });
+                this.flippedCards = [];
+              });
             }
           }
-          
-
-
-          unflipCard(card) {
-            // No match, flip back after a delay
-            this.time.delayedCall(1000, () => {
-              card.setTexture('card_back').setData('flipped', false);
-              this.cardsFlipped = [];
-            });
-          }
-          
-          removeCard(card1,card2) {
-            card1.destroy();
-            card2.destroy();
-          }
-          
-          /* Displays that the special cards have been reshuffled*/
-          displayReshuflleScreen() {
-              return null;
-          }
-          
-          /* Gets player input */
-          getPlayerClicks(x, y, board) {
-            
-            card.on('gameobjectclick',  () => {
-              this.flipCard(x, y);
-            });
         }
-      }
 
         const config = {
           type: Phaser.AUTO,
           width: 800,
           height: 600,
           parent: 'game-container',
-          scene: [GameScene, EndScreen],
+          scene: [LevelSelectionScreen,StartScreen, GameScene, EndScreen, HowToPlayScreen],
           physics: {
             default: 'arcade',
             arcade: {
@@ -176,7 +333,7 @@ export default function Gamer() {
           }
         };
 
-        gameRef.current = new Phaser.Game(config);
+        gameRef.current = new Phaser.Game(config); 
       };
 
       initPhaser();
@@ -189,11 +346,15 @@ export default function Gamer() {
     };
   }, [roomCode, socket]);
 
+  function howToPlay() {
+    gameRef.current.scene.start("HowToPlayScreen");
+  }
+
     return (
       <div style={{ backgroundImage: 'url("/textures/background2.png")', backgroundSize: 'cover', height: '100vh', position: 'relative' }} className="bg-second d-flex align-items-center text-center">
-      <h2 style={{ color: 'purple', textShadow: '2px 2px 4px #1FE8DC', zIndex: 2, position: 'absolute', top: '-1%', left: '50%', transform: 'translate(-50%, 0%)' }} className='mt-3 w-100 text-purple'>Room Code: {roomCode}</h2>
+        <button type="button" class="btn btn-success" style={{position: 'absolute', left: '1%',top:'2%', zIndex:5}} onClick={howToPlay}>How To Play</button>
+        <h2 style={{ color: 'purple', textShadow: '2px 2px 4px #1FE8DC', zIndex: 2, position: 'absolute', top: '-1%', left: '50%', transform: 'translate(-50%, 0%)' }} className='mt-3 w-100 text-purple'>Room Code: {roomCode}</h2>
       <div id="game-container" style={{ border: '10px solid #1FE8DC', borderRadius: '10px', zIndex: 1, position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}></div>
     </div>
     );
   }
-
