@@ -1,5 +1,5 @@
 import Player from "./player";
-import UI from "../../../pages/game/[slug]";
+// import UI from "../../../pages/game/[slug]";
 
 // return random room code
 function generateRoomCode() {
