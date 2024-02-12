@@ -36,8 +36,8 @@
 
 In Sprint 3: The inital stages of game development have been completed and basic game functionality is fully functional. The implementation begn by following our inital figma design from sprint 2 which included 3 game levels for our card matching game. In this sprint our focus was only implementing the middle (Pro) level of the game and focused on a single player perspective stand point. Our multiplayer functionality will be implemented in a later sprint to allow for multiple users from different device to conect to the same game room and play one on one.Once a game is created a room code is generated which will be used later for players to join the same room and play against one another. Our game UI and design is displayed below.
 
-### Card Matcher!!!
-
+### Card Levels!!!
+With the card matching algorithm and ui being completed, additional levels ahve been added to the game. These are the noob's, pro's and hacker's each with different amount of cards and death cards.
 
 ![Card Matcher](Sprint 3 - resources/Card_matcher.png)
 
@@ -45,7 +45,7 @@ In Sprint 3: The inital stages of game development have been completed and basic
 
 ### Additional changes
 
-Additionaly we decided to redesign our about me section and included a single about me page with all the team members and had cards display each team members name and a brief description about them. This can be seen below: 
+Additionaly we added a screen modal for how to play the game on the top left side. Click it, to oprn the model and click on the 'x' to close it.
 
-![About US](Sprint 3 - resources/About_us_pics.png)
+
 
