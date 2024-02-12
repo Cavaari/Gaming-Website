@@ -44,3 +44,8 @@ With the card matching algorithm and ui being completed, additional levels ahve 
 Additionaly we added a screen modal for how to play the game on the top left side. Click it, to open the model and click on the 'x' to close it.
 
 ![How to Play](Sprint 4 - resources/how-to-play.png)
+
+
+### Chat
+This sprint chat room was launched on production using Nginx and Socket.io
+More detailed information can be found by this [link](https://gitlab.socs.uoguelph.ca/cis 4250_w 24/team_9/-/wikis Socket.io)
