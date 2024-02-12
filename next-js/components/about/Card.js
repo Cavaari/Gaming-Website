@@ -10,7 +10,7 @@ function randomColor(){
 export default function Card({ name, link = "", imgSrc, description }) {
 
     return (
-        <div className="col" >
+        <div className="col">
             <div className="card m-1">
                 {
                     imgSrc ? (
