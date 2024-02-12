@@ -45,7 +45,7 @@ With the card matching algorithm and ui being completed, additional levels ahve 
 
 ### Additional changes
 
-Additionaly we added a screen modal for how to play the game on the top left side. Click it, to oprn the model and click on the 'x' to close it.
+Additionaly we added a screen modal for how to play the game on the top left side. Click it, to open the model and click on the 'x' to close it.
 
 
 
