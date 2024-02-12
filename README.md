@@ -48,4 +48,4 @@ Additionaly we added a screen modal for how to play the game on the top left sid
 
 ### Chat
 This sprint chat room was launched on production using Nginx and Socket.io
-More detailed information can be found by this [link](https://gitlab.socs.uoguelph.ca/cis 4250_w 24/team_9/-/wikis Socket.io)
+More detailed information can be found by this [link](https://gitlab.socs.uoguelph.ca/cis4250_w24/team_9/-/wikis/Socket.io)
