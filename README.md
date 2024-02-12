@@ -37,10 +37,10 @@ In Sprint 4: The inital stages of game development have been completed and basic
 ### Card Levels!!!
 With the card matching algorithm and ui being completed, additional levels ahve been added to the game. These are the noob's, pro's and hacker's each with different amount of cards and death cards.
 
-![Card Matcher](Sprint 4 - resources/Card_matcher.png)
-
 ![Card Levels](Sprint 4 - resources/card-game-levels.mov)
 
 ### Additional changes
 
 Additionaly we added a screen modal for how to play the game on the top left side. Click it, to open the model and click on the 'x' to close it.
+
+![How to Play](Sprint 4 - resources/how-to-play.png)
