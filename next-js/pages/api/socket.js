@@ -127,7 +127,7 @@ const handleUserInput = (socket_session_id, user_input_word) => {
     return {status: "loser", data: front_end_data}
   }
   
-  return front_end_data
+  return {status: "game is going", data: front_end_data} 
 }
 
 
