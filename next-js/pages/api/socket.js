@@ -5,7 +5,7 @@ import path from "path";
 
 const generateWord = async () => {
   const filePath = path.join(process.cwd(), 'public/wordle/words.txt');
-  console.log("Word is started genetaring")
+  console.log("Word is started generating")
 
   // try{
     const data = await fs.readFile(filePath, 'utf8');
@@ -61,7 +61,7 @@ const generateWord = async () => {
 
 
 // array of all games for all users
-const wordleGames = []
+const wordle_games = []
 
 // return one game state
 const  createWordleGame = async (socket_session_id) => {
@@ -69,22 +69,22 @@ const  createWordleGame = async (socket_session_id) => {
   return {
     id: socket_session_id,
     word: await generateWord(),
-    trialsLeft: 6
+    trials_left: 6
   }
 }
 
 // searches for game and makes user input
-const userInput = (socket_session_id, word) => {
-  if (!word){
+// return [0,game.word[1],?,game.word[3],?]
+// 0 no such letter
+// ? there is one or more such letters but in the other positions
+const handleUserInput = (socket_session_id, user_input_word) => {
+  console.log(user_input_word);
+  if (!user_input_word){
     return "Input must have a message"
   }
   
   // find game
-  const game = wordleGames.filter((game)=>{
-    if(game.id == socket_session_id){
-      return game
-    }
-  })[0]
+  const game = wordle_games.filter(game => game.id == socket_session_id)[0]
 
   if(!game){
     return "No such game"
@@ -92,16 +92,42 @@ const userInput = (socket_session_id, word) => {
 
   //Wordle Game Logic
 
-  // winner is here
-  if(word == game.word){
-    return [game.word[0],game.word[1],game.word[2],game.word[3],game.word[4]]
+  // winner is here, winner condition
+  if(user_input_word == game.word){
+    return {status: "winner", data: [game.word[0],game.word[1],game.word[2],game.word[3],game.word[4]]}
   }
 
-  game.word.forEach((letter,index) => {
-    //check if input word index letter is equal to the word letter
-  });
+  game.trials_left = game.trials_left - 1;
+
+  const front_end_data = user_input_word.split("").map((user_letter, user_index)=>{
+    // user guessed position and letter
+    if(user_letter == game.word[user_index]){
+      return game.word[user_index]
+    }
+
+
+    let hasMatch = false
+    // user guessed only letter 
+    game.word.split("").forEach((game_letter) => {
+      if(user_letter == game_letter){
+        hasMatch = true 
+        return 
+      }
+    });
+
+    if (hasMatch){
+      return "?"
+    }
+
+    // no such letter 
+    return "0"
+  })
+
+  if (game.trials_left == 0){
+    return {status: "loser", data: front_end_data}
+  }
   
-  // return [x,game.word[1],o,game.word[3],x]
+  return front_end_data
 }
 
 
@@ -211,7 +237,14 @@ export default function SocketHandler(req, res) {
 
       socket.on("new_wordle_game", async() => {
         const game = await createWordleGame(socket.id)
+        wordle_games.push(game)
         console.log(JSON.stringify(game));
+      })
+
+      socket.on("user_input", (word) => {
+        const data = handleUserInput(socket.id, word)
+        socket.emit('game_data', JSON.stringify({ data }));
+        console.log(data);
       })
     });
 
