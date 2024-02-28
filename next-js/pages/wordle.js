@@ -1,10 +1,22 @@
 import SocketContext from '@/components/SocketContext';
-import { useContext, useEffect, useState } from 'react';
+import WinnerModal from '@/components/wordle/WinnerModal';
+import LoserModal from '@/components/wordle/LoserModal';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 const square = {
-    padding: 25,
+    width: 50,
+    height: 50,
     margin: 5,
-    border: "1px solid #1a0000"
+    border: "1px solid #dedede",
+    backgroundColor: "#ebebeb",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    boxShadow: "rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;",
+    fontWeight: "bold",
+    fontSize: 24,
+    // webkitTextStrokeWidth: 1,
+    // webkitTextStrokeColor: "#000000"
 }
 
 function Square({ value }) {
@@ -18,7 +30,8 @@ function Square({ value }) {
 function Board({ trials }) {
 
     return (
-        <div className="d-flex flex-column">
+        <div className="d-flex flex-column align-items-center">
+            <h1 className='mb-5'>Welcome to Wordle Game</h1>
             <div id="row-1" className="d-flex">
                 <Square value={trials[0][0]} />
                 <Square value={trials[0][1]} />
@@ -67,6 +80,9 @@ function Board({ trials }) {
 
 
 export default function Wordle() {
+    const winnerModalRef = useRef(null)
+    const loserModalRef = useRef(null)
+
     const [backEndGameData, setBackEndGameData] = useState()
     //socket connection
     const socket = useContext(SocketContext)
@@ -74,7 +90,7 @@ export default function Wordle() {
         if (socket) {
             socket.emit("new_wordle_game")
 
-            socket.on("game_data", (data)=>{
+            socket.on("game_data", (data) => {
                 setBackEndGameData(JSON.parse(data).data)
             })
         }
@@ -86,29 +102,38 @@ export default function Wordle() {
     const [trialsIndex, setTrialsIndex] = useState(0)
 
 
-    useEffect(()=>{
-        if(backEndGameData){
+    useEffect(() => {
+        if (backEndGameData) {
             console.log(backEndGameData);
+            // FUCK REACT DOING IT IN PLAIN JS
             const row = document.getElementById("row-" + trialsIndex)
-           
-            backEndGameData.data.forEach((letter, index)=>{
-                if(letter == "0"){
-                    row.childNodes[index].style.backgroundColor = "red"
-                }else if (letter == "?"){
-                    row.childNodes[index].style.backgroundColor = "orange"
-                }else{
-                    row.childNodes[index].style.backgroundColor = "green"
+
+            // coloring squares based on backend data response 
+            backEndGameData.data.forEach((letter, index) => {
+                if (letter == "0") {
+                    row.childNodes[index].style.backgroundColor = "#bd1b02"
+                    row.childNodes[index].style.color = "#FFFFFF"
+                    row.childNodes[index].style.webkitTextStrokeColor = "#000000"
+                } else if (letter == "?") {
+                    row.childNodes[index].style.backgroundColor = "#fb9b00"
+                    row.childNodes[index].style.color = "#FFFFFF"
+                    row.childNodes[index].style.webkitTextStrokeColor = "#000000"
+                } else {
+                    row.childNodes[index].style.backgroundColor = "#58a351"
+                    row.childNodes[index].style.color = "#FFFFFF"
+                    row.childNodes[index].style.webkitTextStrokeColor = "#000000"
                 }
             })
-            
-            if(backEndGameData.status == "winner"){
-                alert("You won")
-            }else if(backEndGameData.status == "loser"){
-                alert("You lost")
+
+            // winner loser logic after backend response
+            if (backEndGameData.status == "winner") {
+                winnerModalRef.current.show()
+            } else if (backEndGameData.status == "loser") {
+                loserModalRef.current.show()
             }
-            
+
         }
-    }, [backEndGameData, trialsIndex])
+    }, [backEndGameData, trialsIndex, winnerModalRef, loserModalRef])
 
     //keyboard input tracking
     useEffect(() => {
@@ -121,8 +146,9 @@ export default function Wordle() {
                 return
             }
 
+            // enter sends socket message with user input
             if (pressedKey === "Enter") {
-                socket.emit("user_input", trials[trialsIndex])
+                socket.emit("user_input", trials[trialsIndex].toLowerCase())
                 setTrialsIndex(trialsIndex + 1)
                 return
             }
@@ -133,7 +159,7 @@ export default function Wordle() {
             } else {
                 if (trials[trialsIndex].length < 5) {
                     const temp = [...trials]
-                    temp[trialsIndex] = temp[trialsIndex] + pressedKey
+                    temp[trialsIndex] = temp[trialsIndex] + pressedKey.toUpperCase()
                     setTrials(temp)
                 }
             }
@@ -148,9 +174,12 @@ export default function Wordle() {
         }
     }, [trials, trialsIndex])
 
+    
     return (
         <div className="mt-5 d-flex align-items-center justify-content-center">
             <Board trials={trials} />
+            <WinnerModal modalRef={winnerModalRef}/>
+            <LoserModal modalRef={loserModalRef}/>
         </div>
     )
 }
