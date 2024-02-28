@@ -2,9 +2,19 @@ import SocketContext from '@/components/SocketContext';
 import { useContext, useEffect, useState } from 'react';
 
 const square = {
-    padding: 25,
+    width: 50,
+    height: 50,
     margin: 5,
-    border: "1px solid #1a0000"
+    border: "1px solid #dedede",
+    backgroundColor: "#ebebeb",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    boxShadow: "rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;",
+    fontWeight: "bold",
+    fontSize: 24,
+    // webkitTextStrokeWidth: 1,
+    // webkitTextStrokeColor: "#000000"
 }
 
 function Square({ value }) {
@@ -18,7 +28,8 @@ function Square({ value }) {
 function Board({ trials }) {
 
     return (
-        <div className="d-flex flex-column">
+        <div className="d-flex flex-column align-items-center">
+            <h1 className='mb-5'>Welcome to Wordle Game</h1>
             <div id="row-1" className="d-flex">
                 <Square value={trials[0][0]} />
                 <Square value={trials[0][1]} />
@@ -89,15 +100,22 @@ export default function Wordle() {
     useEffect(()=>{
         if(backEndGameData){
             console.log(backEndGameData);
+            // FUCK REACT DOING IT IN PLAIN JS
             const row = document.getElementById("row-" + trialsIndex)
            
             backEndGameData.data.forEach((letter, index)=>{
                 if(letter == "0"){
-                    row.childNodes[index].style.backgroundColor = "red"
+                    row.childNodes[index].style.backgroundColor = "#bd1b02"
+                    row.childNodes[index].style.color = "#FFFFFF"
+                    row.childNodes[index].style.webkitTextStrokeColor = "#000000"
                 }else if (letter == "?"){
-                    row.childNodes[index].style.backgroundColor = "orange"
+                    row.childNodes[index].style.backgroundColor = "#fb9b00"
+                    row.childNodes[index].style.color = "#FFFFFF"
+                    row.childNodes[index].style.webkitTextStrokeColor = "#000000"
                 }else{
-                    row.childNodes[index].style.backgroundColor = "green"
+                    row.childNodes[index].style.backgroundColor = "#58a351"
+                    row.childNodes[index].style.color = "#FFFFFF"
+                    row.childNodes[index].style.webkitTextStrokeColor = "#000000"
                 }
             })
             
@@ -122,7 +140,7 @@ export default function Wordle() {
             }
 
             if (pressedKey === "Enter") {
-                socket.emit("user_input", trials[trialsIndex])
+                socket.emit("user_input", trials[trialsIndex].toLowerCase())
                 setTrialsIndex(trialsIndex + 1)
                 return
             }
@@ -133,7 +151,7 @@ export default function Wordle() {
             } else {
                 if (trials[trialsIndex].length < 5) {
                     const temp = [...trials]
-                    temp[trialsIndex] = temp[trialsIndex] + pressedKey
+                    temp[trialsIndex] = temp[trialsIndex] + pressedKey.toUpperCase()
                     setTrials(temp)
                 }
             }
