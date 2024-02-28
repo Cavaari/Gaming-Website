@@ -3,7 +3,8 @@ import { useEffect } from "react"
 
 
 
-export default function WinnerModal({modalRef, title}) {
+export default function WinnerModal({modalRef}) {
+    // https://blog.logrocket.com/handling-bootstrap-integration-next-js/
     useEffect(()=>{
         if(modalRef.current == null){
             const { Modal } = require("bootstrap")

@@ -4,6 +4,7 @@ import { useEffect } from "react"
 
 
 export default function LoserModal({modalRef}) {
+    // https://blog.logrocket.com/handling-bootstrap-integration-next-js/
     useEffect(()=>{
         if(modalRef.current == null){
             const { Modal } = require("bootstrap")

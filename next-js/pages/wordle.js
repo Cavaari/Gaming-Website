@@ -25,10 +25,14 @@ export default function Wordle() {
 
 
     //game trials state 
+    // single game state examle "0r?a?" and the whole state is array of trials made by user
+    // 0 no such letter
+    // ? there is one or more such letters but in the other positions
     const [trials, setTrials] = useState(["", "", "", "", "", ""])
     const [trialsIndex, setTrialsIndex] = useState(0)
 
 
+    //this react hook listens for backEndGameData updates and colors squares based on data
     useEffect(() => {
         if (backEndGameData) {
             console.log(backEndGameData);
@@ -37,18 +41,18 @@ export default function Wordle() {
 
             // coloring squares based on backend data response 
             backEndGameData.data.forEach((letter, index) => {
+                // no such letter: color squares red
                 if (letter == "0") {
                     row.childNodes[index].style.backgroundColor = "#bd1b02"
                     row.childNodes[index].style.color = "#FFFFFF"
-                    row.childNodes[index].style.webkitTextStrokeColor = "#000000"
+                // right letter but wrong index: color squares orange
                 } else if (letter == "?") {
                     row.childNodes[index].style.backgroundColor = "#fb9b00"
                     row.childNodes[index].style.color = "#FFFFFF"
-                    row.childNodes[index].style.webkitTextStrokeColor = "#000000"
+                // right letter and index: color squares green
                 } else {
                     row.childNodes[index].style.backgroundColor = "#58a351"
                     row.childNodes[index].style.color = "#FFFFFF"
-                    row.childNodes[index].style.webkitTextStrokeColor = "#000000"
                 }
             })
 
@@ -66,6 +70,8 @@ export default function Wordle() {
     useEffect(() => {
         const userPress = () => {
             let pressedKey = String(event.key)
+
+            // Backspace key
             if (pressedKey === "Backspace") {
                 const temp = [...trials]
                 temp[trialsIndex] = temp[trialsIndex].substring(0, temp[trialsIndex].length - 1)
@@ -80,6 +86,7 @@ export default function Wordle() {
                 return
             }
 
+            // letter keys
             let found = pressedKey.match(/[a-z]/gi)
             if (!found || found.length > 1) {
                 return
@@ -105,6 +112,7 @@ export default function Wordle() {
     return (
         <div className="mt-5 d-flex align-items-center justify-content-center">
             <Board trials={trials} />
+
             <WinnerModal modalRef={winnerModalRef}/>
             <LoserModal modalRef={loserModalRef}/>
         </div>

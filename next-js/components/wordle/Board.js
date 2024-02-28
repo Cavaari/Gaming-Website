@@ -1,5 +1,11 @@
 import Square from "./Square";
 export default function Board({ trials }) {
+    //keep in mind game trials state in order to render the board
+    // single game state examle "0r?a?" and the whole state is array of trials made by user
+    // 0 no such letter
+    // ? there is one or more such letters but in the other positions
+    // const [trials, setTrials] = useState(["", "", "", "", "", ""])
+    
     return (
         <div className="d-flex flex-column align-items-center">
             <h1 className='mb-5'>Welcome to Wordle Game</h1>
