@@ -137,6 +137,49 @@ function getGameById(id) {
   })[0]
 }
 
+/* Use this function to encode the riddle PATH might need to be updated*/
+function encodeRandomRiddle() {
+  const riddlesPath = path.join(__dirname, '..', 'lib', 'riddles', 'riddles.csv');
+  const randomRiddle = getRandomRiddle(riddlesPath);
+  return encode(randomRiddle);
+}
+
+function getRandomRiddle(filePath) {
+  const data = fs.readFileSync(filePath, 'utf8');
+  const lines = data.split('\n');
+  const nonEmptyLines = lines.filter(line => line.trim() !== '');
+  const randomLine = nonEmptyLines[Math.floor(Math.random() * nonEmptyLines.length)];
+  return randomLine;
+}
+
+function encode(csvContent) {
+  const shift = Math.floor(Math.random() * 25) + 1;
+  
+  const encode = (text, shift) => {
+    return text.split('').map(char => {
+      if (char.match(/[a-z]/i)) { 
+        let base = char >= 'A' && char <= 'Z' ? 65 : 97;
+        let code = ((char.charCodeAt(0) - base + shift) % 26) + base; 
+        return String.fromCharCode(code);
+      }
+      return char;
+    }).join('');
+  };
+  
+  const encodedCsv = csvContent.split('\n').map(line => {
+      const parts = line.split(','); 
+      const riddle = parts.slice(0, parts.length - 1).join(','); 
+      const answer = parts[parts.length - 1]; 
+      return `${encode(riddle, shift)},${encode(answer, shift)}`; 
+  }).join('\n');
+
+
+  return {
+      encodedCsv,
+      shift
+  };
+}
+
 // creating route at /api/socket
 export default function SocketHandler(req, res) {
   // launching socket server
