@@ -41,8 +41,8 @@ export default function Navbar() {
                                 </Link>
                             </li>
                             <li className="nav-item d-flex align-items-center justify-content-center">
-                                <Link className={styles.new_nav_link} href="/game">
-                                    Game
+                                <Link className={styles.new_nav_link} href="/games">
+                                    Games
                                 </Link>
                             </li>
                         </ul>
