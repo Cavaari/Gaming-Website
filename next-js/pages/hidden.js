@@ -1,11 +1,37 @@
 import { useState, useEffect } from 'react';
 import fs from 'fs';
-import path from 'path';
 
 
 
 
-// functions needed here
+
+function parseCSV(data) {
+  const lines = data.split('\n').map(line => line.trim()).filter(line => line);
+  const headers = lines.shift().split(',');
+  return lines.map(line => {
+    const values = line.split(',');
+    return headers.reduce((object, header, index) => {
+      object[header.trim()] = values[index].trim();
+      return object;
+    }, {});
+  });
+}
+
+function randomHexColor() {
+  return `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`;
+}
+
+export async function getServerSideProps() {
+  const filePath = 'lib/hidden_quotes/quotes.csv';
+  const data = fs.readFileSync(filePath, 'utf8');
+  const records = parseCSV(data).filter(record => record.Fact && record.Category);
+
+  return {
+    props: {
+      quotes: records,
+    },
+  };
+}
 
 export default function Hidden({ quotes }) {
   const [background, setBackground] = useState(randomHexColor());
@@ -44,7 +70,16 @@ export default function Hidden({ quotes }) {
   }, []);
 
 
-// factstyle needed here
+  const factStyle = index => ({
+    position: 'absolute',
+    top: position.y + (index * 50) + 'px',
+    left: position.x + 'px',
+    padding: '10px',
+    borderRadius: '10px',
+    backgroundColor: '#fff',
+    color: '#333',
+    whiteSpace: 'nowrap'
+  });
 
   return (
     <div style={{ height: "100vh", backgroundColor: background, transition: "background-color 10s ease", overflow: 'hidden' }}>
