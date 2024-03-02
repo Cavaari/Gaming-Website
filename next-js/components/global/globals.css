@@ -38,3 +38,7 @@ html, body{
 .text-hidden {
   opacity: 0;
 }
+
+.card-hover-transition {
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
