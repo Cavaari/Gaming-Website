@@ -1,18 +1,64 @@
-import Quote from "@/components/hidden/Quote";
+import { useState, useEffect } from 'react';
+import fs from 'fs';
+import path from 'path';
 
-function randomColor(){
-    const colors = ["#3d1538", "#00032F", "#5e8768", "#15333d", "#264a56"]
-    const random = Math.floor(Math.random() * colors.length);
-    return colors[random]
-}
 
-export default function Hidden() {
-    return (
-        <div style={{height: "1400px", backgroundColor: randomColor()}} className="p-5 bg-third d-flex flex-column align-items-center mx-auto">
-            <h1 style={{fontSize: "5rem", color: "white", textShadow: "2px 2px black", padding: "40px"}} className="text-first text-center align-self-md-start">Hidden Page</h1>
-            <Quote quote="A dynamic quote choice from a libaray of quotes" author="Some brilliant author"/>
-            <Quote quote="Wow another quote" author="Cool author"/>
-            <Quote quote="Last example quote" author="Dope author"/>
+
+
+// functions needed here
+
+export default function Hidden({ quotes }) {
+  const [background, setBackground] = useState(randomHexColor());
+  const [factOne, setFactOne] = useState(null);
+  const [factTwo, setFactTwo] = useState(null);
+  const [position, setPosition] = useState({ x: 50, y: 50, vx: 2, vy: 2 });
+
+  useEffect(() => {
+    if (quotes && quotes.length > 0) {
+      setFactOne(quotes[Math.floor(Math.random() * quotes.length)]);
+      setFactTwo(quotes[Math.floor(Math.random() * quotes.length)]);
+    }
+  }, [quotes]);
+
+  useEffect(() => {
+    const move = () => {
+      setPosition(prev => {
+        let newX = prev.x + prev.vx;
+        let newY = prev.y + prev.vy;
+        const newVx = (newX <= 0 || newX >= window.innerWidth - 200) ? -prev.vx : prev.vx;
+        const newVy = (newY <= 0 || newY >= window.innerHeight - 100) ? -prev.vy : prev.vy;
+        return { x: newX, y: newY, vx: newVx, vy: newVy };
+      });
+    };
+
+    const intervalId = setInterval(move, 50);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setBackground(randomHexColor());
+    }, 10000); // Change background color every 10 seconds
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+
+// factstyle needed here
+
+  return (
+    <div style={{ height: "100vh", backgroundColor: background, transition: "background-color 10s ease", overflow: 'hidden' }}>
+      <h1 style={{ textAlign: 'center', fontWeight: 'bold', position: 'absolute', width: '100%' }}>Congratulations</h1>
+      {factOne && (
+        <div style={factStyle(0)}>
+          <p>"{factOne.Fact}" - {factOne.Category}</p>
         </div>
-    )
+      )}
+      {factTwo && (
+        <div style={factStyle(1)}>
+          <p>"{factTwo.Fact}" - {factTwo.Category}</p>
+        </div>
+      )}
+    </div>
+  );
 }
