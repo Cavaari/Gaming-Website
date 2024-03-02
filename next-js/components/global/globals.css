@@ -29,3 +29,12 @@ html, body{
 .new-section{
   height: calc(100vh - 4rem);
 }
+
+.text-fade {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+.text-hidden {
+  opacity: 0;
+}

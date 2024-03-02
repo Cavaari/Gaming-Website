@@ -15,8 +15,6 @@ const generateWord = async () => {
   //   return 'Failed to read the words file';
   // }
 
-
-
   let words = data.split("\n").filter(Boolean);
 
   if (words.length === 0) {
@@ -137,22 +135,56 @@ function getGameById(id) {
   })[0]
 }
 
-/* Use this function to encode the riddle PATH might need to be updated*/
-function encodeRandomRiddle() {
-  const riddlesPath = path.join(__dirname, '..', 'lib', 'riddles', 'riddles.csv');
-  const randomRiddle = getRandomRiddle(riddlesPath);
-  return encode(randomRiddle);
+
+const riddle_games = []
+
+const createRiddleGame = async (socket_session_id) =>{
+  const {encoded, shift, answer} = await encodeRandomRiddle()
+  return {
+    id: socket_session_id,
+    riddle: encoded,
+    answer: answer,
+    shift: shift, 
+    trials_left: 6
+  }
 }
 
-function getRandomRiddle(filePath) {
-  const data = fs.readFileSync(filePath, 'utf8');
+const handleSecretMessageInput = (socket_session_id, user_input_word) => {
+  if (!user_input_word) {
+    return "Input must have a message"
+  }
+
+  // find game
+  const game = riddle_games.filter(game => game.id == socket_session_id)[0]
+
+  if (!game) {
+    return "No such game"
+  }
+
+  if(user_input_word == game.answer){
+    return "secret is broken"
+  }else{
+    return "try more"
+  }
+}
+
+/* Use this function to encode the riddle PATH might need to be updated*/
+async function encodeRandomRiddle() {
+  const riddlesPath = path.join(process.cwd(), 'lib/riddles/riddles.csv');
+  const randomRiddle = await getRandomRiddle(riddlesPath);
+  const encodedRiddle = encodeCSV(randomRiddle)
+  return encodedRiddle
+}
+
+async function getRandomRiddle(filePath) {
+  const data = await fs.readFile(filePath, 'utf8');
   const lines = data.split('\n');
   const nonEmptyLines = lines.filter(line => line.trim() !== '');
   const randomLine = nonEmptyLines[Math.floor(Math.random() * nonEmptyLines.length)];
   return randomLine;
 }
 
-function encode(csvContent) {
+function encodeCSV(csvContent) {
   const shift = Math.floor(Math.random() * 25) + 1;
   
   const encode = (text, shift) => {
@@ -166,17 +198,17 @@ function encode(csvContent) {
     }).join('');
   };
   
-  const encodedCsv = csvContent.split('\n').map(line => {
-      const parts = line.split(','); 
-      const riddle = parts.slice(0, parts.length - 1).join(','); 
-      const answer = parts[parts.length - 1]; 
-      return `${encode(riddle, shift)},${encode(answer, shift)}`; 
-  }).join('\n');
-
-
+  let answer = ""
+ 
+  const parts = csvContent.split(','); 
+  const riddle = parts.slice(0, parts.length - 1).join(','); 
+  answer = parts[parts.length - 1].trim(); 
+  const encoded = encode(riddle, shift).trim()
+  
   return {
-      encodedCsv,
-      shift
+      encoded,
+      shift,
+      answer
   };
 }
 
@@ -244,14 +276,33 @@ export default function SocketHandler(req, res) {
       });
 
 
+      
       // Chat room logic
+      socket.on("join_chat", async (room)  => {
+        socket.join(room);
+        console.log(socket.id + " Joined the Room: " + room);
+
+        // Create riddle with socket id
+        if(room == "secret room"){
+          const riddle = await createRiddleGame(socket.id)
+          riddle_games.push(riddle)
+          const data_out = {
+            riddle: riddle.riddle,
+            shift: riddle.shift
+          }
+          io.to("secret room").emit("init_secret_msg", JSON.stringify(data_out));
+
+          console.log(JSON.stringify(riddle));
+        }
+      });
       socket.on("message", (message) => {
         console.log(message);
         io.to(message.room).emit("new_msg", message.text);
-      });
-      socket.on("join_chat", (room) => {
-        socket.join(room);
-        console.log(socket.id + " Joined the Room: " + room);
+
+        // Solve riddle by user here
+        if(message.room == "secret room"){
+          io.to("secret room").emit("secret_msg", handleSecretMessageInput(socket.id, message.text)); 
+        }
       });
 
 

@@ -18,6 +18,12 @@ export default function GameInput({socket, room, isJoined}){
             socket.on('new_msg', (message) => {
                 setMessages([...messages, message])
             });
+            socket.on('init_secret_msg', (message) => {
+                setMessages([...messages, message])
+            });
+            socket.on('secret_msg', (message) => {
+                setMessages([...messages, message])
+            });
         }
     },[socket, messages])
 
