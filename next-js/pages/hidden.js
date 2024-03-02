@@ -5,6 +5,7 @@ import fs from 'fs';
 
 
 
+
 function parseCSV(data) {
   const lines = data.split('\n').map(line => line.trim()).filter(line => line);
   const headers = lines.shift().split(',');
@@ -64,7 +65,7 @@ export default function Hidden({ quotes }) {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setBackground(randomHexColor());
-    }, 10000); // Change background color every 10 seconds
+    }, 5000); // Change background color every 5 seconds
 
     return () => clearInterval(intervalId);
   }, []);
@@ -83,7 +84,7 @@ export default function Hidden({ quotes }) {
 
   return (
     <div style={{ height: "100vh", backgroundColor: background, transition: "background-color 10s ease", overflow: 'hidden' }}>
-      <h1 style={{ textAlign: 'center', fontWeight: 'bold', position: 'absolute', width: '100%' }}>Congratulations</h1>
+      <h1 className="bounce" style={{ textAlign: 'center', fontWeight: 'bold', position: 'absolute', width: '100%' }}>Congratulations !!!</h1>
       {factOne && (
         <div style={factStyle(0)}>
           <p>"{factOne.Fact}" - {factOne.Category}</p>
