@@ -67,10 +67,10 @@ export default function Game() {
     
 
     return (
-        <div className="new-section bg-second d-flex flex-column align-items-center justify-content-center">
+        <div className="new-section bg-third d-flex flex-column align-items-center justify-content-center">
          
 
-            <div className="p-5 new-section bg-second d-flex flex-column align-items-center justify-content-end">
+            <div className="p-5 new-section bg-third d-flex flex-column align-items-center justify-content-end">
                 {/* Test Component which uses socket connection state*/}
                 <Room socket={socket}/>
             </div>
