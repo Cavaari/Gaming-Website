@@ -40,7 +40,7 @@ export default function Hidden({ quotes }) {
   const [background, setBackground] = useState(randomHexColor());
   const [factOne, setFactOne] = useState(null);
   const [factTwo, setFactTwo] = useState(null);
-  const [position, setPosition] = useState({ x: 50, y: 50, vx: 2, vy: 2 });
+  const [position, setPosition] = useState({ x: 0, y: 81, vx: 2, vy: 2 });
 
 
   // check auth
@@ -49,25 +49,41 @@ export default function Hidden({ quotes }) {
 
   useEffect(() => {
     if (quotes && quotes.length > 0) {
-      setFactOne(quotes[Math.floor(Math.random() * quotes.length)]);
-      setFactTwo(quotes[Math.floor(Math.random() * quotes.length)]);
+      const fact_one = quotes[Math.floor(Math.random() * quotes.length)]
+      const fact_two = quotes[Math.floor(Math.random() * quotes.length)]
+
+      fact_one.Fact = fact_one.Fact.replace('"', '')
+      fact_one.Category = fact_one.Category.replace('"', '')
+
+      fact_two.Fact = fact_two.Fact.replace('"', '')
+      fact_two.Category = fact_two.Category.replace('"', '')
+
+      setFactOne(fact_one);
+      setFactTwo(fact_two);
     }
   }, [quotes]);
 
   useEffect(() => {
-    const move = () => {
-      setPosition(prev => {
-        let newX = prev.x + prev.vx;
-        let newY = prev.y + prev.vy;
-        const newVx = (newX <= 0 || newX >= window.innerWidth - 200) ? -prev.vx : prev.vx;
-        const newVy = (newY <= 0 || newY >= window.innerHeight - 100) ? -prev.vy : prev.vy;
-        return { x: newX, y: newY, vx: newVx, vy: newVy };
-      });
-    };
+    if (auth) {
+      const move = () => {
+        const area = document.getElementById("bounce-area")
+        const object = document.getElementById("bounce-object")
+        const navbar = document.getElementById("navbar")
 
-    const intervalId = setInterval(move, 50);
-    return () => clearInterval(intervalId);
-  }, []);
+        setPosition(prev => {
+          let newX = prev.x + prev.vx;
+          let newY = prev.y + prev.vy;
+          const newVx = (newX <= 0 || newX >= area.offsetWidth - (object.offsetWidth + 1)) ? -prev.vx : prev.vx;
+          const newVy = (newY <= navbar.offsetHeight || newY >= area.offsetHeight - (object.offsetHeight - navbar.offsetHeight)) ? -prev.vy : prev.vy;
+
+          return { x: newX, y: newY, vx: newVx, vy: newVy };
+        });
+      };
+      const intervalId = setInterval(move, 50);
+      return () => clearInterval(intervalId);
+    }
+
+  }, [auth]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -78,25 +94,37 @@ export default function Hidden({ quotes }) {
   }, []);
 
 
-  const factStyle = index => ({
+  const factStyle = {
     position: 'absolute',
-    top: position.y + (index * 50) + 'px',
+    top: position.y + 'px',
     left: position.x + 'px',
     padding: '10px',
     borderRadius: '10px',
     backgroundColor: '#fff',
     color: '#333',
-    whiteSpace: 'nowrap'
-  });
+    textAlign: 'center',
+    maxWidth: '60%',
+    whiteSpace: 'wrap'
+  }
 
 
 
   return (
     <>
       {auth ?
-        <div style={{ height: "100vh", backgroundColor: background, transition: "background-color 10s ease", overflow: 'hidden' }}>
-          <h1 className="bounce" style={{ textAlign: 'center', fontWeight: 'bold', position: 'absolute', width: '100%' }}>Congratulations !!!</h1>
-          {factOne && (
+        <div id='bounce-area' style={{ width: "100%", height: "calc(100vh - 5rem)", backgroundColor: background, transition: "background-color 10s ease", overflow: 'hidden' }}>
+          <h1 className="bounce pt-5" style={{ textAlign: 'center', fontWeight: 'bold', position: 'absolute', width: '100%' }}>Congratulations !!!</h1>
+
+          {factOne && factTwo && (
+            <div id='bounce-object' style={factStyle}>
+              <p><span className='fw-bold'>"{factOne.Fact}"</span> - <i>{factOne.Category}</i></p>
+              <p><span className='fw-bold'>"{factTwo.Fact}"</span> - <i>{factTwo.Category}</i></p>
+            </div>
+          )}
+
+
+
+          {/* {factOne && (
             <div style={factStyle(0)}>
               <p>"{factOne.Fact}" - {factOne.Category}</p>
             </div>
@@ -105,9 +133,9 @@ export default function Hidden({ quotes }) {
             <div style={factStyle(1)}>
               <p>"{factTwo.Fact}" - {factTwo.Category}</p>
             </div>
-          )}
+          )} */}
         </div> :
-        <NotAuth/>
+        <NotAuth />
       }
     </>
 
