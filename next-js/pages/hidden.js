@@ -117,23 +117,15 @@ export default function Hidden({ quotes }) {
 
           {factOne && factTwo && (
             <div id='bounce-object' style={factStyle}>
-              <p><span className='fw-bold'>"{factOne.Fact}"</span> - <i>{factOne.Category}</i></p>
-              <p><span className='fw-bold'>"{factTwo.Fact}"</span> - <i>{factTwo.Category}</i></p>
+                <blockquote class="blockquote">
+                <p>{factOne.Fact}</p>
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                <cite title="Source Title">{factOne.Category}</cite>
+                </figcaption>
             </div>
           )}
 
-
-
-          {/* {factOne && (
-            <div style={factStyle(0)}>
-              <p>"{factOne.Fact}" - {factOne.Category}</p>
-            </div>
-          )}
-          {factTwo && (
-            <div style={factStyle(1)}>
-              <p>"{factTwo.Fact}" - {factTwo.Category}</p>
-            </div>
-          )} */}
         </div> :
         <NotAuth />
       }
