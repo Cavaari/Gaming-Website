@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import fs from 'fs';
+import useAuthCookie from '@/components/hidden/useAuthCookie';
 
-
+import SocketContext from '@/components/SocketContext';
+import NotAuth from '@/components/hidden/NotAuth';
 
 
 
@@ -39,6 +41,11 @@ export default function Hidden({ quotes }) {
   const [factOne, setFactOne] = useState(null);
   const [factTwo, setFactTwo] = useState(null);
   const [position, setPosition] = useState({ x: 50, y: 50, vx: 2, vy: 2 });
+
+
+  // check auth
+  const socket = useContext(SocketContext)
+  const auth = useAuthCookie(socket)
 
   useEffect(() => {
     if (quotes && quotes.length > 0) {
@@ -82,19 +89,27 @@ export default function Hidden({ quotes }) {
     whiteSpace: 'nowrap'
   });
 
+
+
   return (
-    <div style={{ height: "100vh", backgroundColor: background, transition: "background-color 10s ease", overflow: 'hidden' }}>
-      <h1 className="bounce" style={{ textAlign: 'center', fontWeight: 'bold', position: 'absolute', width: '100%' }}>Congratulations !!!</h1>
-      {factOne && (
-        <div style={factStyle(0)}>
-          <p>"{factOne.Fact}" - {factOne.Category}</p>
-        </div>
-      )}
-      {factTwo && (
-        <div style={factStyle(1)}>
-          <p>"{factTwo.Fact}" - {factTwo.Category}</p>
-        </div>
-      )}
-    </div>
+    <>
+      {auth ?
+        <div style={{ height: "100vh", backgroundColor: background, transition: "background-color 10s ease", overflow: 'hidden' }}>
+          <h1 className="bounce" style={{ textAlign: 'center', fontWeight: 'bold', position: 'absolute', width: '100%' }}>Congratulations !!!</h1>
+          {factOne && (
+            <div style={factStyle(0)}>
+              <p>"{factOne.Fact}" - {factOne.Category}</p>
+            </div>
+          )}
+          {factTwo && (
+            <div style={factStyle(1)}>
+              <p>"{factTwo.Fact}" - {factTwo.Category}</p>
+            </div>
+          )}
+        </div> :
+        <NotAuth/>
+      }
+    </>
+
   );
 }

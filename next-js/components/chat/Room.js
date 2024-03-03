@@ -18,7 +18,6 @@ export default function Room({socket}){
                 <>
                     <div className="mb-auto text-center">
                         <h2 className="text-white">Room: {room}</h2>
-                        <h2 className="text-white">Client: {new Date().valueOf()}</h2>
                     </div>
                     <ChatInput socket={socket} room={room} isJoined={isJoined}/> 
                 </>

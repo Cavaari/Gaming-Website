@@ -145,7 +145,8 @@ const createRiddleGame = async (socket_session_id) =>{
     riddle: encoded,
     answer: answer,
     shift: shift, 
-    trials_left: 6
+    trials_left: 6,
+    is_win: false
   }
 }
 
@@ -162,10 +163,23 @@ const handleSecretMessageInput = (socket_session_id, user_input_word) => {
   }
 
   if(user_input_word == game.answer){
+    game.is_win = true
     return "Secret is broken"
   }else{
     return "Try more"
   }
+}
+
+const handleIsWinner = (socket_session_id) =>{
+  // find game
+  const game = riddle_games.filter(game => game.id == socket_session_id)[0]
+
+  if (!game) {
+    return false
+  }
+
+
+  return game.is_win
 }
 
 /* Use this function to encode the riddle PATH might need to be updated*/
@@ -303,6 +317,9 @@ export default function SocketHandler(req, res) {
         if(message.room == "secret room"){
           io.to("secret room").emit("secret_msg", handleSecretMessageInput(socket.id, message.text)); 
         }
+      });
+      socket.on("is_winner", () => {
+        socket.emit("is_winner", handleIsWinner(socket.id))
       });
 
 
