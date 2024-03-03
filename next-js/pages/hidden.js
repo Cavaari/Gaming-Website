@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import fs from 'fs';
-import useAuthCookie from '@/components/hidden/useAuthCookie';
+import useAuthWinner from '@/components/hidden/useAuthWinner';
 
 import SocketContext from '@/components/SocketContext';
 import NotAuth from '@/components/hidden/NotAuth';
@@ -45,7 +45,7 @@ export default function Hidden({ quotes }) {
 
   // check auth
   const socket = useContext(SocketContext)
-  const auth = useAuthCookie(socket)
+  const auth = useAuthWinner(socket)
 
   useEffect(() => {
     if (quotes && quotes.length > 0) {

@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 
-export default function useAuthCookie(socket){
+export default function useAuthWinner(socket){
     const [auth, setAuth] = useState(false)
 
     
