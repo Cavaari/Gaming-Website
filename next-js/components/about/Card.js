@@ -12,7 +12,7 @@ export default function Card({ name, link = "", imgSrc, description, contact }) 
     const router = useRouter()
     return (
         <div className="col">
-            <div className="card m-1">
+            <div className="h-100 card m-1">
                 {
                     imgSrc ? (
                         <Image
@@ -31,13 +31,13 @@ export default function Card({ name, link = "", imgSrc, description, contact }) 
                     )
                 }
 
-                <div className="card-body">
+                <div className="card-body d-flex flex-column justify-content-end">
                     <h5 className="card-title">{name}</h5>
                     <p className="card-text">{description}</p>
                     <Link href={link} className="btn btn-primary">{name}&apos;s Page</Link>
                 </div>
                 <div class="card-footer">
-                    <small class="text-body-secondary">Contact at {contact}</small>
+                    <small class="text-body-secondary">Contact at <a className="link-underline link-underline-opacity-0" href={"mailto:" + contact}>{contact}</a></small>
                 </div>
             </div>
         </div>)
