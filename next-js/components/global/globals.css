@@ -27,7 +27,7 @@ html, body{
 
 /* since our nav bar is 4rem */
 .new-section{
-  height: calc(100vh - 4rem);
+  height: calc(100vh - 5rem);
 }
 
 .text-fade {

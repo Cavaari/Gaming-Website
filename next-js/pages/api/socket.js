@@ -162,9 +162,9 @@ const handleSecretMessageInput = (socket_session_id, user_input_word) => {
   }
 
   if(user_input_word == game.answer){
-    return "secret is broken"
+    return "Secret is broken"
   }else{
-    return "try more"
+    return "Try more"
   }
 }
 
