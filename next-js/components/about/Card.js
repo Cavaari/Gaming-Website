@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from 'next/router'
+import React from 'react'
 
 function randomColor(){
     const colors = ["#E9A400", "#152A64", "#00032F"]
@@ -8,8 +8,8 @@ function randomColor(){
     return colors[random]
 }
 
-export default function Card({ name, link = "", imgSrc, description, contact }) {
-    const router = useRouter()
+export default function Card({ name, link = "", imgSrc, description, contact, discord }) {
+
     return (
         <div className="col">
             <div className="h-100 card m-1">
@@ -25,7 +25,7 @@ export default function Card({ name, link = "", imgSrc, description, contact }) 
                             objectFit="fill"
                         />
                     ) : (
-                        <div className="rounded-top d-flex align-items-center justify-content-center" style={{width:"100%", height:"200px", backgroundColor: randomColor(), fontSize:"4rem", color: "white"}}>
+                        <div className="rounded-top d-flex align-items-center justify-content-center" style={{width:"100%", height:"400px", backgroundColor: randomColor(), fontSize:"4rem", color: "white"}}>
                             <span style={{textShadow: "2px 2px #000000"}}>{name[0]}</span>
                         </div>
                     )
@@ -37,7 +37,18 @@ export default function Card({ name, link = "", imgSrc, description, contact }) 
                     <Link href={link} className="btn btn-primary">{name}&apos;s Page</Link>
                 </div>
                 <div class="card-footer">
-                    <small class="text-body-secondary">Contact at <a className="link-underline link-underline-opacity-0" href={"mailto:" + contact}>{contact}</a></small>
+                    <small class="text-body-secondary">Contact: <a className="link-underline link-underline-opacity-0"></a>
+                    <span class="position-relative badge text-bg-light">
+                        <a href={"mailto:" + contact} className="card-img-icon">
+                            <img src="/about/email.png" height={30} width={30} alt="Email Icon"></img>
+                        </a>
+                        {" "+contact}
+                    </span>
+                    <span class="position-relative badge text-bg-light">
+                    <img src="/about/discord.png" height={25} width={45} alt="Discord Icon"></img>
+                        {discord}
+                    </span>
+                    </small>
                 </div>
             </div>
         </div>)
