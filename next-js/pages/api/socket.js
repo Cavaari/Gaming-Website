@@ -137,7 +137,6 @@ function getGameById(id) {
 
 
 const riddle_games = []
-
 const createRiddleGame = async (socket_session_id) =>{
   const {encoded, shift, answer} = await encodeRandomRiddle()
   return {
@@ -149,7 +148,6 @@ const createRiddleGame = async (socket_session_id) =>{
     is_win: false
   }
 }
-
 const handleSecretMessageInput = (socket_session_id, user_input_word) => {
   if (!user_input_word) {
     return "Input must have a message"
@@ -169,7 +167,6 @@ const handleSecretMessageInput = (socket_session_id, user_input_word) => {
     return "Try more"
   }
 }
-
 const handleIsWinner = (socket_session_id) =>{
   // find game
   const game = riddle_games.filter(game => game.id == socket_session_id)[0]
@@ -181,7 +178,6 @@ const handleIsWinner = (socket_session_id) =>{
 
   return game.is_win
 }
-
 /* Use this function to encode the riddle PATH might need to be updated*/
 async function encodeRandomRiddle() {
   const riddlesPath = path.join(process.cwd(), 'lib/riddles/riddles.csv');
@@ -189,7 +185,6 @@ async function encodeRandomRiddle() {
   const encodedRiddle = encodeCSV(randomRiddle)
   return encodedRiddle
 }
-
 async function getRandomRiddle(filePath) {
   const data = await fs.readFile(filePath, 'utf8');
   const lines = data.split('\n');
@@ -197,7 +192,6 @@ async function getRandomRiddle(filePath) {
   const randomLine = nonEmptyLines[Math.floor(Math.random() * nonEmptyLines.length)];
   return randomLine;
 }
-
 function encodeCSV(csvContent) {
   const shift = Math.floor(Math.random() * 25) + 1;
   
@@ -225,6 +219,112 @@ function encodeCSV(csvContent) {
       answer
   };
 }
+
+
+
+// Puzzle logic 
+
+const wires = ["red", "blue", "purple", "green", "white"]
+
+function randomWire() {
+  const random = Math.floor(Math.random() * wires.length);
+  return wires[random]
+}
+
+
+
+// IDEA: three mini games
+// 1: wordle - done 
+// 2: color wires 
+// 3: switches
+
+
+const puzzle_games = []
+async function createPuzzleGame (socket_session_id){
+  return {
+    id: socket_session_id,
+    wordle: {
+      word: await generateWord(),
+      trials_left: 6,
+      is_win: false
+    },
+    color_wires:{ // make generation function
+      wire: "red",
+      hint: "select not green",
+      is_win: false
+    },
+    switches:{ // make generation function
+      positions: ["00", "11", "01", "10"],
+      is_win: false
+    },
+  }
+}
+
+function findPuzzleGame (socket_session_id){
+  // find game
+  const game = puzzle_games.filter(game => game.id == socket_session_id)[0]
+
+  if (!game) {
+    return false
+  }
+
+  return game
+}
+
+function handlePuzzleWordleInput (socket_session_id, input){
+  if (!input) {
+    return "Input must have a message"
+  }
+
+  const game = findPuzzleGame(socket_session_id)
+  if(game){
+    //Wordle Game Logic
+  
+    // winner is here, winner condition
+    if (input == game.wordle.word) {
+      return { status: "winner", data: [game.wordle.word[0], game.wordle.word[1], game.wordle.word[2], game.wordle.word[3], game.wordle.word[4]] }
+    }
+  
+    game.wordle.trials_left = game.wordle.trials_left - 1;
+  
+    const front_end_data = input.split("").map((user_letter, user_index) => {
+      // user guessed position and letter
+      if (user_letter == game.wordle.word[user_index]) {
+        return game.wordle.word[user_index]
+      }
+  
+  
+      let hasMatch = false
+      // user guessed only letter 
+      game.wordle.word.split("").forEach((game_letter) => {
+        if (user_letter == game_letter) {
+          hasMatch = true
+          return
+        }
+      });
+  
+      if (hasMatch) {
+        return "?"
+      }
+  
+      // no such letter 
+      return "0"
+    })
+  
+    if (game.wordle.trials_left == 0) {
+      return { status: "loser", data: front_end_data }
+    }
+  
+    return { status: "game is going", data: front_end_data }
+  }
+}
+
+// function for user input of color wires game
+function handlePuzzleColorWiresInput (socket_session_id, input){}
+
+// function for user input of switches game
+function handlePuzzleSwitchesInput (socket_session_id, input){}
+
 
 // creating route at /api/socket
 export default function SocketHandler(req, res) {
@@ -334,6 +434,15 @@ export default function SocketHandler(req, res) {
         socket.emit('game_data', JSON.stringify({ data }));
         console.log(data);
       })
+
+      // Wordle game : socket layer 
+      socket.on("new_puzzle", async () => {
+        const puzzle = await createPuzzleGame(socket.id)
+        console.log(JSON.stringify(puzzle));
+        socket.emit('game_data', JSON.stringify({ puzzle }));
+        
+      })
+      
     });
 
     httpServer.listen(3001, () => {
