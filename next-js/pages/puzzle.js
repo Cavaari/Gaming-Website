@@ -10,7 +10,7 @@ export default function Puzzle() {
 
     const [gameState, setGameState] = useState(null)
 
-    
+
 
 
     useEffect(() => {
@@ -31,14 +31,18 @@ export default function Puzzle() {
 
 
     // for example purpose of user input is sent to the back-end
-    const handleUserInputSubmit = () =>{
+    const handleUserInputSubmit = () => {
         event.preventDefault()
         const form_data = new FormData(event.target)
 
-        const makeMove = async () =>{
+        const makeMove = async () => {
             const r = await fetch(
                 process.env.HOST_URL + "/api/puzzle/make_move?" +
-                new URLSearchParams({ id: socket.id, game: form_data.get("game_type"), user_input: form_data.get("user_input")})
+                new URLSearchParams({
+                    id: socket.id,
+                    game: form_data.get("game_type"),
+                    user_input: form_data.get("user_input")
+                })
             )
             const data = await r.json();
             // on cold server boot might return no such game CTRL + SHIFT + R couple of times 
@@ -60,7 +64,7 @@ export default function Puzzle() {
                         game_types.map((type, index) => <option key={index} value={type}>{type}</option>)
                     }
                 </select>
-                <input className='form-control m-2' name='user_input' id='user_input' type='text' placeholder='User Input'/>
+                <input className='form-control m-2' name='user_input' id='user_input' type='text' placeholder='User Input' />
                 <button className='form-control m-2'>Submit</button>
             </form>
         </div>
