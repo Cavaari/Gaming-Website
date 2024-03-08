@@ -41,6 +41,7 @@ export default function Puzzle() {
                 new URLSearchParams({ id: socket.id, game: form_data.get("game_type"), user_input: form_data.get("user_input")})
             )
             const data = await r.json();
+            // on cold server boot might return no such game CTRL + SHIFT + R couple of times 
             console.log(data);
         }
         makeMove()
