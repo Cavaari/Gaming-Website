@@ -32,7 +32,8 @@ function createNewPuzzleGame(socket_session_id) {
     timeout: false
   }
   puzzle_games.push(game)
-
+  console.log(game);
+  
   return game
 }
 
