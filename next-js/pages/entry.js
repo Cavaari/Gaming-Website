@@ -17,7 +17,7 @@ export default function MysteryPage() {
       <div className="mysteryContainer">
         {stage === 'asteroid' && (
           <div className="iconContainer">
-            <FontAwesomeIcon icon={faGift} size="3x" /> {/* Updated to use faGift */}
+            <FontAwesomeIcon icon={faGift} size="3x" /> 
           </div>
         )}
         {stage === 'content' && (
