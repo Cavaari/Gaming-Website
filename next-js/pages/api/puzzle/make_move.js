@@ -21,10 +21,10 @@ export default function handler(req, res) {
         res.status(400).json({ message: 'Provide Socket!' })
     }
 
-    const game = findPuzzleGame(req.query.id)
-    if(!game){
-        res.status(404).json({ message: 'No Such Game!' })
-    }
+    // const game = findPuzzleGame(req.query.id)
+    // if(!game){
+    //     res.status(404).json({ message: 'No Such Game!' })
+    // }
 
     switch(req.query.game){
         case "switch":
