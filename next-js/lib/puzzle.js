@@ -32,7 +32,7 @@ function createNewPuzzleGame(socket_session_id) {
     timeout: false
   }
   puzzle_games.push(game)
-  console.log(game);
+  console.log(JSON.stringify(game));
   
   return game
 }
@@ -107,8 +107,6 @@ function findPuzzleGame(socket_session_id) {
 
 // function for user input of color wordle game
 function handlePuzzleUserInput(socket_session_id, game_type, input) {
-  console.log(puzzle_games);
-
   if (!input) {
     return "Input must have a message"
   }

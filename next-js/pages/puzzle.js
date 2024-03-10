@@ -86,7 +86,7 @@ export default function Puzzle() {
 
             
             {winnerIndex == 3 &&
-                <>
+                <div className='text-center'>
                     <h1>Hello Winner</h1>
                     <Image
                         className='img-fluid'
@@ -94,7 +94,7 @@ export default function Puzzle() {
                         width={1000}
                         height={1000}
                     />
-                </>
+                </div>
             }
         </div>
     )

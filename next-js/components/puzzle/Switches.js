@@ -27,7 +27,7 @@ const netural = {
 }
 
 
-export default function Switches({ gameState, handleUserInputSubmit }) {
+export default function Switches({ gameState, handleUserInputSubmit, setWinnerIndex }) {
     const [switchesState, setSwitchesState] = useState(["10", "00", "00", "00", "01"])
 
     // const handleSumbit 
