@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faGift } from '@fortawesome/free-solid-svg-icons'; 
 
 export default function MysteryPage() {
   const [stage, setStage] = useState('asteroid');
 
   useEffect(() => {
     let timers = [];
-    timers.push(setTimeout(() => setStage('fireworks'), 4000)); //  fireworks after asteroid
-    timers.push(setTimeout(() => setStage('content'), 6000)); //  content after fireworks
+    timers.push(setTimeout(() => setStage('content'), 4000)); 
 
-    return () => timers.forEach(timer => clearTimeout(timer)); // timers
+    return () => timers.forEach(timer => clearTimeout(timer));
   }, []);
 
   return (
     <>
       <div className="mysteryContainer">
-        {stage === 'asteroid' && <div className="asteroid"></div>}
-        {stage === 'fireworks' && <div className="fireworks"></div>}
+        {stage === 'asteroid' && (
+          <div className="iconContainer">
+            <FontAwesomeIcon icon={faGift} size="3x" /> {/* Updated to use faGift */}
+          </div>
+        )}
         {stage === 'content' && (
           <>
-            <h1 className="title fadeIn">Welcome to Team 9 Mystery</h1>
+            <div className="titleContainer">
+              <h1 className="title fadeIn">Welcome to Team 9 Mystery</h1>
+            </div>
             <div className="inputGroup fadeIn">
               <input type="text" placeholder="Enter your mystery..." className="mysteryInput" />
-              <button className="mysteryButton">Submit</button>
+              <button className="mysteryButton">
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
             </div>
           </>
         )}
@@ -49,12 +57,8 @@ export default function MysteryPage() {
           color: var(--first-color);
         }
 
-        .asteroid {
+        .iconContainer {
           position: absolute;
-          background-color: var(--second-color);
-          width: 100px;
-          height: 100px;
-          border-radius: 50%;
           top: -100px;
           left: 50%;
           transform: translateX(-50%);
@@ -64,6 +68,7 @@ export default function MysteryPage() {
         @keyframes fall {
           0% {
             top: -100px;
+            opacity: 1;
           }
           90% {
             top: calc(100vh - 150px);
@@ -75,37 +80,29 @@ export default function MysteryPage() {
           }
         }
 
-        .fireworks {
+        .titleContainer {
+          position: relative;
+          display: inline-block;
+          overflow: hidden;
+        }
+
+        .titleContainer::before {
+          content: '';
           position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
+          top: 0;
+          left: -100%;
           width: 100%;
           height: 100%;
-          background: radial-gradient(circle, transparent 0%, transparent 70%, var(--first-color) 70%);
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: 300% 300%;
-          animation: fireworks 1.5s ease-in-out forwards, colors 1s infinite alternate;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+          animation: clearFog 3s forwards;
         }
 
-        @keyframes fireworks {
-          from {
-            background-size: 300% 300%;
-            opacity: 0;
-          }
-          to {
-            background-size: 100% 100%;
-            opacity: 1;
-          }
-        }
-
-        @keyframes colors {
+        @keyframes clearFog {
           0% {
-            filter: hue-rotate(0deg);
+            left: -100%;
           }
           100% {
-            filter: hue-rotate(-360deg);
+            left: 100%;
           }
         }
 
@@ -134,6 +131,15 @@ export default function MysteryPage() {
           background-color: var(--first-color);
           color: var(--third-color);
           cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .mysteryButton:hover {
+          background-color: #fff;
+          color: var(--second-color);
         }
 
         .fadeIn {
