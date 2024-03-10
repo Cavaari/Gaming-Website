@@ -29,7 +29,6 @@ export default function Puzzle() {
             }
             fetchNewGame()
         }
-        
     }, [socket])
 
 
@@ -51,9 +50,9 @@ export default function Puzzle() {
 
     return (
         <div className='mt-5 container-fluid align-items-center justify-content-center'>
-            {JSON.stringify(gameState)}
+            {/* {JSON.stringify(gameState)} */}
 
-            <div className="puzzle-intro-text">
+            <div className="puzzle-intro-text text-center">
                 <p>You have stepped into the shoes of Alex Carter. How unfortunate for you. You have done bad things
                     and bad things have consequences. JigSaw has trapped you in a room with a bomb. You see a sheet
                     of paper, pliers and a phone in front of you, you’ve tried to call someone, but it only seems to

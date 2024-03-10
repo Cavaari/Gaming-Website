@@ -10,15 +10,15 @@ import { findPuzzleGame, handlePuzzleUserInput } from "@/lib/puzzle"
 
 export default function handler(req, res) {
     if(!req.query.game){
-        res.status(400).json({ message: 'Provide Game Type!' })
+        res.status(400).json('Provide Game Type!')
     }
 
     if(!req.query.user_input){
-        res.status(400).json({ message: 'Provide Users Type!' })
+        res.status(400).json('Provide Users Input!')
     }
 
     if(!req.query.id){
-        res.status(400).json({ message: 'Provide Socket!' })
+        res.status(400).json('Provide Socket!')
     }
 
     // const game = findPuzzleGame(req.query.id)

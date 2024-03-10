@@ -27,8 +27,8 @@ const wireStyles = {
     height: '400px',
     width: '40px',
     color: 'white',
-    fontSize: '20px', 
-    fontWeight: 'bold', 
+    fontSize: '20px',
+    fontWeight: 'bold',
   },
   colors: [
     { backgroundColor: '#e6194B' }, // Red
@@ -54,12 +54,16 @@ const Wires = ({ handleUserInputSubmit, gameState, setWinnerIndex }) => {
     if (response.includes("Winner")) {
       setWinnerIndex((prev) => prev + 1);
     } else {
-      console.log(response);
+      document.getElementById("buttons_game").classList.add("alerts-border")
+      setTimeout(() => {
+        document.getElementById("buttons_game").classList.remove("alerts-border")
+      }, "1000");
+      console.log(response)
     }
   };
 
   return (
-    <div style={mainStyle}>
+    <div id='buttons_game' style={mainStyle}>
       <div className="wire-container" style={{ display: "flex" }}>
         {wireStyles.colors.map((style, index) => (
           <div

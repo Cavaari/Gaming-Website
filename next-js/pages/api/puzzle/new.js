@@ -17,6 +17,6 @@ export default function handler(req, res) {
             },
         })
     } else {
-        res.status(400).json({ message: 'Wrong Socket!' })
+        res.status(400).json('Wrong Socket!')
     }
 }

@@ -120,12 +120,7 @@ export default function SocketHandler(req, res) {
 
       // Puzzle game : socket layer 
       socket.on("new_puzzle", async () => {
-        await createNewPuzzleGame(socket.id)
-        const puzzle = findPuzzleGame(socket.id)
-
-
-        console.log(JSON.stringify(puzzle));
-        socket.emit('game_data', JSON.stringify({ puzzle }));
+        
       })
       
     });
