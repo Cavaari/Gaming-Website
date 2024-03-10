@@ -26,7 +26,7 @@ export default function MysteryPage() {
               <h1 className="title fadeIn">Welcome to Team 9 Mystery</h1>
             </div>
             <div className="inputGroup fadeIn">
-              <input type="text" placeholder="Enter your mystery..." className="mysteryInput" />
+              <input type="text" placeholder="Enter your mystery code..." className="mysteryInput" />
               <button className="mysteryButton">
                 <FontAwesomeIcon icon={faSearch} />
               </button>
