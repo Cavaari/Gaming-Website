@@ -1,23 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faGift } from '@fortawesome/free-solid-svg-icons'; 
+import { faSearch, faGift } from '@fortawesome/free-solid-svg-icons';
 
 export default function MysteryPage() {
   const [stage, setStage] = useState('asteroid');
+  const [mysteryCode, setMysteryCode] = useState(''); // State to hold the mystery code input
+  const [isVerified, setIsVerified] = useState(false); // State to show/hide the verified text and button
 
   useEffect(() => {
     let timers = [];
-    timers.push(setTimeout(() => setStage('content'), 4000)); 
+    timers.push(setTimeout(() => setStage('content'), 4000));
 
     return () => timers.forEach(timer => clearTimeout(timer));
   }, []);
+
+  // Function to handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the form from reloading the page
+    if (mysteryCode === 'Team9secret') {
+      setIsVerified(true); // Show verified text and button
+    }
+  };
 
   return (
     <>
       <div className="mysteryContainer">
         {stage === 'asteroid' && (
           <div className="iconContainer">
-            <FontAwesomeIcon icon={faGift} size="3x" /> 
+            <FontAwesomeIcon icon={faGift} size="3x" />
           </div>
         )}
         {stage === 'content' && (
@@ -25,12 +35,24 @@ export default function MysteryPage() {
             <div className="titleContainer">
               <h1 className="title fadeIn">Welcome to Team 9 Mystery</h1>
             </div>
-            <div className="inputGroup fadeIn">
-              <input type="text" placeholder="Enter your mystery code..." className="mysteryInput" />
-              <button className="mysteryButton">
+            <form className="inputGroup fadeIn" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="Enter your mystery code..."
+                className="mysteryInput"
+                value={mysteryCode}
+                onChange={(e) => setMysteryCode(e.target.value)}
+              />
+              <button type="submit" className="mysteryButton">
                 <FontAwesomeIcon icon={faSearch} />
               </button>
-            </div>
+            </form>
+            {isVerified && (
+              <div className="verifiedSection fadeIn">
+                <p>Verified</p>
+                <button onClick={() => { window.location.href = '/puzzle'; }}>Click here to proceed</button>
+              </div>
+            )}
           </>
         )}
       </div>
@@ -138,6 +160,27 @@ export default function MysteryPage() {
         }
 
         .mysteryButton:hover {
+          background-color: #fff;
+          color: var(--second-color);
+        }
+
+        .verifiedSection {
+          margin-top: 20px;
+          text-align: center;
+        }
+
+        .verifiedSection button {
+          margin-top: 10px;
+          padding: 10px 20px;
+          border-radius: 5px;
+          border: none;
+          background-color: var(--first-color);
+          color: var(--third-color);
+          cursor: pointer;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .verifiedSection button:hover {
           background-color: #fff;
           color: var(--second-color);
         }

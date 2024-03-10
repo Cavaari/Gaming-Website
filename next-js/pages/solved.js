@@ -14,7 +14,7 @@ const PuzzleSolvedPage = () => {
           <div className="alert alert-success" role="alert">
             <code>PUZZLE-SOLVED-CODE-123</code>
           </div>
-          <a href="/" className="mysteryButton">More Mystery ?!?!</a>
+          <a href="https://cis4250w24-10.socs.uoguelph.ca/qRpLmNoStU" className="mysteryButton">More Mystery ?!?!</a>
         </div>
       </div>
 
