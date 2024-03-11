@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router'; // Import useRouter
+import { useRouter } from 'next/router';
 import SocketContext from '@/components/SocketContext';
 import Switches from '@/components/puzzle/Switches';
 import Buttons from '@/components/puzzle/Buttons';
@@ -82,7 +82,7 @@ export default function Puzzle() {
                 </div>
                 <div style={{ paddingTop: 50 }} className='col-12 col-md-7 col-lg-5 d-flex flex-column align-items-center justify-content-center'>
                     <div className="puzzle-intro-text text-center d-flex flex-column align-items-center justify-content-center">
-                        <p style={{ color: "var(--first-color)", background: "var(--second-color)" }} className="text-wrap fs-4 fw-bold alert alert-warning">
+                        <p style={{ color: "var(--first-color)", background: "var(--second-color)", textAlign: "justify" }} className="text-wrap fs-4 fw-bold alert alert-warning">
                             You have stepped into the shoes of Alex Carter. How unfortunate for you. You have done bad things
                             and bad things have consequences. JigSaw has trapped you in a room with a bomb. You see a sheet
                             of paper, pliers and a phone in front of you, you’ve tried to call someone, but it only seems to
