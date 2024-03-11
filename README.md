@@ -31,9 +31,8 @@
 
 	
 ## Sprint 6: Game Development
-
+Keep the story rolling, we have aligned our story to flow with teams 8 and 10. Unlocking our page upon completion of team 8's puzzle, our puzzle takes you through a series of mini levels to unlock the final game on team 10's page.
 
 ### Additional changes
+For this sprint, we created a story that focuses on 1 character needing to escape a Jigsaw trap through a series of small mini-games. Our mini-games offer a new challenge to a seemingly simple interface, including hints through text messages from Jigsaw. 
 
-
-### Reinventing Chat for Hidden Page
