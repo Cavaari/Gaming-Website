@@ -76,9 +76,9 @@ export default function Puzzle() {
                     zIndex: 1000,
                     padding: '0px 0',
                     textAlign: 'left',
-                    color: '#FFFF'
+                    color: '#E9A400'
                 }}>
-                    <h2>Time Remaining: {Math.floor(timer / 60)}:{("0" + (timer % 60)).slice(-2)}</h2>
+                    <h2 >Time Remaining: {Math.floor(timer / 60)}:{("0" + (timer % 60)).slice(-2)}</h2>
                 </div>
                 <div style={{ paddingTop: 50 }} className='col-12 col-md-7 col-lg-5 d-flex flex-column align-items-center justify-content-center'>
                     <div className="puzzle-intro-text text-center d-flex flex-column align-items-center justify-content-center">
@@ -147,23 +147,32 @@ export default function Puzzle() {
                         </>
                     }
 
-{/* Finish styling here------------------------ */}
                     {winnerIndex === 3 &&
                         <div className='text-center'>
-                            <h1>Hello Winner</h1>
-                            <p>Dont get too excited... the adventure is not over for you just yet! Good luck...</p>
-                            <Image
-                                className='img-fluid'
-                                src="/puzzle/jigsaw.gif"
-                                width={1000}
-                                height={1000}
-                            />
-                            {/* Button to proceed to the next page */}
-                            <button className="btn btn-primary mt-3 mb-3" onClick={proceedToNextPage}>Proceed to Next Page</button>
-                        </div>
+                        <h1 className="bg-second text-first" style={{ borderRadius:'5px' }}>Hello Winner</h1>
+                        <p className="bg-second text-first" style={{ borderRadius:'5px' }}>Don't get too excited... the adventure is not over for you just yet! Good luck...</p>
+                        <Image
+                          className='img-fluid'
+                          src="/puzzle/jigsaw.gif"
+                          width={1000}
+                          height={1000}
+                        />
+                        {/* Button to proceed to the next page */}
+                        <button className="btn mt-3 mb-3 btn-proceed" onClick={proceedToNextPage}>Proceed to Next Page</button>
+                        <style jsx>{`
+                          .btn-proceed {
+                            background-color: #E9A400;
+                            color: #000000;
+                            border: none;
+                          }
+                          .btn-proceed:hover {
+                            background-color: white;
+                            color: var(--bg-second);
+                          }
+                        `}</style>
+                      </div>
                     }
                 </div>
-
             </div>
         );
     } else {
