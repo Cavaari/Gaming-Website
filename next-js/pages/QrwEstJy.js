@@ -29,6 +29,8 @@ export default function MysteryPage() {
 
     if(data == "Right Code!"){
       setIsVerified(true); // Show verified text and button
+      // update the cookie or local storage
+      localStorage.setItem("code", "solved");
     }
   };
 

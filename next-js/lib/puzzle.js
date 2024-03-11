@@ -33,7 +33,7 @@ function createNewPuzzleGame(socket_session_id) {
   }
   puzzle_games.push(game)
   console.log(JSON.stringify(game));
-  
+
   return game
 }
 
@@ -74,23 +74,23 @@ function generateColourPoem() {
   const random = Math.floor(Math.random() * scenarios.length)
   const buttonsHint = scenarios[random]
   const buttonsAnswer = answers[random]
-  return {buttonsHint, buttonsAnswer}
+  return { buttonsHint, buttonsAnswer }
 }
 
 function wirePersona() {
   const wireMessage = ["In a world where truths are masked and innocence tasked, look beyond the surface where deceit is vast. Not the envy that grows, nor the passion that flows, not the crown of the corrupt, nor the wisdom that's abrupt, nor the twilight of ambition. Seek the depth of conviction, where silence is golden but the truth is unspoken.",
-  "In the garden of choices, where each voice disguises, the path to redemption seldom rises. Not the depth where secrets drown, nor the heart where truths are bound, not the regal robe worn with pride, nor the light that guides the stride, nor the fire of desire. Find the growth amidst the mire, where integrity's seed sprouts from the liar.",
-  "In the tapestry of fate, where threads intertwine in hate, a single strand must liberate. Not the abyss that swallows light, nor the envy of the night, not the illusion of noble fight, nor the dawn that breaks the plight, nor the dusk that ends the quest. Seek the pulse within the chest, where the truth beats, undressed.",
-  "Where power is masked and trust is tasked, through the charades where the truth is unasked. Not in the depths where silence sleeps, nor in the envy that quietly creeps. Not where the heart's rhythm dares to tread, nor in the light where clarity is spread. Nor in the final glow of the setting sun. Seek what's hidden under the guise of one, in the shadows of grandeur, the deed is done.",
-  "Under the bright gaze where secrets haze, clarity and deception in the light's maze. Not where the depths hide the unseen, nor where growth covers what has been. Not in the beat of the passionate drum, nor in the cloak of the night to come. Nor where the evening's fire softly dies. Find the ray that truth never denies, in the brilliance that overshadows the lies.",
-  "As the horizon blends and the day ends, in balance truth transcends. Not in the abyss where whispers float, nor in the fields where desires gloat. Not in the pulse of the veiled heart, nor where shadows and illusions start. Nor in the beacon that guides the way. Between the extremes, where the honest say, in the twilight's embrace, the truth will stay."
+    "In the garden of choices, where each voice disguises, the path to redemption seldom rises. Not the depth where secrets drown, nor the heart where truths are bound, not the regal robe worn with pride, nor the light that guides the stride, nor the fire of desire. Find the growth amidst the mire, where integrity's seed sprouts from the liar.",
+    "In the tapestry of fate, where threads intertwine in hate, a single strand must liberate. Not the abyss that swallows light, nor the envy of the night, not the illusion of noble fight, nor the dawn that breaks the plight, nor the dusk that ends the quest. Seek the pulse within the chest, where the truth beats, undressed.",
+    "Where power is masked and trust is tasked, through the charades where the truth is unasked. Not in the depths where silence sleeps, nor in the envy that quietly creeps. Not where the heart's rhythm dares to tread, nor in the light where clarity is spread. Nor in the final glow of the setting sun. Seek what's hidden under the guise of one, in the shadows of grandeur, the deed is done.",
+    "Under the bright gaze where secrets haze, clarity and deception in the light's maze. Not where the depths hide the unseen, nor where growth covers what has been. Not in the beat of the passionate drum, nor in the cloak of the night to come. Nor where the evening's fire softly dies. Find the ray that truth never denies, in the brilliance that overshadows the lies.",
+    "As the horizon blends and the day ends, in balance truth transcends. Not in the abyss where whispers float, nor in the fields where desires gloat. Not in the pulse of the veiled heart, nor where shadows and illusions start. Nor in the beacon that guides the way. Between the extremes, where the honest say, in the twilight's embrace, the truth will stay."
   ]
   const answers = ["Blue", "Green", "Red", "Purple", "Yellow", "Orange"]
   const random = Math.floor(Math.random() * wireMessage.length)
 
   const personaHint = wireMessage[random]
   const personaAnswer = answers[random]
-  return { personaAnswer, personaHint}
+  return { personaAnswer, personaHint }
 }
 
 function findPuzzleGame(socket_session_id) {
@@ -113,26 +113,26 @@ function handlePuzzleUserInput(socket_session_id, game_type, input) {
 
   const game = findPuzzleGame(socket_session_id)
   if (game) {
-    switch(game_type){
+    switch (game_type) {
       case 'switch':
-        if(game.switches.answer == input){
+        if (game.switches.answer == input) {
           game.switches.is_win = true
           return "Winner Switches"
-        }else{
+        } else {
           return "Try Again"
         }
       case 'wire':
-        if(game.color_wires.answer == input){
+        if (game.color_wires.answer == input) {
           game.color_wires.is_win = true
           return "Winner Wires"
-        }else{
+        } else {
           return "Try Again"
         }
       case 'color poem':
-        if(game.buttons.answer == input){
+        if (game.buttons.answer == input) {
           game.buttons.is_win = true
           return "Winner Buttons"
-        }else{
+        } else {
           return "Try Again"
         }
     }
@@ -142,5 +142,16 @@ function handlePuzzleUserInput(socket_session_id, game_type, input) {
 }
 
 
+function isWinner (socket_session_id){
+  const game = findPuzzleGame(socket_session_id)
+  if (game) {
+    if(game.buttons.is_win && game.color_wires.is_win && game.switches.is_win){
+      return "Winner!"
+    }
+  }
 
-export { createNewPuzzleGame, findPuzzleGame, handlePuzzleUserInput }
+  return "No Such Game!"
+}
+
+
+export { createNewPuzzleGame, findPuzzleGame, handlePuzzleUserInput, isWinner }
