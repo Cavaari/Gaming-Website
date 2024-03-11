@@ -11,8 +11,9 @@ const PuzzleSolvedPage = () => {
         <div className="card-body">
           <h5 className="card-title">Puzzle Solved</h5>
           <p className="card-text">Here's your code for solving the puzzle:</p>
+          <p className="card-text">Make sure you copy the code before proceeding</p>
           <div className="alert alert-success" role="alert">
-            <code>PUZZLE-SOLVED-CODE-123</code>
+            <code>p8mU45McP</code>
           </div>
           <a href="https://cis4250w24-10.socs.uoguelph.ca/qRpLmNoStU" className="mysteryButton">More Mystery ?!?!</a>
         </div>

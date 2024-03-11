@@ -15,9 +15,19 @@ export default function MysteryPage() {
   }, []);
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the form from reloading the page
-    if (mysteryCode === 'Team9secret') {
+
+
+    const r = await fetch(
+        `${process.env.HOST_URL}/api/puzzle/check_code?` +
+        new URLSearchParams({
+            code: mysteryCode 
+        })
+    );
+    const data = await r.json();
+
+    if(data == "Right Code!"){
       setIsVerified(true); // Show verified text and button
     }
   };
@@ -142,7 +152,7 @@ export default function MysteryPage() {
           padding: 10px;
           border-radius: 5px;
           border: 1px solid var(--first-color);
-          color: var(--second-color);
+          color: var(--first-color);
           background: transparent;
         }
 
