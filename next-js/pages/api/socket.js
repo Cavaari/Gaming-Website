@@ -1,16 +1,12 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-import Game from "@/lib/card_match/classes/game"
+import { createNewWordleGame, findWordleGame, handleWordleInput } from "@/lib/wordle";
 
-const games = []
-function getGameById(id){
-  return games.filter((game)=>{
-    if(game.getId() == id){
-      return game
-    }
-  })[0]
-}
+import { createNewRiddleGame, findRiddleGame, handleRiddleGameInput, isRiddleGameWinner } from "@/lib/riddle";
+
+import { createNewPuzzleGame, findPuzzleGame } from "@/lib/puzzle";
+
 
 // creating route at /api/socket
 export default function SocketHandler(req, res) {
@@ -31,8 +27,14 @@ export default function SocketHandler(req, res) {
 
     // socket.io framework config
     io.on("connection", (socket) => {
+      // General socket logic
       console.log("Client is Here: " + socket.id);
+      socket.on("disconnect", () => {
+        console.log("Client is Out: " + socket.id);
+      });
 
+
+      // Guessing game : socket layer 
       // Creates Lobby and Joins one player 
       socket.on("create", (levelName) => {
         const newGame = new Game(levelName, socket.id)
@@ -44,7 +46,6 @@ export default function SocketHandler(req, res) {
         socket.emit('room created', newGame.getId());
         console.log('Game Created With ID:', newGame.getId());
       });
-
       // Joins second player to the ready Lobby
       socket.on("join", (id) => {
         const game = getGameById(id)
@@ -53,69 +54,80 @@ export default function SocketHandler(req, res) {
 
           socket.join(game.getId());
           // game start + last game state
-          io.to(game.getId()).emit('game start', JSON.stringify( game ));
+          io.to(game.getId()).emit('game start', JSON.stringify(game));
           // Inform the client of the new room code
           socket.emit('room joined', game.getId());
-        }else{
+        } else {
           socket.emit('error', "no such game");
         }
       });
-
       // Fetching the game
       socket.on("get game", (id) => {
         const game = getGameById(id)
         if (game) {
           socket.emit('get game', JSON.stringify({ games }));
-        }else{
+        } else {
           socket.emit('error', "no such game");
         }
       });
 
-      socket.on("winner", (room) => {
-
-      });
 
       
+      // Chat room logic + Riddle game : socket layer 
+      socket.on("join_chat", async (room)  => {
+        socket.join(room);
+        console.log(socket.id + " Joined the Room: " + room);
+
+        // Create riddle with socket id
+        if(room == "secret room"){
+          await createNewRiddleGame(socket.id)
+          const riddle = findRiddleGame(socket.id)
+          const data_out = {
+            riddle: riddle.riddle,
+            shift: riddle.shift
+          }
+          io.to("secret room").emit("init_secret_msg", JSON.stringify(data_out));
+
+          console.log(JSON.stringify(riddle));
+        }
+      });
       socket.on("message", (message) => {
         console.log(message);
         io.to(message.room).emit("new_msg", message.text);
+
+        // Solve riddle by user here
+        if(message.room == "secret room"){
+          io.to("secret room").emit("secret_msg", handleRiddleGameInput(socket.id, message.text)); 
+        }
+      });
+      // hidden room auth
+      socket.on("is_winner", () => {
+        socket.emit("is_winner", isRiddleGameWinner(socket.id))
       });
 
-      socket.on("join_chat", (room) => {
-        socket.join(room);
-        console.log(socket.id + " Joined the Room: " + room);
-      });
 
+      // Wordle game : socket layer 
+      socket.on("new_wordle_game", async () => {
+        await createNewWordleGame(socket.id)
+        const game =  findWordleGame(socket.id)
+        console.log(JSON.stringify(game));
+      })
+      socket.on("user_input", (word) => {
+        const data = handleWordleInput(socket.id, word)
+        socket.emit('game_data', JSON.stringify({ data }));
+        console.log(data);
+      })
 
-
-      socket.on('takeTurn', (roomId, playerId, action) => {
-          if (processTurn(roomId, playerId, action)) {
-              // Broadcast the updated game state to both players
-              io.to(roomId).emit('updateState', games[roomId]);
-
-              // Optionally, notify players whose turn it is
-              const nextPlayerId = games[roomId].players[games[roomId].currentPlayerIndex];
-              io.to(roomId).emit('yourTurn', nextPlayerId);
-          } else {
-              socket.emit('error', 'Not your turn');
-          }
-        }); 
-
-      // socket.on("makeMove", (room) => {
-
-      // });
-
-      socket.on("disconnect", () => {
-        console.log("Client is Out: " + socket.id);
-      });
+      // Puzzle game : socket layer 
+      socket.on("new_puzzle", async () => {
+        
+      })
+      
     });
-
-
 
     httpServer.listen(3001, () => {
       console.log("Socket Server Started!");
     });
-
 
     res.socket.server.io = io
   }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import GameInput from "./GameInput";
+import ChatInput from "./ChatInput";
 export default function Room({socket}){
 
     const [room, setRoom] = useState("")
@@ -13,14 +13,13 @@ export default function Room({socket}){
     }
 
     return(
-        <>  
+        <div className="p-5 new-section bg-third d-flex flex-column align-items-center justify-content-end">  
             {   isJoined &&
                 <>
                     <div className="mb-auto text-center">
                         <h2 className="text-white">Room: {room}</h2>
-                        <h2 className="text-white">Client: {new Date().valueOf()}</h2>
                     </div>
-                    <GameInput socket={socket} room={room} isJoined={isJoined}/> 
+                    <ChatInput socket={socket} room={room} isJoined={isJoined}/> 
                 </>
             }
 
@@ -33,6 +32,6 @@ export default function Room({socket}){
                     </div>
                 </>
             }
-        </>
+        </div>
     )
 }

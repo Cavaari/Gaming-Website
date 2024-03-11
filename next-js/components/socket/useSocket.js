@@ -20,6 +20,7 @@ export default function useSocket(){
             
                 socket.on("connect", () => {
                     console.log("Client Connected!");
+                    setSocket(socket)
                 });
     
                 socket.on("connect_error", (error) => {
@@ -27,7 +28,7 @@ export default function useSocket(){
                     console.log(error.message);
                 });
     
-                setSocket(socket)
+                
             })
         }
         

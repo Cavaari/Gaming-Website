@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-
 export default function Game() {
   const gameRef = useRef(null);
 
@@ -8,56 +7,60 @@ export default function Game() {
     const initPhaser = async () => {
       const Phaser = await import('phaser');
 
+      // End Screen Scene
       class EndScreen extends Phaser.Scene {
         constructor() {
           super('EndScreen');
         }
         create(data) {
-          const { width, height } = this.scale
+          const { width, height } = this.scale;
 
+          // Display text with a rounded rectangle background
           this.add.text(width * 0.15, height * 0.5, data.title, {
             fontSize: '48px',
             color: '#fff',
             backgroundColor: "rgba(43, 197, 151, 0.76)",
             padding: { right: 10, top: 10, bottom: 10 }
-          })
+          });
         }
       }
-      //////////////////
-      // LevelSelectionScreen.js
+
+      // Level Selection Screen Scene
       class LevelSelectionScreen extends Phaser.Scene {
         constructor() {
           super('LevelSelectionScreen');
         }
 
         preload() {
-          this.load.image('bg', '/textures/back.png'); // Background texture is the sma eas in the figma
+          // Load background image
+          this.load.image('bg', '/textures/back.png');
         }
         create() {
           const { width, height } = this.scale;
 
+          // Set background image
           let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
           bg.displayWidth = this.sys.game.config.width;
           bg.displayHeight = this.sys.game.config.height;
 
           // Style for the buttons
-          const buttonStyle = { fontSize: '32px', color: '#000', backgroundColor: '#FFF', padding: 10, borderRadius: 15 };
+          const buttonStyle = { fontSize: '32px', color: '#fff', backgroundColor: '#9e55ed', padding: 10};
 
-          // Create a white rounded rectangle bubble for each button
+          // Create buttons for different levels
           this.createButton(width / 2, height / 2 - 100, 'NOOB\'S', () => this.selectLevel('noobs'), buttonStyle);
           this.createButton(width / 2, height / 2, 'PRO\'S', () => this.selectLevel('pros'), buttonStyle);
           this.createButton(width / 2, height / 2 + 100, 'HACKER\'S', () => this.selectLevel('hackers'), buttonStyle);
         }
 
         createButton(x, y, text, callback, style) {
-          // Draw the bubble background as the contrast was too little with the background
-          const bubbleWidth = 200; // Adjust the width 
-          const bubbleHeight = style.fontSize * 1.5; // Adjust the height 
+          // Draw the bubble background for each button
+          const bubbleWidth = 200;
+          const bubbleHeight = style.fontSize * 1.5;
           const bubblePadding = 10;
           const bubble = this.add.graphics({ x: x - bubbleWidth / 2 - bubblePadding, y: y - bubbleHeight / 2 - bubblePadding });
 
-          bubble.fillStyle(0xffffff, 1); // White color is being used with the level selection buttons
-          bubble.fillRoundedRect(0, 0, bubbleWidth + 2 * bubblePadding, bubbleHeight + 2 * bubblePadding, 16); // Rounded rectangle
+          bubble.fillStyle(0xffffff, 1);
+          bubble.fillRoundedRect(0, 0, bubbleWidth + 2 * bubblePadding, bubbleHeight + 2 * bubblePadding, 16);
 
           // Add the text for levels
           const button = this.add.text(x, y, text, style)
@@ -69,6 +72,7 @@ export default function Game() {
         }
 
         selectLevel(level) {
+          // Set configurations based on the selected level
           let config;
           switch (level) {
             case 'noobs':
@@ -88,10 +92,10 @@ export default function Game() {
         }
       }
 
-
-      ////////////////////
+      // How To Play Screen Scene
       class HowToPlayScreen extends Phaser.Scene {
         preload() {
+          // Load close button image
           this.load.image('close', '/symbols/close.png');
         }
         constructor() {
@@ -99,8 +103,9 @@ export default function Game() {
         }
 
         create() {
-          const { width, height } = this.scale
+          const { width, height } = this.scale;
 
+          // Display instructions with a rounded rectangle background
           this.add.text(0, 0, "How To Play\n\n- Click on tiles to flip them over\n- Match two tiles to get rid of a pair\n- Be careful, if you match two death cards, you lose!\n\n- Match all cards (except death cards) to win!", {
             fontSize: '24px',
             color: '#fff',
@@ -108,23 +113,24 @@ export default function Game() {
             padding: { right: 10, top: 10, bottom: 10 }
           });
 
-          let close = this.add.sprite(width - 50, 20, 'close')
-            .setInteractive()
+          // Close button
+          let close = this.add.sprite(width - 50, 20, 'close').setInteractive();
           close.on('pointerdown', () => {
-            this.scene.setActive(false, "HowToPlayScreen").setVisible(false, "HowToPlayScreen")
-            // this.scene.remove("HowToPlayScreen")
+            this.scene.setActive(false, "HowToPlayScreen").setVisible(false, "HowToPlayScreen");
           });
-          close.displayWidth = 50
-          close.displayHeight = 50
+          close.displayWidth = 50;
+          close.displayHeight = 50;
         }
       }
 
+      // Start Screen Scene
       class StartScreen extends Phaser.Scene {
         constructor() {
           super('StartScreen');
         }
 
         preload() {
+          // Load background image and card_back image
           this.load.image('bg', '/textures/back.png');
           this.load.image('card_back', '/runeTextures/Black/Slab/card1.png');
         }
@@ -135,12 +141,12 @@ export default function Game() {
           bg.displayWidth = this.sys.game.config.width;
           bg.displayHeight = this.sys.game.config.height;
 
-          // directly start the GameScene with the data provided when we clickedon a level in  LevelSelectionScreen
+          // Start the GameScene with the data provided when a level is clicked in LevelSelectionScreen
           this.scene.start('GameScene', data);
         }
       }
 
-
+      // Game Scene
       class GameScene extends Phaser.Scene {
         constructor() {
           super('GameScene');
@@ -149,6 +155,7 @@ export default function Game() {
         }
 
         preload() {
+          // Load necessary images for the game
           this.load.image('bg', '/textures/back.png');
           this.load.image('card_back', '/runeTextures/Black/Slab/card1.png');
           this.load.image('card_death', '/runeTextures/Red/cardDeath.png');
@@ -164,6 +171,8 @@ export default function Game() {
           let bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
           bg.displayWidth = this.sys.game.config.width;
           bg.displayHeight = this.sys.game.config.height;
+
+          // Create the card grid
           this.createCardGrid(data.rows, data.columns, data.deathcards);
         }
 
@@ -190,36 +199,29 @@ export default function Game() {
         }
 
         getCardTextureNames(pairs, numDeathCards) {
-          // We have 35 unique card textures from 2 to 36 and we load all those crads in first
           let names = [];
           let cardIndices = [];
           for (let i = 2; i < 37; i++) {
             cardIndices.push(i);
           }
 
-          // then if  there are not enough unique cards, repeat the card making process
-          // meaning if we dont have enough loaded cards, more pairs will be made to fill in the board
           while (cardIndices.length < pairs) {
             cardIndices = [...cardIndices, ...cardIndices].slice(0, pairs);
           }
 
-          // then the cards are shuffled for randomness
           cardIndices = Phaser.Utils.Array.Shuffle(cardIndices);
 
-          // Create pairs
           for (let i = 0; i < pairs; i++) {
             names.push(`card_${cardIndices[i]}`);
             names.push(`card_${cardIndices[i]}`);
           }
 
-          // Adding the death cards
           for (let i = 0; i < numDeathCards; i++) {
             names.push('card_death');
           }
 
           return Phaser.Utils.Array.Shuffle(names);
         }
-
 
         flipCard(card) {
           if (this.flippedCards.length < 2 && card.texture.key === 'card_back') {
@@ -239,7 +241,6 @@ export default function Game() {
                   duration: 100,
                 });
 
-
                 this.flippedCards.push(card);
 
                 if (this.flippedCards.length === 2) {
@@ -247,38 +248,29 @@ export default function Game() {
                 }
               },
             });
-
           }
         }
 
         checkForMatch() {
           if (this.flippedCards[0].texture.key === this.flippedCards[1].texture.key) {
-
-            // Cards match, remove them
             this.time.delayedCall(1000, () => {
               this.flippedCards.forEach(card => {
                 card.destroy();
                 this.cards.splice(this.cards.indexOf(card), 1)
               });
 
-              //check for lose
               if (this.flippedCards[0].texture.key == 'card_death') {
-                //show lose screen
-                this.scene.start('EndScreen', { title: 'Game Over. You Lose!' })
+                this.scene.start('EndScreen', { title: 'Game Over. You Lose!' });
               }
               this.flippedCards = [];
 
-              // check for win
               if (this.cards.length == 0) {
-                // show win screen
-                this.scene.start('EndScreen', { title: 'Game Over. You Win!' })
+                this.scene.start('EndScreen', { title: 'Game Over. You Win!' });
               }
             });
           } else {
-            // Cards don't match, flip them back over after a short delay
             this.time.delayedCall(1000, () => {
               this.flippedCards.forEach(card => {
-                // start flip animation
                 this.tweens.add({
                   targets: card,
                   scaleX: 0,
@@ -296,7 +288,6 @@ export default function Game() {
                     this.flippedCards = [];
                   },
                 });
-
               });
               this.flippedCards = [];
             });
@@ -304,6 +295,7 @@ export default function Game() {
         }
       }
 
+      // Phaser configuration object
       const config = {
         type: Phaser.AUTO,
         width: 800,
@@ -318,11 +310,13 @@ export default function Game() {
         }
       };
 
+      // Create Phaser game instance
       gameRef.current = new Phaser.Game(config);
     };
 
     initPhaser();
 
+    // Clean up Phaser game instance on component unmount
     return () => {
       if (gameRef.current) {
         gameRef.current.destroy();
@@ -330,13 +324,15 @@ export default function Game() {
     };
   }, []);
 
+  // Function to navigate to HowToPlayScreen
   function howToPlay() {
     gameRef.current.scene.start("HowToPlayScreen");
   }
 
+  // Render the React component
   return (
     <div style={{ backgroundImage: 'url("/textures/background2.png")', backgroundSize: 'cover', height: '100vh', position: 'relative' }} className="bg-second d-flex align-items-center text-center">
-      <button type="button" class="btn btn-success" style={{ position: 'absolute', left: '1%', top: '2%', zIndex: 5 }} onClick={howToPlay}>How To Play</button>
+      <button type="button" class="btn btn-success" style={{ position: 'absolute', left: '1%', top: '2%', zIndex: 5, borderRadius: '15px' }} onClick={howToPlay}>How To Play</button>
       <div id="game-container" style={{ border: '10px solid #1FE8DC', borderRadius: '10px', zIndex: 1, position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}></div>
     </div>
   );

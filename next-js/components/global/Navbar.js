@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Navbar() {
     return (
         <>
-            <nav className="navbar navbar-expand-lg sticky-top bg-second">
+            <nav id="navbar" className="navbar navbar-expand-lg sticky-top bg-second">
                 <div className="container-fluid">
                     {/* Collapse trigger button */}
                     <button className="ms-2 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,8 +41,8 @@ export default function Navbar() {
                                 </Link>
                             </li>
                             <li className="nav-item d-flex align-items-center justify-content-center">
-                                <Link className={styles.new_nav_link} href="/game">
-                                    Game
+                                <Link className={styles.new_nav_link} href="/games">
+                                    Games
                                 </Link>
                             </li>
                         </ul>
