@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import GamesCarousel from '../components/carousel/carousel';
 
 export default function Home() {
   const [h1Text, setH1Text] = useState("Welcome to team 9’s web app");
@@ -17,11 +18,8 @@ export default function Home() {
       <div className="new-section bg-third d-flex align-items-center justify-content-center text-first">
         <h1 className={fadeClass} onClick={changeText}>{h1Text}</h1>
       </div>
-
+      <GamesCarousel />
       <div className="new-section bg-first">
-
-      </div>
-      <div className="new-section bg-second">
 
       </div>
     </>
