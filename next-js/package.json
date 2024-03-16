@@ -12,6 +12,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "bootstrap": "^5.3.3",
+    "csv-parse": "^5.5.5",
+    "csv-parser": "^3.0.0",
     "next": "14.1.0",
     "phaser": "^3.70.0",
     "react": "^18",

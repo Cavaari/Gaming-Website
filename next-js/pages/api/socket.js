@@ -4,8 +4,15 @@ import { Server } from "socket.io";
 import { createNewWordleGame, findWordleGame, handleWordleInput } from "@/lib/wordle";
 
 import { createNewRiddleGame, findRiddleGame, handleRiddleGameInput, isRiddleGameWinner } from "@/lib/riddle";
+import JeopardyGameGenerator from "@/lib/jeopardy/JeopardyGameGenerator";
+import generateGame from "@/lib/jeopardy/jeopardy";
 
-import { createNewPuzzleGame, findPuzzleGame } from "@/lib/puzzle";
+
+
+
+
+
+
 
 
 // creating route at /api/socket
@@ -121,6 +128,14 @@ export default function SocketHandler(req, res) {
       // Puzzle game : socket layer 
       socket.on("new_puzzle", async () => {
         
+      })
+
+
+
+      socket.on("new_jeopardy", async() => {
+        
+        const game = await generateGame(3)
+        console.log(JSON.stringify(game));
       })
       
     });
