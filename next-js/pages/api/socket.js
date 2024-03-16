@@ -113,18 +113,6 @@ export default function SocketHandler(req, res) {
         socket.emit('game_data', JSON.stringify({ data }));
         console.log(data);
       })
-
-      // Puzzle game : socket layer 
-      socket.on("new_puzzle", async () => {
-        
-      })
-
-      socket.on("new_jeopardy", async() => {
-        
-        const game = await generateGame(3)
-        console.log(JSON.stringify(game));
-      })
-      
     });
 
     httpServer.listen(3001, () => {

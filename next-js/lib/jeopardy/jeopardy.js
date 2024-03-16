@@ -53,6 +53,9 @@ async function generateGame(num_of_players) {
 
         games.push(game)
 
+
+        console.log(JSON.stringify(game,null, 2));
+
         return game
     }else{
         return "Players range: 1-3"
@@ -71,13 +74,13 @@ function makeMove(game_id, player_index, category, question, answer){
         return "Not Your Turn!"
     }
 
-    found_game.turn_index = (found_game.turn_index + 1) % found_game.players.length;
     
     if (compareAnswer(found_game, player_index, category, question, answer)){
         correctAnswer(found_game, player_index, category, question)
         return "Correct!"
     }else{
         wrongAnswer(found_game, player_index, category, question)
+        found_game.turn_index = (found_game.turn_index + 1) % found_game.players.length;
         return "Wrong!"
     }
 }
