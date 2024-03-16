@@ -4,7 +4,6 @@ import { Server } from "socket.io";
 import { createNewWordleGame, findWordleGame, handleWordleInput } from "@/lib/wordle";
 
 import { createNewRiddleGame, findRiddleGame, handleRiddleGameInput, isRiddleGameWinner } from "@/lib/riddle";
-import JeopardyGameGenerator from "@/lib/jeopardy/JeopardyGameGenerator";
 import generateGame from "@/lib/jeopardy/jeopardy";
 
 
