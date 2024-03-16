@@ -4,15 +4,7 @@ import { Server } from "socket.io";
 import { createNewWordleGame, findWordleGame, handleWordleInput } from "@/lib/wordle";
 
 import { createNewRiddleGame, findRiddleGame, handleRiddleGameInput, isRiddleGameWinner } from "@/lib/riddle";
-import generateGame from "@/lib/jeopardy/jeopardy";
-
-
-
-
-
-
-
-
+import {generateGame} from "@/lib/jeopardy/jeopardy";
 
 // creating route at /api/socket
 export default function SocketHandler(req, res) {
@@ -77,8 +69,6 @@ export default function SocketHandler(req, res) {
         }
       });
 
-
-      
       // Chat room logic + Riddle game : socket layer 
       socket.on("join_chat", async (room)  => {
         socket.join(room);
@@ -128,8 +118,6 @@ export default function SocketHandler(req, res) {
       socket.on("new_puzzle", async () => {
         
       })
-
-
 
       socket.on("new_jeopardy", async() => {
         

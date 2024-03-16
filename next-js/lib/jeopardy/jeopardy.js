@@ -2,26 +2,15 @@ import { promises as fs } from 'fs';
 import path from "path";
 import { parse } from 'csv-parse/sync';
 
-
-
 const games = []
 
-
-export default async function generateGame(num_of_players){
+async function generateGame(num_of_players) {
     const game = {
         id: Date.now(),
-        board: 
-            [
-                {
-                    name: "",
-                    clues : []
-                }
-            ]
-        ,
+        categories: [],
         players: [],
         turn_index: 0
     }
-
 
     // Step 1: Read the file to find all unique categories
     const filePath = path.join(process.cwd(), '/lib/jeopardy/categories.tsv');
@@ -32,7 +21,6 @@ export default async function generateGame(num_of_players){
         delimiter: '\t',
         relax_quotes: true
     });
-
 
     const allCategories = [...new Set(records.map(record => record.category))];
 
@@ -54,13 +42,81 @@ export default async function generateGame(num_of_players){
     if(num_of_players <=3 && num_of_players > 0){
         const players = []
         for(let i = 0; i < num_of_players;i++){
-            players.push();
+            players.push({
+                name: "player_" + (i + 1),
+                score: 0
+            });
         }
 
-        game.board = categories;
+        game.players = players;
+        game.categories = categories;
+
+        games.push(game)
 
         return game
     }else{
         return "Players range: 1-3"
     }
 }
+
+/* Make Move for front-end */
+function makeMove(game_id, player_index, category, question, answer){
+    const found_game = games.filter(game => game.id == game_id)[0]
+
+    if(!found_game){
+        return "No Such Game!"
+    }
+
+    if(player_index != found_game.turn_index){
+        return "Not Your Turn!"
+    }
+
+    found_game.turn_index = (found_game.turn_index + 1) % found_game.players.length;
+    
+    if (compareAnswer(found_game, player_index, category, question, answer)){
+        correctAnswer(found_game, player_index, category, question)
+        return "Correct!"
+    }else{
+        wrongAnswer(found_game, player_index, category, question)
+        return "Wrong!"
+    }
+}
+
+/* getters for front-end */
+function GetWinner(game){
+    const winner = game.players.reduce((prev, current) => (prev.score > current.score) ? prev : current)
+    return winner
+}
+
+/* Player Answer Checking */
+function compareAnswer(game, player_index, category, question, answer){
+    const found_category = getCategory(game, category)
+    const found_question = found_category.clues.filter(clue => clue.question == question)[0]
+
+    if (found_question.answer == answer){
+        return true
+    } else {
+        return false
+    }
+}
+
+function correctAnswer(game, player_index, category, question){
+    const found_category = getCategory(game, category)
+    const found_question = found_category.clues.filter(clue => clue.question == question)[0]
+
+    game.players[player_index].score += found_question.clue_value;
+}
+
+function wrongAnswer(game, player_index, category, question){
+    const found_category = getCategory(game, category)
+    const found_question = found_category.clues.filter(clue => clue.question == question)[0]
+
+
+    game.players[player_index].score -= found_question.clue_value;
+}
+
+function getCategory(game, category){
+    return game.categories.filter(cat => cat.name == category)[0]
+}
+
+export { generateGame, makeMove }
