@@ -15,13 +15,22 @@ export default function Home() {
 
   return (
     <>
-      <div className="new-section bg-third d-flex align-items-center justify-content-center text-first">
-        <h1 className={fadeClass} onClick={changeText}>{h1Text}</h1>
+      <div style={{
+        backgroundColor: '#000080', // dark blue background
+        padding: '10px 0', // smaller padding for a banner-like appearance
+        textAlign: 'center', // center the text
+      }}>
+        <h1 style={{
+          transition: 'opacity 0.5s ease',
+          color: '#FFD700', // golden text color
+          margin: 0, // remove default margin
+          opacity: fadeClass.includes('text-hidden') ? 0 : 1,
+        }} onClick={changeText}>
+          {h1Text}
+        </h1>
       </div>
       <GamesCarousel />
-      <div className="new-section bg-first">
 
-      </div>
     </>
   );
 }
