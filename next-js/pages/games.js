@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import matchPic from '../public/mainPage/match.png';
 import wordlePic from '../public/mainPage/wordle.png';
+import jeopardyPic from '../public/mainPage/jeopardy.png';
 
 const Games = () => {
   const [isHoveredMatch, setIsHoveredMatch] = useState(false);
   const [isHoveredWordle, setIsHoveredWordle] = useState(false);
+  const [isHoveredJeopardy, setIsHoveredJeopardy] = useState(false);
 
   const navigateToGame = (url) => {
     window.location.href = url;
@@ -53,6 +55,23 @@ const Games = () => {
                 <p className="card-text">Challenge your vocabulary with Wordle.</p>
                 <div className='align-self-center h-100 d-flex align-items-center justify-content-center'>
                   <Image className='img-fluid' src={wordlePic} width={350} height={391} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-11 col-md-4" style={{ marginBottom: "3.9rem" }}>
+            <div
+              className={`card mb-4 shadow-sm h-100 card-hover-transition ${isHoveredJeopardy ? 'bg-first' : 'bg-second'}`}
+              onClick={() => navigateToGame('/jeopardy')}
+              style={{ cursor: 'pointer', ...(isHoveredJeopardy ? hoverStyle : {}) }}
+              onMouseEnter={() => setIsHoveredJeopardy(true)}
+              onMouseLeave={() => setIsHoveredJeopardy(false)}
+            >
+              <div className="card-body text-white d-flex flex-column">
+                <h2 className="card-title" style={{textShadow: "2px 2px #000000"}}>Jeopardy</h2>
+                <p className="card-text">Test your luck with JEOPARDY!.</p>
+                <div className='align-self-center h-100 d-flex align-items-center justify-content-center'>
+                  <Image className='img-fluid' src={jeopardyPic} width={350} height={391} />
                 </div>
               </div>
             </div>
