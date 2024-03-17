@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import matchPic from '../../public/mainPage/match.png';
 import wordlePic from '../../public/mainPage/wordle.png';
+import jeopardyPic from '../../public/mainPage/jeopardy.png';
 
 const GamesCarousel = () => {
   // Carousel items data
@@ -22,7 +23,13 @@ const GamesCarousel = () => {
       alt: 'Wordle Game',
       href: '/wordle',
     },
-    // This is where we add jeapordy
+    {
+        name: 'Jeopardy',
+        description: 'Test your knowledge with Jeopardy.',
+        image: jeopardyPic,
+        alt: 'Jeopardy Game',
+        href: '/jeopardy',
+    }
   ];
 
   return (
@@ -47,7 +54,7 @@ const GamesCarousel = () => {
                     left: '50%',
                     transform: 'translateX(-50%)',
                     zIndex: 2,
-                    color: '#E9A400',
+                    color: '#000',
                   }}>
                     <h3>{game.name}</h3>
                     <p>{game.description}</p>
