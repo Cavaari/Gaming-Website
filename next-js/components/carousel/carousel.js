@@ -29,6 +29,7 @@ const GamesCarousel = () => {
     <div className="new-section bg-third d-flex align-items-center justify-content-center text-first">
       <div style={{
         maxWidth: '600px',
+        border: '5px solid #E9A400',
         borderRadius: '10px',
         overflow: 'hidden',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
