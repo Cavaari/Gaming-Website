@@ -50,7 +50,7 @@ async function generateGame(num_of_players) {
     const clues = records
       .filter(
         (record) => {
-            if(record.category === categoryName && record.clue_value != 0){
+            if(record.category === categoryName){
                 // while(seen.has(record.clue_value)){
                 //     record.clue_value = (parseInt(record.clue_value, 10) + 100).toString();
                 // }
