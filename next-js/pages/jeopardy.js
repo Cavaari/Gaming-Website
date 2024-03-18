@@ -80,7 +80,7 @@ export default function Jeopardy() {
                   {gameState.categories.map((category, categoryIndex) => (
                     <td key={categoryIndex}>
                       {category.clues[clueIndex] ? (
-                        <button>{category.clues[clueIndex].clue_value}</button>
+                        <button onClick={()=>alert(category.clues[clueIndex].question)}>{category.clues[clueIndex].clue_value}</button>
                       ) : null}
                     </td>
                   ))}
