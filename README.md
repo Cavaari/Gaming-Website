@@ -23,17 +23,14 @@
 ## Team Members:
 	- Muhammad Salmaan 
 	- Karina Garmendez
-	- Egor Ivanov (Team Lead)
-	- Cavaari Taylor
+	- Egor Ivanov 
+	- Cavaari Taylor (Team Lead)
 	- Tehreem Nazar
 	- Eric Dearing 
 	- Kalindu Kehel Baddarage 
 
 	
-## Sprint 6: Game Development
+## Sprint 7: Game Development & Minor Design Changes
 
 
-### Additional changes
-
-
-### Reinventing Chat for Hidden Page
+Implemented basic Jeopardy Game
