@@ -62,7 +62,7 @@ async function generateGame(num_of_players) {
         }
       )
       .map((record) => ({
-        question: record.question.replace('\\',''),
+        question: record.question.replaceAll('\\',''),
         answer: record.answer,
         clue_value: parseInt(record.clue_value, 10),
         clue_bonus_value: parseInt(record.daily_double_value, 10),
@@ -82,7 +82,7 @@ async function generateGame(num_of_players) {
       })
 
       seen.clear()
-    return { name: categoryName.replace('\\',''), clues: clues };
+    return { name: categoryName.replaceAll('\\',''), clues: clues };
   });
 
   // generate players
