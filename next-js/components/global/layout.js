@@ -1,14 +1,11 @@
 import Navbar from "./Navbar";
 
-import BootstrapClient from "./BootstrapClient";
 
-
-export default function Layout({ children }) {  
+export default function Layout({ children, changeTheme }) {  
   return (
     <>
-      <Navbar/>
+      <Navbar changeTheme={changeTheme} title={"Jeopardy!"}/>
       <main>{children}</main>
-      <BootstrapClient/>
     </>
   );
 }

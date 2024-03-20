@@ -1,0 +1,36 @@
+// Required
+@import "../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/variables-dark";
+@import "../../node_modules/bootstrap/scss/maps";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/root";
+
+// Optional Bootstrap components here
+@import "../../node_modules/bootstrap/scss/reboot";
+@import "../../node_modules/bootstrap/scss/type";
+// etc
+
+// Common Styles
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+
+// Themes override
+[data-bs-theme='dark'] {
+  --bs-primary: #{#3E2755};
+  --bs-primary-rgb: #{to-rgb(#3E2755)};
+  --bs-secondary: #{#EFEBF6};
+  --bs-secondary-rgb: #{to-rgb(#EFEBF6)};
+  --bs-background: #{#3E2755};
+  --bs-text: #{#EFEBF6};
+}
+
+[data-bs-theme='light'] {
+  --bs-primary: #{#EFEBF6};
+  --bs-primary-rgb: #{to-rgb(#EFEBF6)};
+  --bs-secondary: #{#3E2755};
+  --bs-secondary-rgb: #{to-rgb(#3E2755)};
+  --bs-background: #{#EFEBF6};
+  --bs-text: #{#3E2755};
+}
+
