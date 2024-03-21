@@ -32,45 +32,16 @@ export default function Home() {
   };
 
   return (
-    <>
-      <style jsx>{`
-        .new-section {
-          margin-bottom: 20px;
-          position: relative;
-          z-index: 2;
-        }
-
-        .text-first {
-          color: #E9A400;
-          position: relative;
-          z-index: 2;
-        }
-
-        .text-fade {
-          transition: opacity 0.5s ease;
-        }
-
-        .text-hidden {
-          opacity: 0;
-        }
-
-        .carousel-container {
-          display: flex; 
-          flex-direction: column;
-          align-items: center; 
-          justify-content: center; 
-          margin-bottom: 20px;
-          position: relative;
-          z-index: 2;
-          width: 100%;
-        }
-      `}</style>
+    <div>
+      
+      
+        <h1 className={fadeClass}>{h1Text} onClick={changeText}</h1>
+     
       <div className="new-section bg-third">
-        <div className="carousel-container bg-third text-first" onClick={changeText}>
-          <h1 className={fadeClass}>{h1Text}</h1>
+        <div className="carousel-container bg-third text-first" >
           <GamesCarousel />
         </div>
       </div>
-    </>
+    </div>
   );
 }

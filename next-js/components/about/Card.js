@@ -3,24 +3,24 @@ import Link from "next/link"
 import React from 'react'
 
 function randomColor(){
-    const colors = ["#E9A400", "#152A64", "#00032F"]
+    const colors = ["#A9DBB8", "#E3DAFF", "#F4B393"]
     const random = Math.floor(Math.random() * colors.length);
     return colors[random]
 }
 
-export default function Card({ name, link = "", imgSrc, description, contact, discord }) {
+export default function Card({ name, link = "", imgSrc, description, contact, discord, children }) {
 
     return (
         <div className="col">
-            <div className="h-100 card m-1">
+            <div className="h-100 card m-1 position-relative">
                 {
                     imgSrc ? (
                         <Image
                             src={imgSrc}
                             alt="Picture of the author"
                             className="card-img-top img-fluid"
-                            width={300}
-                            height={300}
+                            width={600}
+                            height={600}
                             style={{backgroundColor:randomColor()}}
                         />
                     ) : (
@@ -49,6 +49,7 @@ export default function Card({ name, link = "", imgSrc, description, contact, di
                     </span>
                     </small>
                 </div>
+                {children}
             </div>
         </div>)
 }
