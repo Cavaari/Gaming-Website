@@ -1,10 +1,20 @@
 
 import { useEffect } from "react"
-export default function ClueModal({clue, modalRef}) {
+export default function ClueModal({clue, modalRef, currentAnswers}) {
     useEffect(()=>{
         window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
         modalRef.current = new bootstrap.Modal(document.getElementById('clue-modal'))
     },[])
+
+    function checkAnswer(answer) {
+        // TBD: Checking answer (string) and getting T or F from backend
+        // if (response) {
+            
+        // } else {
+
+        // }
+    }
+    
     return (
         <div id="clue-modal" className="modal fade" tabindex="-1">
             <div className="modal-dialog modal-dialog-centered">
@@ -17,8 +27,11 @@ export default function ClueModal({clue, modalRef}) {
                         <p>{clue ? clue.question : ""}</p>
                     </div>
                     <div className="modal-footer">
-                        {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary">Save changes</button> */}
+                        {currentAnswers &&
+                            currentAnswers.map((answer)=>(
+                                <button className="btn btn-primary" onClick={checkAnswer({answer})}>{answer}</button>
+                            ))
+                        }
                     </div>
                 </div>
             </div>

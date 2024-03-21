@@ -1,4 +1,4 @@
-import { generateGame } from "@/lib/jeopardy/jeopardy"
+import { generateGame } from "@/lib/jeopardy/jeopardy";
 
 
 export default async function handler(req, res) {
@@ -14,6 +14,9 @@ export default async function handler(req, res) {
                             return {
                                 question: clue.question, clue_value: clue.clue_value, clue_bonus_value: clue.clue_bonus_value
                             }
+                        }),
+                    answers: category.clues.map((clue) => {
+                            return clue.answer
                         })
                 }
             })

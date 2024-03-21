@@ -86,7 +86,7 @@ async function generateGame(num_of_players) {
   });
 
   // generate players
-  if (num_of_players <= 3 && num_of_players > 0) {
+  if (num_of_players <= 4 && num_of_players > 0) {
     const players = [];
     for (let i = 0; i < num_of_players; i++) {
       players.push({
@@ -104,7 +104,7 @@ async function generateGame(num_of_players) {
 
     return game;
   } else {
-    return "Players range: 1-3";
+    return "Players range: 1-4";
   }
 }
 

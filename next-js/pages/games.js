@@ -88,7 +88,7 @@ const Games = () => {
                 <h2 className="card-title">Coming Soon...</h2>
                 <p></p>
                 <div className='align-self-center h-100 d-flex align-items-center justify-content-center'>
-                  <Image className='img-fluid rounded' src={jeopardyPic} width={350} height={391} />
+                  <Image className='img-fluid rounded' src={comingSoon} width={350} height={391} />
                 </div>
               </div>
             </div>

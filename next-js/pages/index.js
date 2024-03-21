@@ -46,6 +46,9 @@ export default function Home() {
           <div className="carousel-item">
             <Image src="/mainPage/Jeopardy.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} className="d-block img-fluid mx-auto rounded" alt="..."/>
           </div>
+          <div className="carousel-item">
+            <Image src="/mainPage/comingSoon.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} className="d-block img-fluid mx-auto rounded" alt="..."/>
+          </div>
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>

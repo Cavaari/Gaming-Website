@@ -9,6 +9,7 @@ export default function Jeopardy() {
   const [playerIndex, setPlayerIndex] = useState(0);
 
   const [currentClue, setCurrentClue]= useState(null);
+  const [currentAnswers, setCurrentAnswers]= useState(null);
 
   const modalRef = useRef(null)
 
@@ -62,18 +63,18 @@ export default function Jeopardy() {
                   <div className="d-flex flex-column" key={i}>
                     {
                       category.clues.map((clue, j)=>(
-                        <button onClick={() => {setCurrentClue(clue);modalRef.current.toggle() }} className={"fw-bold m-1 btn btn-primary text-secondary pt-3 pb-3 " + `fs-${6 - j}`} key={j}>{clue.clue_value}</button>
+                        <button onClick={() => {setCurrentAnswers(category.answers);setCurrentClue(clue);modalRef.current.toggle() }} className={"fw-bold m-1 btn btn-primary text-secondary pt-3 pb-3 " + `fs-${6 - j}`} key={j}>{clue.clue_value}</button>
                       ))
                     }
                   </div>
                 ))}
-                <ClueModal modalRef={modalRef} clue={currentClue}/>
-                <ScoreBoard players={3}/>
+                <ClueModal modalRef={modalRef} clue={currentClue} currentAnswers={currentAnswers}/>
           </>
         )}
       </div>
-
-                    
+      
+      <ScoreBoard players={3}/>
+               
     </div>
   );
 }
