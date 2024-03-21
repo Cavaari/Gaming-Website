@@ -3,7 +3,7 @@ import Link from "next/link"
 import React from 'react'
 
 function randomColor(){
-    const colors = ["#A9DBB8", "#E3DAFF", "#F4B393"]
+    const colors = ["#A9DBB8", "#E3DAFF", "#F4B393", "#A76D60", "#9A7AA0", "#A3A5C3", "#E5B181", "#F4CAE0"]
     const random = Math.floor(Math.random() * colors.length);
     return colors[random]
 }

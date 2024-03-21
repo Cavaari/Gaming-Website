@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import GamesCarousel from '../components/carousel/carousel';
+// import GamesCarousel from '../components/carousel/carousel';
+
+import Image from 'next/image';
 
 export default function Home() {
-  const [h1Text, setH1Text] = useState("");
+  const [h1Text, setH1Text] = useState("Welcome to team 9’s web app");
   const [fadeClass, setFadeClass] = useState("text-fade");
   const [clicked, setClicked] = useState(false);
 
-  useEffect(() => {
-    const text = "Welcome to team 9’s web app";
-    let currentIndex = 0;
-    const interval = setInterval(() => {
-      if (currentIndex <= text.length) {
-        setH1Text(text.substring(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 100);
-    return () => clearInterval(interval);
-  }, []);
+
 
   const changeText = () => {
     if (!clicked) {
@@ -32,15 +22,39 @@ export default function Home() {
   };
 
   return (
-    <div>
-      
-      
-        <h1 className={fadeClass}>{h1Text} onClick={changeText}</h1>
-     
-      <div className="new-section bg-third">
-        <div className="carousel-container bg-third text-first" >
+    <div className="container-fluid">
+      {/* <style jsx>{`
+        body{
+          background-image: url("https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg") !important;
+          
+        }
+      `}</style> */}
+      <h1 className={"mt-5 mb-5 text-center"} onClick={changeText}>{h1Text}</h1>
+
+      {/* <div className="carousel-container" >
           <GamesCarousel />
+      
+        </div> */}
+      <div id="carouselExample" class="carousel slide bg-secondary rounded p-2">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <Image src="/mainPage/card-matching.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} class="d-block img-fluid mx-auto rounded" alt="..."/>
+          </div>
+          <div class="carousel-item">
+            <Image src="/mainPage/wordle.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} class="d-block img-fluid mx-auto rounded" alt="..."/>
+          </div>
+          <div class="carousel-item">
+            <Image src="/mainPage/Jeopardy.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} class="d-block img-fluid mx-auto rounded" alt="..."/>
+          </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
     </div>
   );
