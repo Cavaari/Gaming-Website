@@ -37,7 +37,7 @@ const Games = () => {
                 <h2 className="card-title">Card Matching</h2>
                 <p>Test your memory with card-matching. Can you beat our hardest level?</p>
                 <div className='align-self-center h-100 d-flex align-items-center justify-content-center'>
-                  <Image className='img-fluid rounded' src={matchPic} width={350} height={300} />
+                  <Image className='img-fluid rounded' src={matchPic} width={350} height={300} alt="GIF of Card Matching game"/>
                 </div>
               </div>
             </div>
@@ -54,7 +54,7 @@ const Games = () => {
                 <h2 className="card-title">Wordle</h2>
                 <p>Can you guess the word? Or is it too hard for you?</p>
                 <div className='align-self-center h-100 d-flex align-items-center justify-content-center'>
-                  <Image className='img-fluid rounded' src={wordlePic} width={350} height={391} />
+                  <Image className='img-fluid rounded' src={wordlePic} width={350} height={391} alt="GIF of Wordle game"/>
                 </div>
               </div>
             </div>
@@ -71,7 +71,7 @@ const Games = () => {
                 <h2 className="card-title">Jeopardy</h2>
                 <p>Test your random fact knowledge. Play locally with up to 4 friends!</p>
                 <div className='align-self-center h-100 d-flex align-items-center justify-content-center'>
-                  <Image className='img-fluid rounded' src={jeopardyPic} width={350} height={391} />
+                  <Image className='img-fluid rounded' src={jeopardyPic} width={350} height={391} alt="GIF with image of Jeopardy game"/>
                 </div>
               </div>
             </div>
@@ -88,7 +88,7 @@ const Games = () => {
                 <h2 className="card-title">Coming Soon...</h2>
                 <p></p>
                 <div className='align-self-center h-100 d-flex align-items-center justify-content-center'>
-                  <Image className='img-fluid rounded' src={comingSoon} width={350} height={391} />
+                  <Image className='img-fluid rounded' src={comingSoon} width={350} height={391} alt="GIF with text that says coming soon"/>
                 </div>
               </div>
             </div>

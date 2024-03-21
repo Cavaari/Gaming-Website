@@ -10,7 +10,7 @@ export default function ChatInput({socket, room, isJoined}){
     // send message to the room
     const handleSend = useCallback(()=>{
         if (isJoined){
-            socket.emit("message", {text: message, room: room})
+            socket.emit("message", {text: {message}, room: {room}})
             setMessage("")
         }
     },[isJoined, message])

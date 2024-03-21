@@ -95,18 +95,21 @@ export default function Puzzle() {
                                 src="/puzzle/bomb.png"
                                 width={300}
                                 height={300}
+                                alt="Image of a bomb"
                             />
                             <Image
                                 className='img-fluid'
                                 src="/puzzle/cutters.png"
                                 width={200}
                                 height={200}
+                                alt="Image of scissors"
                             />
                             <Image
                                 className='img-fluid'
                                 src="/puzzle/phone.png"
                                 width={100}
                                 height={100}
+                                alt="Image of a flip phone"
                             />
                         </div>
                         <p className="fw-bold alert alert-primary" style={{ color: "var(--first-color)", background: "var(--second-color)" }}>
@@ -120,6 +123,7 @@ export default function Puzzle() {
                             src="/puzzle/alex_carter.jpg"
                             width={500}
                             height={500}
+                            alt="Image of character Alex Carter"
                         />
                         <p className="fw-bold alert alert-primary mt-5" style={{ color: "var(--first-color)", background: "var(--second-color)" }}>
                             You have 5 minutes to solve the puzzle, or else the bomb will explode. Good luck.
@@ -156,6 +160,7 @@ export default function Puzzle() {
                           src="/puzzle/jigsaw.gif"
                           width={1000}
                           height={1000}
+                          alt="GIF of JigSaw on a tricycle"
                         />
                         {/* Button to proceed to the next page */}
                         <button className="btn mt-3 mb-3 btn-proceed" onClick={proceedToNextPage}>Proceed to Next Page</button>

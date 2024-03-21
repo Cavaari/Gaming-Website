@@ -1,10 +1,10 @@
+import { useEffect } from "react";
 
-import { useEffect } from "react"
 export default function ClueModal({clue, modalRef, currentAnswers}) {
     useEffect(()=>{
         window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
-        modalRef.current = new bootstrap.Modal(document.getElementById('clue-modal'))
-    },[])
+        modalRef.current = new bootstrap.Modal(document.getElementById('clue-modal'));
+    },[modalRef])
 
     function checkAnswer(answer) {
         // TBD: Checking answer (string) and getting T or F from backend
@@ -13,6 +13,7 @@ export default function ClueModal({clue, modalRef, currentAnswers}) {
         // } else {
 
         // }
+        answer = answer;
     }
     
     return (
@@ -28,7 +29,7 @@ export default function ClueModal({clue, modalRef, currentAnswers}) {
                     </div>
                     <div className="modal-footer">
                         {currentAnswers &&
-                            currentAnswers.map((answer)=>(
+                            currentAnswers.map((answer, i)=>(
                                 <button className="btn btn-primary" onClick={checkAnswer({answer})}>{answer}</button>
                             ))
                         }

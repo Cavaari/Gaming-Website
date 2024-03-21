@@ -93,7 +93,7 @@ export default function Wordle() {
         return () => {
             document.removeEventListener("keyup", userPress);
         };
-    }, [trials, trialsIndex, gameOver]); // Include gameOver in dependencies to re-run effect when it changes
+    }, [socket, trials, trialsIndex, gameOver]); // Include gameOver in dependencies to re-run effect when it changes
 
     // Proceed to the next page button logic
     const handleProceedNextPage = () => {
