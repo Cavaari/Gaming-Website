@@ -43,15 +43,6 @@ export default function Jeopardy() {
 
   return (
     <div className="container">
-      <style jsx>{`
-        table,
-        th,
-        td {
-          border: 1px solid;
-        }
-      `}</style>
-
-
       <div className="mt-5 row row-cols-4 d-flex align-items-center justify-content-center">
         {gameState && (
           <>
@@ -70,7 +61,7 @@ export default function Jeopardy() {
                   <div className="d-flex flex-column" key={i}>
                     {
                       category.clues.map((clue, j)=>(
-                        <button onClick={() => alert(clue.question)} className="fs-2 fw-bold m-1 btn btn-primary text-secondary pt-3 pb-3" key={j}>{clue.clue_value}</button>
+                        <button onClick={() => alert(clue.question)} className={"fw-bold m-1 btn btn-primary text-secondary pt-3 pb-3 " + `fs-${6 - j}`} key={j}>{clue.clue_value}</button>
                       ))
                     }
                   </div>
