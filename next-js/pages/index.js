@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import GamesCarousel from '../components/carousel/carousel';
-
+import AboutCards from '@/components/about/AboutCards';
 import Image from 'next/image';
 
 export default function Home() {
@@ -56,6 +56,10 @@ export default function Home() {
           <span className="visually-hidden">Next</span>
         </button>
       </div>
+      <br></br>
+      <AboutCards>
+        <h1 className="fs-1 text-secondary mx-auto">About Us</h1>
+      </AboutCards>
     </div>
   );
 }

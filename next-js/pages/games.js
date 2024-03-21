@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import matchPic from '../public/mainPage/match.png';
-import wordlePic from '../public/mainPage/wordle.png';
-import jeopardyPic from '../public/mainPage/jeopardy.png';
+import matchPic from '../public/mainPage/card-matching.gif';
+import wordlePic from '../public/mainPage/wordle.gif';
+import jeopardyPic from '../public/mainPage/Jeopardy.gif';
 
 const Games = () => {
   const [isHoveredMatch, setIsHoveredMatch] = useState(false);
