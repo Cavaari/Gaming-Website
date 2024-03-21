@@ -25,10 +25,10 @@ export default function Navbar({title, changeTheme}) {
                                     <Link className="nav-link text-secondary" href="/">Home</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link text-secondary" href="/">About Us</Link>
+                                    <Link className="nav-link text-secondary" href="/about">About Us</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link text-secondary" href="/games">Chat</Link>
+                                    <Link className="nav-link text-secondary" href="/chat">Chat</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link text-secondary" href="/games">Games</Link>
