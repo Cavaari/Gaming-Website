@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Jeopardy() {
   const [gameState, setGameState] = useState(null);
@@ -20,13 +20,13 @@ export default function Jeopardy() {
     if (user_answer) {
       const r = await fetch(
         `${process.env.HOST_URL}/api/jeopardy/make_move?` +
-          new URLSearchParams({
-            id: gameState.id,
-            player_index: playerIndex,
-            category: gameState.categories[0].name,
-            question: gameState.categories[0].clues[0].question,
-            answer: document.getElementById("answer").value,
-          })
+        new URLSearchParams({
+          id: gameState.id,
+          player_index: playerIndex,
+          category: gameState.categories[0].name,
+          question: gameState.categories[0].clues[0].question,
+          answer: document.getElementById("answer").value,
+        })
       );
       const data = await r.json();
 
@@ -39,18 +39,10 @@ export default function Jeopardy() {
     }
   };
 
-  const maxClues = useMemo(() => {
-    if (gameState) {
-      return Math.max(
-        ...gameState.categories.map((category) => category.clues.length)
-      );
-    } else {
-      return 0;
-    }
-  }, [gameState]);
+
 
   return (
-    <>
+    <div className="container">
       <style jsx>{`
         table,
         th,
@@ -58,38 +50,38 @@ export default function Jeopardy() {
           border: 1px solid;
         }
       `}</style>
-      {gameState && (
-        <>
-          {/* {gameState.id}
+
+
+      <div className="mt-5 row row-cols-4 d-flex align-items-center justify-content-center">
+        {gameState && (
+          <>
+            {/* {gameState.id}
           <p>Player Turn Index: {playerIndex}</p> */}
-          {/* <button onClick={makeMove}>Make Move</button>
+            {/* <button onClick={makeMove}>Make Move</button>
           <input type='text' id="answer" /> */}
 
-          <table>
-            <thead>
-              <tr style={{ border: "1px black solid" }}>
-                {gameState.categories.map((category, i) => (
-                  <th key={i}>{category.name}</th>
-                ))}
-              </tr>
-            </thead>
 
-            <tbody>
-              {Array.from({ length: maxClues }).map((_, clueIndex) => (
-                <tr key={clueIndex}>
-                  {gameState.categories.map((category, categoryIndex) => (
-                    <td key={categoryIndex}>
-                      {category.clues[clueIndex] ? (
-                        <button onClick={()=>alert(category.clues[clueIndex].question)}>{category.clues[clueIndex].clue_value}</button>
-                      ) : null}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
-      )}
-    </>
+                {gameState.categories.map((category, i) => (
+                  <span className="fs-6 fw-bold text-secondary text-center mb-3" key={i}>{category.name}</span>
+                ))}
+
+
+                {gameState.categories.map((category, i) => (
+                  <div className="d-flex flex-column" key={i}>
+                    {
+                      category.clues.map((clue, j)=>(
+                        <button onClick={() => alert(clue.question)} className="fs-2 fw-bold m-1 btn btn-primary text-secondary pt-3 pb-3" key={j}>{clue.clue_value}</button>
+                      ))
+                    }
+                  </div>
+                ))}
+
+                
+          </>
+        )}
+      </div>
+
+
+    </div>
   );
 }
