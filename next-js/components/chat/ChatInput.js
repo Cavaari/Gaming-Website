@@ -28,7 +28,7 @@ export default function ChatInput({socket, room, isJoined}){
 
                 temp.push({text: "Hey, Stranger! Do you like Caesar salad? Honestly, Secret Room doesn't care! Here some word salad for you. And.. Hmm..  Some key?!?!?!?", side: "left"})
                 temp.push({text: msgObj.riddle, side: "left"})
-                temp.push({text: msgObj.shift, side: "left", color: "green"})
+                temp.push({text: msgObj.shift, side: "left"})
 
                 setMessages(temp)
             });
@@ -55,7 +55,7 @@ export default function ChatInput({socket, room, isJoined}){
             </div>
             <div className="d-flex">
                 <input placeholder="Enter Your Message" value={message} onChange={()=>{setMessage(event.target.value)}} className="form-control me-2" type="text" />
-                <button onClick={handleSend} className="btn btn-success">Send</button>
+                <button onClick={handleSend} className="btn btn-primary">Send</button>
             </div>
         </>
     )

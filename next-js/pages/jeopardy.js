@@ -1,9 +1,16 @@
 "use client"
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useRef } from "react";
+import ClueModal  from "@/components/jeopardy/ClueModal";
+import ScoreBoard from "@/components/jeopardy/ScoreBoard";
 
 export default function Jeopardy() {
   const [gameState, setGameState] = useState(null);
   const [playerIndex, setPlayerIndex] = useState(0);
+
+  const [currentClue, setCurrentClue]= useState(null);
+
+  const modalRef = useRef(null)
 
   useEffect(() => {
     const fetchNewGame = async () => {
@@ -41,18 +48,11 @@ export default function Jeopardy() {
   };
 
 
-
   return (
     <div className="container">
       <div className="mt-5 row row-cols-4 d-flex align-items-center justify-content-center">
         {gameState && (
           <>
-            {/* {gameState.id}
-          <p>Player Turn Index: {playerIndex}</p> */}
-            {/* <button onClick={makeMove}>Make Move</button>
-          <input type='text' id="answer" /> */}
-
-
                 {gameState.categories.map((category, i) => (
                   <span className="fs-6 fw-bold text-secondary text-center mb-3" key={i}>{category.name}</span>
                 ))}
@@ -62,18 +62,18 @@ export default function Jeopardy() {
                   <div className="d-flex flex-column" key={i}>
                     {
                       category.clues.map((clue, j)=>(
-                        <button onClick={() => alert(clue.question)} className={"fw-bold m-1 btn btn-primary text-secondary pt-3 pb-3 " + `fs-${6 - j}`} key={j}>{clue.clue_value}</button>
+                        <button onClick={() => {setCurrentClue(clue);modalRef.current.toggle() }} className={"fw-bold m-1 btn btn-primary text-secondary pt-3 pb-3 " + `fs-${6 - j}`} key={j}>{clue.clue_value}</button>
                       ))
                     }
                   </div>
                 ))}
-
-                
+                <ClueModal modalRef={modalRef} clue={currentClue}/>
+                <ScoreBoard players={3}/>
           </>
         )}
       </div>
 
-
+                    
     </div>
   );
 }

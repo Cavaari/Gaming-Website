@@ -13,11 +13,11 @@ export default function Room({socket}){
     }
 
     return(
-        <div className="p-5 new-section bg-third d-flex flex-column align-items-center justify-content-end">  
+        <div className="p-5 new-section d-flex flex-column align-items-center justify-content-end">  
             {   isJoined &&
                 <>
                     <div className="mb-auto text-center">
-                        <h2 className="text-white">Room: {room}</h2>
+                        <h2 className="text-text-secondary">Room: {room}</h2>
                     </div>
                     <ChatInput socket={socket} room={room} isJoined={isJoined}/> 
                 </>
@@ -25,10 +25,10 @@ export default function Room({socket}){
 
             {   !isJoined && 
                 <>
-                    <h2 className="mb-auto text-white">Select Chat</h2>
+                    <h2 className="mb-auto text-secondary">Select Chat</h2>
                     <div className="d-flex">
                         <input placeholder="Type Room ID to Enter" value={room} onChange={()=>{setRoom(event.target.value)}} className="form-control me-2" type="text" />
-                        <button onClick={handleSelect} className="btn btn-success">Join Chat</button>
+                        <button onClick={handleSelect} className="btn btn-primary">Join Chat</button>
                     </div>
                 </>
             }

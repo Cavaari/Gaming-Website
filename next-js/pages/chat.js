@@ -37,7 +37,7 @@ export default function Chat() {
     
 
     return (
-        <div className="new-section bg-third d-flex flex-column align-items-center justify-content-center">
+        <div className="bg-primary d-flex flex-column align-items-center justify-content-center">
          
             <Room socket={socket}/>
 

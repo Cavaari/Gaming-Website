@@ -24,6 +24,6 @@ const messageLeft = {
 
 export default function Message({ text, side, color }) {
     return (
-        <span  style={(side == "left" ? messageLeft : messageRight)} className={(color ? "bg-success text-white" : "")}>{text}</span>
+        <span  style={(side == "left" ? messageLeft : messageRight)} className={(color ? "btn-primary text-black" : "")}>{text}</span>
     )
 }
