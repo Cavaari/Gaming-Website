@@ -111,7 +111,7 @@ export default function Puzzle() {
                         </div>
                         <p className="fw-bold alert alert-primary" style={{ color: "var(--first-color)", background: "var(--second-color)" }}>
                             You then reach for the paper, here’s what’s on it:
-                            <span class="position-absolute align-items-right top-0 start-100 translate-middle p-2">
+                            <span className="position-absolute align-items-right top-0 start-100 translate-middle p-2">
                                 <img src="/puzzle/jigsaw.png" height={70} width={70}></img>
                             </span>
                         </p>
@@ -123,7 +123,7 @@ export default function Puzzle() {
                         />
                         <p className="fw-bold alert alert-primary mt-5" style={{ color: "var(--first-color)", background: "var(--second-color)" }}>
                             You have 5 minutes to solve the puzzle, or else the bomb will explode. Good luck.
-                            <span class="position-absolute align-items-right top-0 start-100 translate-middle p-2">
+                            <span className="position-absolute align-items-right top-0 start-100 translate-middle p-2">
                                 <img src="/puzzle/jigsaw.png" height={70} width={70}></img>
                             </span>
                         </p>

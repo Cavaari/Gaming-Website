@@ -35,25 +35,25 @@ export default function Home() {
           <GamesCarousel />
       
         </div> */}
-      <div id="carouselExample" class="carousel slide bg-secondary rounded p-2">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <Image src="/mainPage/card-matching.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} class="d-block img-fluid mx-auto rounded" alt="..."/>
+      <div id="carouselExample" className="carousel slide bg-secondary rounded p-2">
+        <div className="carousel-inner">
+          <div className="carousel-item active">
+            <Image src="/mainPage/card-matching.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} className="d-block img-fluid mx-auto rounded" alt="..."/>
           </div>
-          <div class="carousel-item">
-            <Image src="/mainPage/wordle.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} class="d-block img-fluid mx-auto rounded" alt="..."/>
+          <div className="carousel-item">
+            <Image src="/mainPage/wordle.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} className="d-block img-fluid mx-auto rounded" alt="..."/>
           </div>
-          <div class="carousel-item">
-            <Image src="/mainPage/Jeopardy.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} class="d-block img-fluid mx-auto rounded" alt="..."/>
+          <div className="carousel-item">
+            <Image src="/mainPage/Jeopardy.gif" height={1000} width={1000} style={{objectFit: "scale-down"}} className="d-block img-fluid mx-auto rounded" alt="..."/>
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Next</span>
         </button>
       </div>
     </div>

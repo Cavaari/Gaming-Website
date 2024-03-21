@@ -13,7 +13,7 @@ export default function About() {
                 <Card name="Muhammad" imgSrc="/about/Muhammad.png" description="" link="/about/msalmaan" contact="msalmaan@uoguelph.ca" discord="msalmaan"/>
                 <Card name="Tehreem" imgSrc="/about/tehreem.png" description="AI Better not take my jobs" link="/about/tnazar"  contact="tnazar@uoguelph.ca" discord="sshutup"/>
                 <Card name="Greg" imgSrc="/about/greg.png" description="Read about me at uoguelph.ca/computing/people/greg-klotz" contact="gklotz@uoguelph.ca">
-                    <span class="badge badge-pill text-primary bg-info position-absolute align-items-right start-100 translate-middle">
+                    <span className="badge badge-pill text-primary bg-info position-absolute align-items-right start-100 translate-middle">
                         PROF
                     </span>
                 </Card>

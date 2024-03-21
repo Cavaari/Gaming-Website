@@ -53,7 +53,7 @@ export default function Buttons({ setWinnerIndex, gameState, handleUserInputSubm
       {gameState &&
         <p className="fw-bold alert alert-primary fw-bold" style={{ color: "var(--first-color)", background: "var(--second-color)"}}>
           {gameState.buttons.hint}<p></p>
-          <span class="position-absolute align-items-right top-0 start-100 translate-middle p-2">
+          <span className="position-absolute align-items-right top-0 start-100 translate-middle p-2">
             <img src="/puzzle/jigsaw.png" height={70} width={70}></img>
           </span>
         </p>

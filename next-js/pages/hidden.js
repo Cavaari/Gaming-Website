@@ -117,10 +117,10 @@ export default function Hidden({ quotes }) {
 
           {factOne && factTwo && (
             <div id='bounce-object' style={factStyle}>
-                <blockquote class="blockquote">
+                <blockquote className="blockquote">
                 <p>{factOne.Fact}</p>
                 </blockquote>
-                <figcaption class="blockquote-footer">
+                <figcaption className="blockquote-footer">
                 <cite title="Source Title">{factOne.Category}</cite>
                 </figcaption>
             </div>

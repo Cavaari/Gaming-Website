@@ -35,15 +35,15 @@ export default function Card({ name, link = "", imgSrc, description, contact, di
                     <p className="card-text">{description}</p>
                     <Link href={link} className="btn btn-primary">{name}&apos;s Page</Link>
                 </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary">
-                    <span class="position-relative badge text-secondary">
+                <div className="card-footer">
+                    <small className="text-body-secondary">
+                    <span className="position-relative badge text-secondary">
                         <a href={"mailto:" + contact} className="card-img-icon text-secondary text-decoration-none">
                             <Image style={{mixBlendMode: "luminosity"}} src="/about/email.png" height={30} width={30} alt="Email Icon"></Image  >
                             {" "+contact}
                         </a>
                     </span>
-                    <span class="position-relative badge text-secondary">
+                    <span className="position-relative badge text-secondary">
                     <img src="/about/discord.png" height={25} width={45} alt="Discord Icon"></img>
                         {discord}
                     </span>

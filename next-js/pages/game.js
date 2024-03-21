@@ -332,7 +332,7 @@ export default function Game() {
   // Render the React component
   return (
     <div style={{ backgroundImage: 'url("/textures/background2.png")', backgroundSize: 'cover', height: '100vh', position: 'relative' }} className="bg-second d-flex align-items-center text-center">
-      <button type="button" class="btn btn-success" style={{ position: 'absolute', left: '1%', top: '2%', zIndex: 5, borderRadius: '15px' }} onClick={howToPlay}>How To Play</button>
+      <button type="button" className="btn btn-success" style={{ position: 'absolute', left: '1%', top: '2%', zIndex: 5, borderRadius: '15px' }} onClick={howToPlay}>How To Play</button>
       <div id="game-container" style={{ border: '10px solid #1FE8DC', borderRadius: '10px', zIndex: 1, position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}></div>
     </div>
   );

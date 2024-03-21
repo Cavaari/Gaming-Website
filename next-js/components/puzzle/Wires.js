@@ -87,7 +87,7 @@ const Wires = ({ handleUserInputSubmit, gameState, setWinnerIndex }) => {
       {gameState &&
         <p className="fw-bold alert alert-primary fw-bold text-center" style={{ color: "var(--first-color)", background: "var(--second-color)"}}>
           {gameState.color_wires.hint}
-          <span class="position-absolute align-items-right top-0 start-100 translate-middle p-2">
+          <span className="position-absolute align-items-right top-0 start-100 translate-middle p-2">
             <img src="/puzzle/jigsaw.png" height={70} width={70}></img>
           </span>
         </p>
