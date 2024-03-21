@@ -1,13 +1,29 @@
-
 "use client"
 
-import styles from "./Navbar.module.css";
+import { useRouter } from "next/router";
+import {useEffect, useState}  from "react";
 import Link from "next/link";
 
+import { Roboto, Truculenta, Khand } from 'next/font/google'
+ 
+const khand = Khand({
+  weight: '700',
+  subsets: ['latin'],
+})
 
-export default function Navbar({title, changeTheme}) {
-
+export default function Navbar({ changeTheme}) {
+    const router = useRouter()
     
+    const [title, setTitle] = useState("");
+
+
+    useEffect(()=>{
+        if(router.pathname == "/"){
+            setTitle("HOME")
+        }else{
+            setTitle(router.pathname.slice(1, router.pathname.length).toUpperCase())
+        }
+    },[router.pathname] )
 
     return (
         <>
@@ -18,8 +34,8 @@ export default function Navbar({title, changeTheme}) {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                         <div className="w-100 d-flex flex-column flex-md-row align-items-center justify-content-evenly">
-                            <a className="navbar-brand text-secondary" href="#">Team 9</a>
-                            <span className="text-secondary">{title}</span>
+                            <Link className="navbar-brand text-secondary" href="/">Team 9</Link>
+                            <span className={khand.className + " text-secondary fs-4"}>{title}</span>
                             <ul className="navbar-nav mb-2 mb-lg-0">
                                 <li className="nav-item">
                                     <Link className="nav-link text-secondary" href="/">Home</Link>

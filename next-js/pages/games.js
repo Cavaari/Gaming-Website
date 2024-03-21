@@ -15,7 +15,7 @@ const Games = () => {
 
   // Style object for transforming scale on hover
   const hoverStyle = {
-    transform: 'scale(1.05)',
+    transform: 'scale(1.02)',
     transition: 'transform 0.3s ease-in-out', // Only transforming scale, assuming your CSS handles background color transition
   };
 

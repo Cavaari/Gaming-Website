@@ -18,11 +18,10 @@ export default function Card({ name, link = "", imgSrc, description, contact, di
                         <Image
                             src={imgSrc}
                             alt="Picture of the author"
-                            className="card-img-top"
-                            width={150}
-                            height={200}
-                            layout="responsive"
-                            objectFit="fill"
+                            className="card-img-top img-fluid"
+                            width={300}
+                            height={300}
+                            style={{backgroundColor:randomColor()}}
                         />
                     ) : (
                         <div className="rounded-top d-flex align-items-center justify-content-center" style={{width:"100%", height:"400px", backgroundColor: randomColor(), fontSize:"4rem", color: "white"}}>
@@ -37,14 +36,14 @@ export default function Card({ name, link = "", imgSrc, description, contact, di
                     <Link href={link} className="btn btn-primary">{name}&apos;s Page</Link>
                 </div>
                 <div class="card-footer">
-                    <small class="text-body-secondary">Contact: <a className="link-underline link-underline-opacity-0"></a>
-                    <span class="position-relative badge text-bg-light">
-                        <a href={"mailto:" + contact} className="card-img-icon">
-                            <img src="/about/email.png" height={30} width={30} alt="Email Icon"></img>
+                    <small class="text-body-secondary">
+                    <span class="position-relative badge text-secondary">
+                        <a href={"mailto:" + contact} className="card-img-icon text-secondary text-decoration-none">
+                            <Image style={{mixBlendMode: "luminosity"}} src="/about/email.png" height={30} width={30} alt="Email Icon"></Image  >
+                            {" "+contact}
                         </a>
-                        {" "+contact}
                     </span>
-                    <span class="position-relative badge text-bg-light">
+                    <span class="position-relative badge text-secondary">
                     <img src="/about/discord.png" height={25} width={45} alt="Discord Icon"></img>
                         {discord}
                     </span>
