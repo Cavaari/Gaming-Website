@@ -38,10 +38,10 @@ async function generateGame(num_of_players) {
     }
   }
 
-//   for (let i = 0; i < 4 && allCategories.length > 0; i++) {
-//     const randomIndex = Math.floor(Math.random() * allCategories.length);
-//     selectedCategories.push(allCategories.splice(randomIndex, 1)[0]);
-//   }
+  //   for (let i = 0; i < 4 && allCategories.length > 0; i++) {
+  //     const randomIndex = Math.floor(Math.random() * allCategories.length);
+  //     selectedCategories.push(allCategories.splice(randomIndex, 1)[0]);
+  //   }
 
   // Organize clues by category
   const categories = selectedCategories.map((categoryName) => {
@@ -49,19 +49,19 @@ async function generateGame(num_of_players) {
     const clues = records
       .filter(
         (record) => {
-            if(record.category === categoryName){
-                // while(seen.has(record.clue_value)){
-                //     record.clue_value = (parseInt(record.clue_value, 10) + 100).toString();
-                // }
-                // seen.add(record.clue_value)
-                return true
-            }else{
-                return false;
-            }
+          if (record.category === categoryName) {
+            // while(seen.has(record.clue_value)){
+            //     record.clue_value = (parseInt(record.clue_value, 10) + 100).toString();
+            // }
+            // seen.add(record.clue_value)
+            return true
+          } else {
+            return false;
+          }
         }
       )
       .map((record) => ({
-        question: record.question.replaceAll('\\',''),
+        question: record.question.replaceAll('\\', ''),
         answer: record.answer,
         clue_value: parseInt(record.clue_value, 10),
         clue_bonus_value: parseInt(record.daily_double_value, 10),
@@ -75,14 +75,14 @@ async function generateGame(num_of_players) {
         } else {
           return 0;
         }
-      }).slice(0,5);
+      }).slice(0, 5);
 
-      clues.forEach((record,i)=>{
-        record.clue_value = (i+1)*100;
-      })
+    clues.forEach((record, i) => {
+      record.clue_value = (i + 1) * 100;
+    })
 
-      seen.clear()
-    return { name: categoryName.replaceAll('\\',''), clues: clues };
+    seen.clear()
+    return { name: categoryName.replaceAll('\\', ''), clues: clues };
   });
 
   // generate players
@@ -95,7 +95,7 @@ async function generateGame(num_of_players) {
         is_turn: false
       }
 
-      if(i == 0){
+      if (i == 0) {
         player.is_turn = true
       }
 
@@ -115,6 +115,43 @@ async function generateGame(num_of_players) {
   }
 }
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+
+function gameToJSON(game) {
+  return JSON.stringify({
+    id: game.id,
+    players: game.players.map((player) => {
+      return {
+        name: player.name,
+        score: player.score,
+        is_turn: player.is_turn
+      }
+    }),
+    categories: game.categories.map(
+      (category) => {
+        const answers = category.clues.map((clue) => {
+          return clue.answer
+        })
+        shuffleArray(answers)
+        return {
+          name: category.name, clues: category.clues.map(
+            (clue) => {
+              return {
+                question: clue.question, clue_value: clue.clue_value, clue_bonus_value: clue.clue_bonus_value, is_solved: clue.is_solved
+              }
+            }),
+          answers: answers,
+        }
+      })
+  })
+}
+
 /* Make Move for front-end */
 function makeMove(game_id, player_index, category, question, answer) {
   const found_game = games.filter((game) => game.id == game_id)[0];
@@ -124,12 +161,12 @@ function makeMove(game_id, player_index, category, question, answer) {
   }
 
 
-  if (compareAnswer(found_game, player_index, category, question, answer)) {
+  if (compareAnswer(found_game, category, question, answer)) {
     correctAnswer(found_game, player_index, category, question);
-    return "Correct!";
+    return JSON.stringify({ msg: "Correct!", game_data: gameToJSON(found_game) });
   } else {
     wrongAnswer(found_game, player_index, category, question);
-    return "Wrong!";
+    return JSON.stringify({ msg: "Wrong!", game_data: gameToJSON(found_game) });
   }
 }
 
@@ -142,13 +179,14 @@ function GetWinner(game) {
 }
 
 /* Player Answer Checking */
-function compareAnswer(game, player_index, category, question, answer) {
+function compareAnswer(game, category, question, answer) {
   const found_category = getCategory(game, category);
   const found_question = found_category.clues.filter(
     (clue) => clue.question == question
   )[0];
 
   if (found_question.answer == answer) {
+    found_question.is_solved = true
     return true;
   } else {
     return false;
@@ -171,10 +209,12 @@ function wrongAnswer(game, player_index, category, question) {
   )[0];
 
   game.players[player_index].score -= found_question.clue_value;
+  game.players[player_index].is_turn = false;
+  game.players[(player_index + 1) % 3].is_turn = true;
 }
 
 function getCategory(game, category) {
   return game.categories.filter((cat) => cat.name == category)[0];
 }
 
-export { generateGame, makeMove };
+export { generateGame, makeMove, gameToJSON };

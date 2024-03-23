@@ -15,24 +15,23 @@ export default function MyApp({ Component, pageProps }) {
 
   const [isDark, setIsDark] = useState(true)
 
-  const changeTheme = () =>{
-    console.log("kek");
-      if(isDark){
-          setIsDark(false)
-      }else{
-          setIsDark(true)
-      }
+  const changeTheme = () => {
+    if (isDark) {
+      setIsDark(false)
+    } else {
+      setIsDark(true)
+    }
   }
 
 
-  useEffect(()=>{
-      if(isDark){
-        document.documentElement.setAttribute('data-bs-theme', 'dark')
-        // import(`../components/global/dark-theme.scss`);
-      }else{
-        document.documentElement.setAttribute('data-bs-theme', 'light')
-        // import(`../components/global/light-theme.scss`);
-      }
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.setAttribute('data-bs-theme', 'dark')
+      // import(`../components/global/dark-theme.scss`);
+    } else {
+      document.documentElement.setAttribute('data-bs-theme', 'light')
+      // import(`../components/global/light-theme.scss`);
+    }
   }, [isDark])
 
   return (
@@ -40,7 +39,7 @@ export default function MyApp({ Component, pageProps }) {
       <Layout changeTheme={changeTheme}>
         <Component {...pageProps} />
       </Layout>
-      <BootstrapClient/>
+      <BootstrapClient />
     </SocketContext.Provider>
   )
 }
