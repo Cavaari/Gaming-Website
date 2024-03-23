@@ -16,7 +16,7 @@ export default function ClueModal({clue, modalRef, currentAnswers}) {
     }
     
     return (
-        <div id="clue-modal" className="modal fade" tabindex="-1">
+        <div id="clue-modal" className="modal fade" tabIndex="-1">
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -28,8 +28,8 @@ export default function ClueModal({clue, modalRef, currentAnswers}) {
                     </div>
                     <div className="modal-footer">
                         {currentAnswers &&
-                            currentAnswers.map((answer)=>(
-                                <button className="btn btn-primary" onClick={checkAnswer({answer})}>{answer}</button>
+                            currentAnswers.map((answer, index)=>(
+                                <button key={index} className="btn btn-primary" onClick={checkAnswer({answer})}>{answer}</button>
                             ))
                         }
                     </div>

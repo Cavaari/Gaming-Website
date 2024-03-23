@@ -8,8 +8,7 @@ async function generateGame(num_of_players) {
   const game = {
     id: Date.now(),
     categories: [],
-    players: [],
-    turn_index: 0,
+    players: []
   };
 
   // Step 1: Read the file to find all unique categories
@@ -66,6 +65,7 @@ async function generateGame(num_of_players) {
         answer: record.answer,
         clue_value: parseInt(record.clue_value, 10),
         clue_bonus_value: parseInt(record.daily_double_value, 10),
+        is_solved: false
       }))
       .sort(function (x, y) {
         if (x.clue_value < y.clue_value) {
@@ -89,10 +89,17 @@ async function generateGame(num_of_players) {
   if (num_of_players <= 4 && num_of_players > 0) {
     const players = [];
     for (let i = 0; i < num_of_players; i++) {
-      players.push({
+      const player = {
         name: "player_" + (i + 1),
         score: 0,
-      });
+        is_turn: false
+      }
+
+      if(i == 0){
+        player.is_turn = true
+      }
+
+      players.push(player);
     }
 
     game.players = players;
@@ -116,17 +123,12 @@ function makeMove(game_id, player_index, category, question, answer) {
     return "No Such Game!";
   }
 
-  if (player_index != found_game.turn_index) {
-    return "Not Your Turn!";
-  }
 
   if (compareAnswer(found_game, player_index, category, question, answer)) {
     correctAnswer(found_game, player_index, category, question);
     return "Correct!";
   } else {
     wrongAnswer(found_game, player_index, category, question);
-    found_game.turn_index =
-      (found_game.turn_index + 1) % found_game.players.length;
     return "Wrong!";
   }
 }
