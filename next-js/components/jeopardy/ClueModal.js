@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 import JeopardyContext from "./JeopardyContext";
@@ -14,13 +14,9 @@ export default function ClueModal({ modalRef }) {
         modalRef.current = new bootstrap.Modal(document.getElementById('clue-modal'));
     }, [modalRef])
 
-    async function checkAnswer(answer) {
-        // console.log(gameState.id);
-        // console.log(currentCategory);
-        // console.log(currentClue.question);
-        // console.log(currentPlayer.name);
-        // console.log(answer);
+    const [status, setStatus] = useState("Not Answered!")
 
+    async function checkAnswer(answer) {
         const r = await fetch(
             `${process.env.HOST_URL}/api/jeopardy/make_move?` +
             new URLSearchParams({
@@ -39,33 +35,53 @@ export default function ClueModal({ modalRef }) {
         setGameState(JSON.parse(parsed_data.game_data))
 
         if (parsed_data.msg == "Wrong!") {
-            alert("Wrong!")
+            setStatus("Wrong!")
         } else if (parsed_data.msg == "Correct!") {
-            alert("Correct!")
+            setStatus("Correct!")
         }
 
-        modalRef.current.hide()
+        setTimeout(() => {
+            modalRef.current.hide()
+            setStatus("Not Answered!")
+          }, "1000");
+        
     }
 
     return (
-        <div id="clue-modal" className="modal fade" tabIndex="-1">
+        <div id="clue-modal" className="modal fade" tabIndex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
             <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
+                <div className={"modal-content " + (status == "Wrong!" ? "border-danger" : "") + (status == "Correct!" ? "border-success" : "")}>
                     <div className="modal-header">
                         <h5 className="modal-title text-center">{currentClue ? currentClue.clue_value : ""}</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
                         <p>{currentClue ? currentClue.question : ""}</p>
                     </div>
                     <div className="modal-footer d-flex alig-items-center justify-content-between">
-                        {currentAnswers &&
-                            currentAnswers.map((answer, index) => (
+                        { status == "Not Answered!" && 
+                            <>
+                            {currentAnswers &&
+                                currentAnswers.map((answer, index) => (
 
-                                <span key={index} className="btn btn-primary m-1" onClick={() => { checkAnswer(answer) }}>{answer}</span>
+                                    <span key={index} className="btn btn-primary m-1" onClick={() => { checkAnswer(answer) }}>{answer}</span>
 
-                            ))
+                                ))
+                            }
+                            </>
                         }
+
+                        { status == "Wrong!" && 
+                            <>
+                                <span className="w-100 fs-3 fw-bold text-center shaking">Wrong!</span>
+                            </>
+                        }
+
+                        { status == "Correct!" && 
+                            <>
+                                <span className="w-100 fs-3 fw-bold text-center shaking">Correct!</span>
+                            </>
+                        }
+                        
                     </div>
                 </div>
             </div>

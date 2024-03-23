@@ -41,6 +41,8 @@
     --bs-btn-active-border-color: #{rgba($white, .5)};
     --bs-btn-focus-border-color: #{rgba($white, .5)};
     --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
+    --bs-btn-disabled-bg: #{mix($gray-300, #c9bde6, .65)};
+    --bs-btn-disabled-border-color: #{rgba(#9371E1, .25)};
   }
 
   .btn-warning {
@@ -77,6 +79,8 @@
     --bs-btn-active-border-color: #{rgba($white, .5)};
     --bs-btn-focus-border-color: #{rgba($white, .5)};
     --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
+    --bs-btn-disabled-bg: #{mix($gray-300, #a48cdb, .05)};
+    --bs-btn-disabled-border-color: #{rgba(#9371E1, .25)};
   }
 
   .btn-warning {
@@ -89,4 +93,18 @@
     --bs-btn-focus-border-color: #{rgba($white, .5)};
     --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
   }
+}
+
+
+// extra classes
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.shaking{
+  animation: tilt-shaking 0.15s infinite;
 }
