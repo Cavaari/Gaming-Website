@@ -65,7 +65,7 @@ export default function Switches({ gameState, handleUserInputSubmit, setWinnerIn
             <p className="fw-bold alert alert-primary fw-bold text-center m-4" style={{ color: "var(--first-color)", background: "var(--second-color)"}}>
             {<>{JSON.stringify(gameState.switches.hint)}</>}
             <span className="position-absolute align-items-right top-0 start-100 translate-middle p-2">
-                <img src="/puzzle/jigsaw.png" height={70} width={70}></img>
+                <img src="/puzzle/jigsaw.png" height={70} width={70} alt="Image of Jigsaw"></img>
             </span>
             </p>
       }

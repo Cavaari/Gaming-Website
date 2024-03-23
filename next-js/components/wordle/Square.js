@@ -3,7 +3,6 @@ const square = {
     height: 50,
     margin: 5,
     border: "1px solid #dedede",
-    backgroundColor: "#ebebeb",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -14,7 +13,7 @@ const square = {
 
 export default function Square({ value }) {
     return (
-        <div style={square}>
+        <div style={square} className="wordle-square">
             {value}
         </div>
     );
