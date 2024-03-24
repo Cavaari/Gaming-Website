@@ -133,7 +133,7 @@ export default function Chat() {
         }
     }, [socket, router]);
 
-    // Function to add notifications
+    //  add notifications
     const addNotification = (message) => {
         const id = Math.random().toString(36).substr(2, 9); // Generate a unique id for the notification
         setNotifications(prev => [...prev, { id, message }]);
@@ -142,9 +142,6 @@ export default function Chat() {
             setNotifications(prev => prev.filter(notif => notif.id !== id));
         }, 3000);
     };
-
-    // Call this function whenever you need to add a new notification
-    // Example: addNotification('Message entered');
 
     return (
         <div style={chatStyles.container}>
