@@ -4,7 +4,7 @@ export default function Room({socket}){
 
     const [room, setRoom] = useState("")
     const [isJoined, setIsJoined] = useState(false)
-    // const [notifications, setNotifications] = useState([])
+    const [notifications, setNotifications] = useState([])
 
     // join a socket room message
     const handleSelect = ()=>{
