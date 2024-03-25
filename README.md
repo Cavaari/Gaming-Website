@@ -24,13 +24,12 @@
 	- Muhammad Salmaan 
 	- Karina Garmendez
 	- Egor Ivanov 
-	- Cavaari Taylor (Team Lead)
+	- Cavaari Taylor
 	- Tehreem Nazar
-	- Eric Dearing 
+	- Eric Dearing (Team Lead)
 	- Kalindu Kehel Baddarage 
 
 	
-## Sprint 7: Game Development & Minor Design Changes
+## Sprint 8: Jeopardy Game Completion & Site Design Changes
 
-
-Implemented basic Jeopardy Game
+Completed implementation basic Jeopardy Game. Restyled entire website with fresh up-to-date look. Reimagined homepage and reconfigured games page to reflect all current and future games that will exist.
