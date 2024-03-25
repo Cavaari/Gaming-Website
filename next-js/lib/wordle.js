@@ -67,28 +67,47 @@ const handleWordleInput = (socket_session_id, user_input_word) => {
 
     game.trials_left = game.trials_left - 1;
 
-    const front_end_data = user_input_word.split("").map((user_letter, user_index) => {
+    const dict = {};
+
+    game.word.split("").forEach((letter)=>{
+        if(letter in dict){
+            dict[letter] +=1
+        }else{
+            dict[letter] = 1
+        }
+    })
+    
+
+
+    let front_end_data = user_input_word.split("").map((user_letter, user_index) => {
         // user guessed position and letter
         if (user_letter == game.word[user_index]) {
+            dict[user_letter] -= 1;
             return game.word[user_index]
         }
 
 
         let hasMatch = false
-        // user guessed only letter 
-        game.word.split("").forEach((game_letter) => {
-            if (user_letter == game_letter) {
-                hasMatch = true
-                return
-            }
-        });
-
-        if (hasMatch) {
+        if (user_letter in dict) {
+            hasMatch = true
             return "?"
         }
 
         // no such letter 
         return "0"
+    })
+
+    front_end_data = front_end_data.map((letter, user_index) => {
+        if(letter == "?"){
+            if(dict[user_input_word[user_index]] != 0){
+                dict[user_input_word[user_index]] -= 1
+                return "?"
+            }else{
+                return "0"
+            }
+        }else{
+            return letter
+        }
     })
 
     if (game.trials_left == 0) {
