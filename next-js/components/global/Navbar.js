@@ -27,6 +27,12 @@ export default function Navbar({ changeTheme}) {
 
     return (
         <>
+            <style jsx>{`
+                .nav-item:hover {
+                  transform: scale(1.05);
+                  transition: transform 0.2s ease-in-out;
+                }
+      `     }</style>
             <nav className="navbar sticky-top navbar-expand-lg bg-primary fw-bold">
                 <div className="container-fluid">
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +40,7 @@ export default function Navbar({ changeTheme}) {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                         <div className="w-100 d-flex flex-column flex-md-row align-items-center justify-content-evenly">
-                            <Link className="navbar-brand text-secondary" href="/">Team 9</Link>
+                            <Link className="navbar-brand text-secondary align-items-left" href="/">Team 9</Link>
                             <span className={khand.className + " text-secondary fs-4"}>{title}</span>
                             <ul className="navbar-nav mb-2 mb-lg-0">
                                 <li className="nav-item">

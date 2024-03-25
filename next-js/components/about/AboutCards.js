@@ -12,7 +12,7 @@ export default function AboutCards({children}) {
                 <Card name="Kalindu" imgSrc="/about/kalindu.png" description="I like playing basketball and making apps!" link="/about/kkehelba" contact="kkehelba@uoguelph.ca" discord="synapsee"/>
                 <Card name="Muhammad" imgSrc="/about/Muhammad.png" description="" link="/about/msalmaan" contact="msalmaan@uoguelph.ca" discord="msalmaan"/>
                 <Card name="Tehreem" imgSrc="/about/tehreem.png" description="AI Better not take my jobs" link="/about/tnazar"  contact="tnazar@uoguelph.ca" discord="sshutup"/>
-                <Card name="Greg" imgSrc="/about/greg.png" description="Read about me at uoguelph.ca/computing/people/greg-klotz" contact="gklotz@uoguelph.ca">
+                <Card name="Greg" imgSrc="/about/greg.png" description="Come check out my Page!" link="https://www.uoguelph.ca/computing/people/greg-klotz" contact="gklotz@uoguelph.ca">
                     <span className="badge badge-pill text-primary bg-info position-absolute align-items-right start-100 translate-middle">
                         PROF
                     </span>
