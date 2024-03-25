@@ -35,19 +35,19 @@ export default function Home() {
           <GamesCarousel />
       
         </div> */}
-      <div id="carouselExample" className="carousel slide bg-primary rounded p-2">
+      <div id="carouselExample" className="carousel carousel-dark slide rounded p-2">
         <div className="carousel-inner">
           <div className="carousel-item active" >
-            <Image src="/mainPage/card-matching.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid #ffff'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
+            <Image src="/mainPage/card-matching.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
           </div>
           <div className="carousel-item">
-            <Image src="/mainPage/wordle.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid #ffff'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
+            <Image src="/mainPage/wordle.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
           </div>
           <div className="carousel-item">
-            <Image src="/mainPage/Jeopardy.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid #ffff'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
+            <Image src="/mainPage/Jeopardy.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
           </div>
           <div className="carousel-item">
-            <Image src="/mainPage/comingSoon.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid #ffff'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
+            <Image src="/mainPage/comingSoon.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
           </div>
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
