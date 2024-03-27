@@ -30,6 +30,6 @@
 	- Kalindu Kehel Baddarage 
 
 	
-## Sprint 8: Jeopardy Game Completion & Site Design Changes
+## Sprint 9: Maze Game Implementation & Final Site redesign and bug fixes
 
-Completed implementation basic Jeopardy Game. Restyled entire website with fresh up-to-date look. Reimagined homepage and reconfigured games page to reflect all current and future games that will exist.
+Completed implementation of a unique maze game. Finished restyling the website and updating all components with fresh up-to-date look. Fixed all additionalresponsiveness issues and slight bug fixes due to redesign implementation.
