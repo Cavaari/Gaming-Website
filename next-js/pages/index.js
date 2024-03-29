@@ -38,16 +38,24 @@ export default function Home() {
       <div id="carouselExample" className="carousel carousel-dark slide rounded p-2">
         <div className="carousel-inner">
           <div className="carousel-item active" >
-            <Image src="/mainPage/card-matching.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
+            <a href='/game'>
+              <Image src="/mainPage/card-matching.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="Card Matching game"/>
+            </a>
           </div>
           <div className="carousel-item">
-            <Image src="/mainPage/wordle.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
+          <a href='/wordle'>
+            <Image src="/mainPage/wordle.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="Wordle game"/>
+          </a>
           </div>
           <div className="carousel-item">
-            <Image src="/mainPage/Jeopardy.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
+          <a href='/jeopardy'>
+            <Image src="/mainPage/Jeopardy.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="Jeopardy game"/>
+          </a>
           </div>
           <div className="carousel-item">
-            <Image src="/mainPage/comingSoon.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="..."/>
+          <a href='/maze'>
+            <Image src="/mainPage/comingSoon.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="Maze game"/>
+          </a>
           </div>
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
