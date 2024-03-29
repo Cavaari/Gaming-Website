@@ -56,48 +56,46 @@ export default function LabyrinthGame() {
 
   // Some useStyles and other are inline in the return
   const useStyles = {
-    canvasContainer: {
-      display: 'flex',
-      justifyContent: 'center',
-    },
     canvasFrame: {
-      border: '4px solid #333',
+      border: '4px solid var(--bs-text)',
       padding: '20px',
       borderRadius: '10px',
-      backgroundColor: '#f0f0f0',
+      backgroundColor: '#efebf6', // same colour as light mode bg
       tabIndex: 0, 
     },
   };
 
   // labyrinth and adventurer UI being rendered
   return (
-    <div style={useStyles.canvasContainer}>
-      <div
-        className="canvas LabyrinthGame"
-        onKeyDown={handleAdventurerMove}
-        tabIndex={0}
-        ref={gameContainerRef}
-        style={{ ...useStyles.canvasFrame, color: 'black' }} 
-      >
-        <p> Welcome to the labyrinth !!! </p> 
-        <p>This game has 3 levels, solve them and win the game !! </p> 
-        <p>To navigate, use the arrow keys and good luck -_- .</p>
-        <p> Current Stage: {stage}</p>
-        <p>________________________________________________</p>
-        <LabyrinthDisplay labyrinth={labyrinth} adventurerPosition={adventurerPosition} />
-        {adventureStatus === "triumphed" && (
-          <div style={{ marginTop: '20px', textAlign: 'center', color: 'black' }}> 
-            {stage < 3 ? (
-              <button onClick={handleNextStage} style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer', color: 'black' }}> 
-                Continue to next stage
-              </button>
-            ) : (
-              <p>Congratulations, you've completed all stages!</p>
-            )}
-          </div>
-        )}
+    <>
+      <h1 className="mt-5 mb-4 text-center">Welcome to the Labyrinth</h1>
+      <p className="text-center d-flex flex-column justify-content-center mx-auto mb-5" style={{fontSize: "1.5rem", width: '50%'}}>
+        This game has 3 levels, solve them and win the game! 
+        To navigate, use the arrow keys and good luck </p>
+      <div className="d-flex justify-content-center">
+        <div
+          className="canvas LabyrinthGame mt-70px"
+          onKeyDown={handleAdventurerMove}
+          tabIndex={0}
+          ref={gameContainerRef}
+          style={{ ...useStyles.canvasFrame, color: 'black' }} 
+        >
+          <p> Current Stage: {stage}</p>
+          <LabyrinthDisplay labyrinth={labyrinth} adventurerPosition={adventurerPosition} />
+          {adventureStatus === "triumphed" && (
+            <div className="mt-20 align-items-center #efebf6"> 
+              {stage < 3 ? (
+                <button className="btn btn-primary mt-2" onClick={handleNextStage}> 
+                  Continue to next stage
+                </button>
+              ) : (
+                <h5 className="mt-4 flex-column">Congratulations, you've completed all stages!</h5>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 
 //  display the labyrinth
@@ -124,7 +122,7 @@ function LabyrinthDisplay({ labyrinth, adventurerPosition }) {
     const baseStyle = {
       width: '50px',
       height: '50px',
-      backgroundColor: '#fff',
+      backgroundColor: '#efebf6',
       boxSizing: 'border-box',
       border: '1px solid #333',
     };
@@ -138,7 +136,7 @@ function LabyrinthDisplay({ labyrinth, adventurerPosition }) {
     if (cell[2] === 0) baseStyle.borderBottom = '4px solid #333';
     if (cell[3] === 0) baseStyle.borderLeft = '4px solid #334';
   
-    return <td style={baseStyle}><div /></td>;
+    return <td style={baseStyle}><div/></td>;
   }
   
   // generate labyrinth
