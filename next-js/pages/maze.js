@@ -124,7 +124,7 @@ function LabyrinthDisplay({ labyrinth, adventurerPosition }) {
       height: '50px',
       backgroundColor: '#efebf6',
       boxSizing: 'border-box',
-      border: '1px solid #333',
+      border: '1px solid rgba(206, 206, 206, 0.9)',
     };
   
     if (isCurrentPosition) baseStyle.backgroundColor = '#ffca80';
