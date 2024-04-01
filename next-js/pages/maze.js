@@ -19,6 +19,9 @@ export default function LabyrinthGame() {
     }
   }, [adventurerPosition, labyrinth]);
 
+  const nextLevel = useRef(null);
+
+
   const handleAdventurerMove = (event) => {
     if (adventureStatus !== "exploring") return;
     const { row, col } = adventurerPosition;
@@ -54,6 +57,12 @@ export default function LabyrinthGame() {
     }
   };
 
+  useEffect(() => {
+    if (adventureStatus === 'triumphed' && nextLevel.current) {
+      nextLevel.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [adventureStatus]);
+
   // Some useStyles and other are inline in the return
   const useStyles = {
     canvasFrame: {
@@ -83,7 +92,7 @@ export default function LabyrinthGame() {
           <p> Current Stage: {stage}</p>
           <LabyrinthDisplay labyrinth={labyrinth} adventurerPosition={adventurerPosition} />
           {adventureStatus === "triumphed" && (
-            <div className="mt-20 align-items-center #efebf6"> 
+            <div ref={nextLevel} className="mt-20 align-items-center #efebf6"> 
               {stage < 3 ? (
                 <button className="btn btn-primary mt-2" onClick={handleNextStage}> 
                   Continue to next stage
