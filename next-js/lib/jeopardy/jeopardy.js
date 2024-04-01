@@ -102,6 +102,8 @@ async function generateGame(num_of_players) {
       players.push(player);
     }
 
+    game.winner = -1;
+
     game.players = players;
     game.categories = categories;
 
@@ -148,7 +150,8 @@ function gameToJSON(game) {
             }),
           answers: answers,
         }
-      })
+      }),
+    winner: game.winner
   })
 }
 
@@ -178,6 +181,19 @@ function GetWinner(game) {
   return winner;
 }
 
+function checkForWinner(game){
+  const solved = game.categories.every((category) =>
+    category.clues.every((clue) => clue.is_solved)
+  )
+
+  if(solved){
+    const maxScore = Math.max(...game.players.map(player => player.score));
+    return game.players.findIndex(player => player.score === maxScore)+1;
+  }
+
+  return -1;
+}
+
 /* Player Answer Checking */
 function compareAnswer(game, category, question, answer) {
   const found_category = getCategory(game, category);
@@ -200,6 +216,7 @@ function correctAnswer(game, player_index, category, question) {
   )[0];
 
   game.players[player_index].score += found_question.clue_value;
+  game.winner = checkForWinner(game);
 }
 
 function wrongAnswer(game, player_index, category, question) {
