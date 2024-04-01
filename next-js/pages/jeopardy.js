@@ -3,6 +3,8 @@
 import { useEffect, useState, useRef, useMemo } from "react";
 import ClueModal from "@/components/jeopardy/ClueModal";
 import ScoreBoard from "@/components/jeopardy/ScoreBoard";
+import WinnerModal from '@/components/jeopardy/WinnerModal';
+
 
 
 
@@ -17,6 +19,8 @@ export default function Jeopardy() {
   const [currentClue, setCurrentClue] = useState(null);
   const [currentCategory, setCurrentCategory] = useState(null);
 
+  const winnerModalRef = useRef(null);
+
 
   const currentPlayer = useMemo(() => {
     if (gameState) {
@@ -25,6 +29,11 @@ export default function Jeopardy() {
           return player
         }
       })[0];
+      if(gameState.winner != "-1"){
+        setTimeout(()=>{
+          winnerModalRef.current.show();
+        }, 1000)
+      }
       return player
     }
   }, [gameState])
@@ -69,6 +78,9 @@ export default function Jeopardy() {
             </>
           )}
         </div>
+
+        <WinnerModal modalRef={winnerModalRef} player={gameState?.winner?gameState.winner:-1}/>
+
 
         <ScoreBoard players={3} />
 
