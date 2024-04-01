@@ -3,7 +3,7 @@ import Image from 'next/image';
 import matchPic from '../public/games/match.gif';
 import wordlePic from '../public/games/wordle.gif';
 import jeopardyPic from '../public/games/jeopardy.gif';
-import comingSoon from '../public/games/comingSoon.gif';
+import puzzle from '../public/games/puzzle.gif';
 
 const Games = () => {
   const [isHoveredMatch, setIsHoveredMatch] = useState(false);
@@ -89,7 +89,7 @@ const Games = () => {
                 <h2 className="card-title">Maze</h2>
                 <p>Can you beat all 3 stages?</p>
                 <div className='align-self-center h-100 d-flex align-items-center justify-content-center'>
-                  <Image className='img-fluid rounded' src={comingSoon} width={350} height={391} alt="GIF with text that says coming soon" />
+                  <Image className='img-fluid rounded' src={puzzle} width={350} height={391} alt="GIF with text that says coming soon" />
                 </div>
               </div>
             </div>

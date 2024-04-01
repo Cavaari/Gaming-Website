@@ -54,7 +54,7 @@ export default function Home() {
           </div>
           <div className="carousel-item">
           <a href='/maze'>
-            <Image src="/mainPage/comingSoon.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="Maze game"/>
+            <Image src="/mainPage/puzzle.gif" height={1000} width={1000} style={{objectFit: "scale-down", border: '3px solid var(--bs-secondary)'}} className="d-block img-fluid mx-auto rounded" alt="Maze game"/>
           </a>
           </div>
         </div>
