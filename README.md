@@ -21,15 +21,16 @@
 5) Click link to localhost port to see changes
 
 ## Team Members:
+	- Kalindu Kehel Baddarage (Team Lead)
 	- Muhammad Salmaan 
 	- Karina Garmendez
 	- Egor Ivanov 
 	- Cavaari Taylor
 	- Tehreem Nazar
-	- Eric Dearing (Team Lead)
-	- Kalindu Kehel Baddarage 
+	- Eric Dearing 
+	
 
 	
 ## Sprint 9: Maze Game Implementation & Final Site redesign and bug fixes
 
-Completed implementation of a unique maze game. Finished restyling the website and updating all components with fresh up-to-date look. Fixed all additionalresponsiveness issues and slight bug fixes due to redesign implementation.
+Completed implementation of a unique maze game. Finished restyling the website and updating all components with fresh up-to-date look. Fixed all additional responsiveness issues and slight bug fixes due to redesign implementation.
