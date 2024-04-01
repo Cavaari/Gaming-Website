@@ -70,7 +70,7 @@ const Games = () => {
             >
               <div className="card-body text-secondary d-flex flex-column">
                 <h2 className="card-title">Jeopardy</h2>
-                <p>Test your random fact knowledge. Play locally with up to 4 friends!</p>
+                <p>Test your random fact knowledge. Play locally with 3 friends!</p>
                 <div className='align-self-center h-100 d-flex align-items-center justify-content-center'>
                   <Image className='img-fluid rounded' src={jeopardyPic} width={350} height={391} alt="GIF with image of Jeopardy game" />
                 </div>
@@ -87,7 +87,7 @@ const Games = () => {
             >
               <div className="card-body text-secondary d-flex flex-column">
                 <h2 className="card-title">Maze</h2>
-                <p></p>
+                <p>Can you beat all 3 stages?</p>
                 <div className='align-self-center h-100 d-flex align-items-center justify-content-center'>
                   <Image className='img-fluid rounded' src={comingSoon} width={350} height={391} alt="GIF with text that says coming soon" />
                 </div>
