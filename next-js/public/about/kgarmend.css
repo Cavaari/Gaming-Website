@@ -9,7 +9,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Lato', sans-serif;
+    /* font-family: 'Lato', sans-serif; */
     scroll-behavior: smooth;
 }
 
@@ -21,7 +21,7 @@ body {
 
 /* navigation */
 
-header {
+/* header {
     overflow: hidden;
     position: absolute;
     top: 0;
@@ -41,7 +41,7 @@ header .logo {
     text-transform: uppercase;
     font-size: 30px;
     letter-spacing: 2px;
-}
+} */
 
 header ul {
     float: right ;
@@ -109,9 +109,9 @@ nav ul li {
     display: block;
 }
 
-nav ul li {
+/* nav ul li {
     font-size: 20px;
-}
+} */
 
 header ul {
     float: right ;
