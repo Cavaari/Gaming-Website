@@ -14,6 +14,10 @@ module.exports = {
     return config;
   },
   output:"export",
+  
+  images: {
+    unoptimized: true,
+  },
   basePath: '/gaming-website',
   env: {
     HOST_URL: process.env.HOST_URL,
