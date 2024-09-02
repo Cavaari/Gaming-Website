@@ -1,0 +1,110 @@
+// Required
+@import "../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/variables-dark";
+@import "../../node_modules/bootstrap/scss/maps";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/root";
+
+// Optional Bootstrap components here
+@import "../../node_modules/bootstrap/scss/reboot";
+@import "../../node_modules/bootstrap/scss/type";
+// etc
+
+// Common Styles
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+
+// Themes override
+[data-bs-theme='dark'] {
+  --bs-body-bg: #{#3E2755};
+  --bs-body-bg-rgb: #{to-rgb(#3E2755)};
+  --bs-primary: #{#3E2755};
+  --bs-primary-rgb: #{to-rgb(#3E2755)};
+  --bs-secondary: #{#EFEBF6};
+  --bs-secondary-rgb: #{to-rgb(#EFEBF6)};
+  --bs-info: #{#9cff66ec};
+  --bs-info-rgb: #{to-rgb(#9cff66a8)};
+  --bs-background: #{#3E2755};
+  --bs-text: #{#EFEBF6};
+
+  .wordle-square {
+    --bs-background-color: #{#3E2755};
+  }
+
+  .btn-primary {
+    --bs-btn-bg: #{mix($gray-600, #9371E1, .5)};
+    --bs-btn-border-color: #{rgba(#9371E1, .25)};
+    --bs-btn-hover-bg: #{darken(mix($gray-600, #9371E1, .5), 5%)};
+    --bs-btn-hover-border-color: #{rgba($white, .25)};
+    --bs-btn-active-bg: #{darken(mix($gray-600, #9371E1, .5), 10%)};
+    --bs-btn-active-border-color: #{rgba($white, .5)};
+    --bs-btn-focus-border-color: #{rgba($white, .5)};
+    --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
+    --bs-btn-disabled-bg: #{mix($gray-300, #c9bde6, .65)};
+    --bs-btn-disabled-border-color: #{rgba(#9371E1, .25)};
+  }
+
+  .btn-warning {
+    --bs-btn-bg: #{#2F1D40};
+    --bs-btn-border-color: #{rgba(#2F1D40, .25)};
+    --bs-btn-hover-bg: #{darken(mix($gray-600, #9371E1, .5), 5%)};
+    --bs-btn-hover-border-color: #{rgba($white, .25)};
+    --bs-btn-active-bg: #{darken(mix($gray-600, #9371E1, .5), 10%)};
+    --bs-btn-active-border-color: #{rgba($white, .5)};
+    --bs-btn-focus-border-color: #{rgba($white, .5)};
+    --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
+
+  }
+}
+
+[data-bs-theme='light'] {
+  --bs-body-bg: #{#EFEBF6};
+  --bs-body-bg-rgb: #{to-rgb(#EFEBF6)};
+  --bs-primary: #{#EFEBF6};
+  --bs-primary-rgb: #{to-rgb(#EFEBF6)};
+  --bs-secondary: #{#3E2755};
+  --bs-secondary-rgb: #{to-rgb(#3E2755)};
+  --bs-info: #{#23320383};
+  --bs-info-rgb: #{to-rgb(#23320383)};
+  --bs-background: #{#EFEBF6};
+  --bs-text: #{#3E2755};
+
+  .btn-primary {
+    --bs-btn-bg: #{mix($gray-600, #9371E1, .5)};
+    --bs-btn-border-color: #{rgba(#9371E1, .25)};
+    --bs-btn-hover-bg: #{darken(mix($gray-600, #9371E1, .5), 5%)};
+    --bs-btn-hover-border-color: #{rgba($white, .25)};
+    --bs-btn-active-bg: #{darken(mix($gray-600, #9371E1, .5), 10%)};
+    --bs-btn-active-border-color: #{rgba($white, .5)};
+    --bs-btn-focus-border-color: #{rgba($white, .5)};
+    --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
+    --bs-btn-disabled-bg: #{mix($gray-300, #a48cdb, .05)};
+    --bs-btn-disabled-border-color: #{rgba(#9371E1, .25)};
+  }
+
+  .btn-warning {
+    --bs-btn-bg: #{mix($gray-600, #EDC052, .5)};
+    --bs-btn-border-color: #{rgba(#EDC052, .25)};
+    --bs-btn-hover-bg: #{darken(mix($gray-600, #9371E1, .5), 5%)};
+    --bs-btn-hover-border-color: #{rgba($white, .25)};
+    --bs-btn-active-bg: #{darken(mix($gray-600, #9371E1, .5), 10%)};
+    --bs-btn-active-border-color: #{rgba($white, .5)};
+    --bs-btn-focus-border-color: #{rgba($white, .5)};
+    --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .2);
+  }
+}
+
+
+// extra classes
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.shaking{
+  animation: tilt-shaking 0.15s infinite;
+}

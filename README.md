@@ -1,36 +1,50 @@
-#Team 9
+# Routing
+    Reusable components are located at /components folder
 
-## Connecting to the VM without VPN:
+    /pages/_app.js  <- layout wrapper and will be rendered at every page
 
-1) $ ssh username@portkey.socs.uoguelph.ca
-2) $ ssh socs@cis4250w24-09.socs.uoguelph.ca
-3) password: EncoringSharePurplest
+[Source](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts)
 
-## Project git folder
-	$ cd team_9
+## Front-end
+    Everything inside of /pages folder will be rendered on the website 
 
-## Nginx website config folder
-	$ cd /etc/nginx/sites-available
+    /pages/game.js  -> www.site.com/game
+    /pages/about/me.js  -> www.site.com/about/me
 
-## How to run locally
+## Back-end
+    Everything inside of /pages/api folder will be run on the server 
 
-1) Clone gitlab repo
-2) cd into team_9 directory
-3) Pull recent updates and cd into next-js directory
-4) run 'npm i' then 'npm run dev'
-5) Click link to localhost port to see changes
+    /pages/api/server.js  -> www.site.com/api/server
 
-## Team Members:
-	- Kalindu Kehel Baddarage (Team Lead)
-	- Muhammad Salmaan 
-	- Karina Garmendez
-	- Egor Ivanov 
-	- Cavaari Taylor
-	- Tehreem Nazar
-	- Eric Dearing 
-	
 
-	
-## Sprint 9: Maze Game Implementation & Final Site redesign and bug fixes
+## Production
 
-Completed implementation of a unique maze game. Finished restyling the website and updating all components with fresh up-to-date look. Fixed all additional responsiveness issues and slight bug fixes due to redesign implementation.
+PM2 was used as Node.js process manager
+(https://pm2.keymetrics.io/)
+
+1) $ cd next-js 
+2) $ sudo npm i
+3) $ sudo npm run build
+4) $ sudo pm2 start "sudo npm start" --name "NextApp"
+
+
+## Getting Started Local
+
+1) Install Node.js (https://nodejs.org/en)
+2) $ cd next-js 
+3) $ npm i
+4) $ npm run dev
+
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
