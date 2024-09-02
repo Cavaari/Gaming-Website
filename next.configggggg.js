@@ -4,4 +4,4 @@ const nextConfig = {
     basePath: '/gaming-website',
 };
 
-export default nextConfig;
+module.exports = nextConfig

@@ -11,9 +11,10 @@ module.exports = {
       use: "raw-loader",
     });
     
-
     return config;
   },
+  output:"export",
+  basePath: '/gaming-website',
   env: {
     HOST_URL: process.env.HOST_URL,
     SOCKET_URL: process.env.SOCKET_URL

@@ -1,7 +1,8 @@
 {
-  "name": "next-js",
+  "name": "gaming-website",
   "version": "0.1.0",
-  "private": true,
+  "private": true,  
+  "homepage": "http://Cavaari.github.io/gaming-website",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
