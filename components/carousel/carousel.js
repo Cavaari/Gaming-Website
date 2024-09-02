@@ -1,0 +1,71 @@
+import React from 'react';
+import { Carousel } from 'react-bootstrap';
+import Image from 'next/image';
+import Link from 'next/link';
+import matchPic from '../../public/mainPage/match.png';
+import wordlePic from '../../public/mainPage/wordle.png';
+import jeopardyPic from '../../public/mainPage/jeopardy.png';
+
+const GamesCarousel = () => {
+  // Carousel items data
+  const games = [
+    {
+      name: 'Card Matching',
+      description: 'Test your memory with this matching game.',
+      image: matchPic,
+      alt: 'Card Matching Game',
+      href: '/game',
+    },
+    {
+      name: 'Wordle',
+      description: 'Challenge your vocabulary with Wordle.',
+      image: wordlePic,
+      alt: 'Wordle Game',
+      href: '/wordle',
+    },
+    {
+        name: 'Jeopardy',
+        description: 'Test your knowledge with Jeopardy.',
+        image: jeopardyPic,
+        alt: 'Jeopardy Game',
+        href: '/jeopardy',
+    }
+  ];
+
+  return (
+    <div className="bg-third d-flex align-items-center justify-content-center text-first">
+      <div style={{
+        maxWidth: '600px',
+        border: '5px solid #E9A400',
+        borderRadius: '10px',
+        overflow: 'hidden',
+        margin: '10px auto',
+      }}>
+        <Carousel>
+          {games.map((game, index) => (
+            <Carousel.Item key={index} style={{ position: 'relative', height: '300px' }}>
+              <Link href={game.href} passHref>
+                <div className="custom-carousel-item" style={{ display: 'block', width: '100%', height: '100%' }}>
+                  <Image src={game.image} alt={game.alt} layout="responsive" width={600} height={300} objectFit="cover" />
+                  <div className="carousel-caption" style={{
+                    position: 'absolute',
+                    bottom: '20px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 2,
+                    color: '#000',
+                  }}>
+                    <h3>{game.name}</h3>
+                    <p>{game.description}</p>
+                  </div>
+                </div>
+              </Link>
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </div>
+    </div>
+  );
+};
+
+export default GamesCarousel;
